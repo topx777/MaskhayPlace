@@ -14,3 +14,10 @@ Hicimos un cambio a ultimo momento estamos utilizando netamente la plantilla de 
 	assets //Carpeta de recursos
 	--> admin //Carpeta de recursos de administracion
 	--> public //Carpeta de recursos de busqueda
+
+# Base de Datos 
+La implemetacion de la base de datos ya se encuentra finalizada, el nombre de la base de datos debe ser importada en phpmyadmin con el nombre de maskhayplacedb, preferiblemente creen una base de datos vacia con ese nombre con utf8_spanish_ci, luego importen el archivo de la raiz maskhayplacedb.sql
+
+# Clase de Conexion 
+Como ayuda cree una carpeta helpers, dentro de ella pondre primeramente un archivo de clase para facilitarles la conexion a la base datos con php, solo es hacer un include donde la necesiten y instanciar el objeto de la clase Conexion, la clase se encuentra configurada asi que porfavor no modificarla.
+Cualquier duda sobre los metodos o el funcionamiento de la clase en el curso o por medio de la plataforma Slack, que el link para unirse esta en la parte superior.
