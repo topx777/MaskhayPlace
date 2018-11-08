@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2018 a las 14:02:08
+-- Tiempo de generación: 08-11-2018 a las 10:51:23
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -369,7 +369,8 @@ ALTER TABLE `reserva`
 --
 ALTER TABLE `restaurante`
   ADD PRIMARY KEY (`id_restaurante`),
-  ADD KEY `lugar` (`lugar`);
+  ADD KEY `lugar` (`lugar`),
+  ADD KEY `horario` (`horario`);
 
 --
 -- Indices de la tabla `superusuario`
@@ -544,7 +545,8 @@ ALTER TABLE `reserva`
 -- Filtros para la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
-  ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`lugar`) REFERENCES `lugar` (`id_lugar`);
+  ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`lugar`) REFERENCES `lugar` (`id_lugar`),
+  ADD CONSTRAINT `restaurante_ibfk_2` FOREIGN KEY (`horario`) REFERENCES `horario` (`id_horario`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
