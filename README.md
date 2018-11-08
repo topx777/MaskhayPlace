@@ -25,3 +25,5 @@ Cualquier duda sobre los metodos o el funcionamiento de la clase en el curso o p
 # Notas Extras
 Porfavor sumo cuidado con modificar los archivos de assets y helpers si quieren crean estilos aparte o necesitan mas clases o helpers aparte crear propios, pueden almacenarlos en las carpetas correspondientes.
 LEMA DEL GRUPO "Ver pero no tocar"
+
+Por ultimo no se olviden de siempre generar los cambios con su respectivo comentario, muy importante además de comentar muy bien el código, por el bien de los demas.
