@@ -77,11 +77,11 @@ $resResto = $db->recorrer($obtenerRestoQ);
 					<nav id="menu" class="main-menu">
                         <ul>
                             <li><span><a href="index.php">Inicio</a></span></li>
-                            <li><span><a href="#0">Categorias</a></span>
+                            <li><span><a href="#">Categorias</a></span>
                                 <ul>
-                                    <li><a href="confirm.html">Hoteles</a></li>
-                                    <li><a href="confirm.html">Restaurantes</a></li>
-                                    <li><a href="confirm.html">Farmacias</a></li>
+                                    <li><a href="#">Hoteles</a></li>
+                                    <li><a href="#">Restaurantes</a></li>
+                                    <li><a href="#">Farmacias</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -211,7 +211,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
                                 </div>
                             </div>
 							<hr>
-							<h3>Location</h3>
+							<h3>Ubicación</h3>
 							<div id="map" class="map map_single add_bottom_45"></div>
 							<!-- End Map -->
 						</section>
@@ -235,7 +235,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 													<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>5 stars</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong>5 estrellas</strong></small></div>
 										</div>
 										<!-- /row -->
 										<div class="row">
@@ -244,7 +244,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 													<div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>4 stars</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong>4 estrellas</strong></small></div>
 										</div>
 										<!-- /row -->
 										<div class="row">
@@ -253,7 +253,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 													<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>3 stars</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong>3 estrellas</strong></small></div>
 										</div>
 										<!-- /row -->
 										<div class="row">
@@ -262,7 +262,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 													<div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>2 stars</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong>2 estrellas</strong></small></div>
 										</div>
 										<!-- /row -->
 										<div class="row">
@@ -271,7 +271,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>1 stars</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong>1 estrellas</strong></small></div>
 										</div>
 										<!-- /row -->
 									</div>
@@ -443,70 +443,6 @@ $resResto = $db->recorrer($obtenerRestoQ);
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<a data-toggle="collapse" data-target="#collapse_ft_4" aria-expanded="false" aria-controls="collapse_ft_4" class="collapse_bt_mobile">
-						<div class="circle-plus closed">
-							<div class="horizontal"></div>
-							<div class="vertical"></div>
-						</div>
-						<h3>Keep in touch</h3>
-					</a>
-					<div class="collapse show" id="collapse_ft_4">
-						<div id="newsletter">
-							<div id="message-newsletter"></div>
-							<form method="post" action="assets/newsletter.php" name="newsletter_form" id="newsletter_form">
-								<div class="form-group">
-									<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Your email">
-									<input type="submit" value="Submit" id="submit-newsletter">
-								</div>
-							</form>
-						</div>
-						<div class="follow_us">
-							<h5>Follow Us</h5>
-							<ul>
-								<li><a href="#0"><i class="ti-facebook"></i></a></li>
-								<li><a href="#0"><i class="ti-twitter-alt"></i></a></li>
-								<li><a href="#0"><i class="ti-google"></i></a></li>
-								<li><a href="#0"><i class="ti-pinterest"></i></a></li>
-								<li><a href="#0"><i class="ti-instagram"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /row-->
-			<hr>
-			<div class="row">
-				<div class="col-lg-6">
-					<ul id="footer-selector">
-						<li>
-							<div class="styled-select" id="lang-selector">
-								<select>
-									<option value="English" selected>English</option>
-									<option value="French">French</option>
-									<option value="Spanish">Spanish</option>
-									<option value="Russian">Russian</option>
-								</select>
-							</div>
-						</li>
-						<li>
-							<div class="styled-select" id="currency-selector">
-								<select>
-									<option value="US Dollars" selected>US Dollars</option>
-									<option value="Euro">Euro</option>
-								</select>
-							</div>
-						</li>
-						<li><img src="assets/public/img/cards_all.svg" alt=""></li>
-					</ul>
-				</div>
-				<div class="col-lg-6">
-					<ul id="additional_links">
-						<li><a href="#0">Terms and conditions</a></li>
-						<li><a href="#0">Privacy</a></li>
-						<li><span>© 2018 Sparker</span></li>
-					</ul>
-				</div>
 			</div>
 		</div>
 	</footer>
@@ -570,9 +506,8 @@ $resResto = $db->recorrer($obtenerRestoQ);
 	<script src="assets/public/extras/validate.js"></script>
 	
 	<!-- Map -->
-	<script src="http://maps.googleapis.com/maps/api/js"></script>
-	<script src="assets/public/js/map_single_restaurant.js"></script>
-	<script src="assets/public/js/infobox.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"></script>
+	<!-- <script src="assets/public/js/map_single_restaurant.js"></script> -->
 	
 	<!-- INPUT QUANTITY  -->
 	<script src="assets/public/js/input_qty.js"></script>
@@ -584,9 +519,383 @@ $resResto = $db->recorrer($obtenerRestoQ);
         "parentEl": '#input-dates',
         "opens": "left"
     }, function(start, end, label) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-    });
+        console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
+	});
+
+	//Datos del Retaurante para marcadores
+	var 
+	mapObject,
+	markers = [],
+	markersData = {
+		'Marker': [
+		{
+			type_point: '<?=$resResto["categoria"]?>',
+			name: '<?=$resLugar["nombre_lugar"]?>',
+			location_latitude: <?=$resLugar["latitud_gps"]?>, 
+			location_longitude: <?=$resLugar["longitud_gps"]?>,
+			map_image_url: 'assets/public/img/thumb_map_single_restaurant.jpg',
+			rate: 'Superb | 7.5',
+			name_point: '<?=$resLugar["nombre_lugar"]?>',
+			get_directions_start_address: '',
+			phone: '+3934245255'
+		}
+		]
+	};
+
+	
+	//Opciones de Mapa
+	var mapOptions = {
+		zoom: 15,
+		center: new google.maps.LatLng(<?=$resLugar["latitud_gps"]?>, <?=$resLugar["longitud_gps"]?>),
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+		mapTypeControl: false,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			position: google.maps.ControlPosition.LEFT_CENTER
+		},
+		panControl: false,
+		panControlOptions: {
+			position: google.maps.ControlPosition.TOP_RIGHT
+		},
+		zoomControl: true,
+		zoomControlOptions: {
+			style: google.maps.ZoomControlStyle.LARGE,
+			position: google.maps.ControlPosition.TOP_LEFT
+		},
+		scrollwheel: false,
+		scaleControl: false,
+		scaleControlOptions: {
+			position: google.maps.ControlPosition.TOP_LEFT
+		},
+		streetViewControl: true,
+		streetViewControlOptions: {
+			position: google.maps.ControlPosition.LEFT_TOP
+		},
+		styles: [
+			{
+				"featureType": "administrative.country",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "administrative.province",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "administrative.locality",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "administrative.neighborhood",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "administrative.land_parcel",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "landscape.man_made",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "simplified"
+					}
+				]
+			},
+			{
+				"featureType": "landscape.natural.landcover",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "on"
+					}
+				]
+			},
+			{
+				"featureType": "landscape.natural.terrain",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.business",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.government",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.medical",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.park",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.park",
+				"elementType": "labels",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.place_of_worship",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.school",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "poi.sports_complex",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "road.highway",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "road.highway",
+				"elementType": "labels",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "road.highway.controlled_access",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "road.arterial",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "simplified"
+					}
+				]
+			},
+			{
+				"featureType": "road.local",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "simplified"
+					}
+				]
+			},
+			{
+				"featureType": "transit.line",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "transit.station.airport",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "transit.station.bus",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "transit.station.rail",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "water",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "on"
+					}
+				]
+			},
+			{
+				"featureType": "water",
+				"elementType": "labels",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			}
+		]
+	};
+
+	//Instanciacion de Mapa
+	var
+	marker;
+	mapObject = new google.maps.Map(document.getElementById('map'), mapOptions);
+	for (var key in markersData)
+		markersData[key].forEach(function (item) {
+			marker = new google.maps.Marker({
+				position: new google.maps.LatLng(item.location_latitude, item.location_longitude),
+				map: mapObject,
+				icon: 'assets/public/img/pins/' + key + '.png',
+			});
+
+			if ('undefined' === typeof markers[key])
+				markers[key] = [];
+			markers[key].push(marker);
+			google.maps.event.addListener(marker, 'click', (function () {
+			closeInfoBox();
+			getInfoBox(item).open(mapObject, this);
+			mapObject.setCenter(new google.maps.LatLng(item.location_latitude, item.location_longitude));
+			}));
+	});
+
+	function hideAllMarkers () {
+		for (var key in markers)
+			markers[key].forEach(function (marker) {
+				marker.setMap(null);
+			});
+	};
+
+	function closeInfoBox() {
+		$('div.infoBox').remove();
+	};
+
+	function getInfoBox(item) {
+		return new InfoBox({
+			content:
+			'<div class="marker_info" id="marker_info">' +
+			'<img src="' + item.map_image_url + '" alt=""/>' +
+			'<span>'+ 
+				'<span class="infobox_rate">'+ item.rate +'</span>' +
+				'<em>'+ item.type_point +'</em>' +
+				'<h3>'+ item.name_point +'</h3>' +
+			'<strong>'+ item.description_point +'</strong>' +
+			'<form action="http://maps.google.com/maps" method="get" target="_blank"><input name="saddr" value="'+ item.get_directions_start_address +'" type="hidden"><input type="hidden" name="daddr" value="'+ item.location_latitude +',' +item.location_longitude +'"><button type="submit" value="Get directions" class="btn_infobox_get_directions">Get directions</button></form>' +
+				'<a href="tel://'+ item.phone +'" class="btn_infobox_phone">'+ item.phone +'</a>' +
+				'</span>' +
+			'</div>',
+			disableAutoPan: false,
+			maxWidth: 0,
+			pixelOffset: new google.maps.Size(10, 92),
+			closeBoxMargin: '',
+			closeBoxURL: "assets/public/img/close_infobox.png",
+			isHidden: false,
+			alignBottom: true,
+			pane: 'floatPane',
+			enableEventPropagation: true
+		});
+	};
+
+	// var map;
+	// 	function initMap() {
+	// 		map = new google.maps.Map(document.getElementById('map'), {
+	// 		center: {lat: -17.376269, lng: -66.183877},
+	// 		zoom: 16
+	// 	});
+	// }
     </script>
-  
+	<script src="assets/public/js/infobox.js"></script>
+
 </body>
 </html>
