@@ -1,12 +1,17 @@
 <?php
 
-$idLugar = 
+$idLugar = $_GET['id'];
 
 include('helpers/class.Conexion.php');
 
 $db = new Conexion();
 $db->charset();
 
+$obtenerLugarQ = $db->query("SELECT * FROM Lugar WHERE id_lugar = $idLugar LIMIT 1");
+$resLugar = $db->recorrer($obtenerLugarQ);
+
+$obtenerRestoQ = $db->query("SELECT * FROM Restaurante WHERE lugar = $idLugar LIMIT 1");
+$resResto = $db->recorrer($obtenerRestoQ);
 
 ?>
 
@@ -116,58 +121,67 @@ $db->charset();
 					<div class="col-lg-8">
 						<section id="description">
 							<div class="detail_title_1">
-								<h1>Da Alfredo Italian Restaurant</h1>
-								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">438 Rush Green Road, Romford</a>
+								<h1><?=$resLugar["nombre_lugar"]?></h1>
+								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361"><?=$resLugar["direccion"]?></a>
 							</div>
-							<p>Per consequat adolescens ex, cu nibh commune <strong>temporibus vim</strong>, ad sumo viris eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-							<p>Cum et probo menandri. Officiis consulatu pro et, ne sea sale invidunt, sed ut sint <strong>blandit</strong> efficiendi. Atomorum explicari eu qui, est enim quaerendum te. Quo harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
-							<h5 class="add_bottom_15">Amenities</h5>
+							<p><?=$resLugar["descripcion"]?></p>
+							<h5 class="add_bottom_15">Caracteristicas</h5>
 							<div class="row add_bottom_30">
 								<div class="col-md-6">
 									<ul class="bullets">
-										<li>Dolorem mediocritatem</li>
-										<li>Mea appareat</li>
-										<li>Prima causae</li>
-										<li>Singulis indoctum</li>
+										<?php if($resResto["parqueo"] == 1) {?>
+										<li>Parqueo</li>
+										<?php } ?>
+										<?php if($resResto["recreativo"] == 1) {?>
+										<li>Recreativo</li>
+										<?php } ?>
+										<?php if($resResto["area_fumadores"] == 1) {?>
+										<li>Area Fumadores</li>
+										<?php } ?>
+										<?php if($resResto["auto_servicio"] == 1) {?>
+										<li>Auto Servicio</li>
+										<?php } ?>
 									</ul>
 								</div>
 								<div class="col-md-6">
 									<ul class="bullets">
-										<li>Timeam inimicus</li>
-										<li>Oportere democritum</li>
-										<li>Cetero inermis</li>
-										<li>Pertinacia eum</li>
+										<?php if($resResto["internet"] == 1) {?>
+										<li>Internet</li>
+										<?php } ?>
+										<?php if($resResto["reserva_mesa"] == 1) {?>
+										<li>Reserva Mesa</li>
+										<?php } ?>
 									</ul>
 								</div>
 							</div>
 							<!-- /row -->						
 							<div class="opening">
                                 <div class="ribbon">
-                                    <span class="open">Now Open</span>
+                                    <span class="open">Ahora Abierto</span>
                                 </div>
                                 <i class="icon_clock_alt"></i>
-                                <h4>Opening Hours</h4>
+                                <h4>Horario de Atencion</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul>
-                                            <li>Monday <span>9 AM - 5 PM</span></li>
-                                            <li>Tuesday <span>9 AM - 5 PM</span></li>
-                                            <li>Wednesday <span>9 AM - 5 PM</span></li>
-                                            <li>Thursday <span>9 AM - 5 PM</span></li>
+                                            <li>Lunes <span>9 AM - 5 PM</span></li>
+                                            <li>Martes <span>9 AM - 5 PM</span></li>
+                                            <li>Miercoles <span>9 AM - 5 PM</span></li>
+                                            <li>Jueves <span>9 AM - 5 PM</span></li>
                                         </ul>
                                     </div>
                                     <div class="col-md-6">
                                         <ul>
-                                            <li>Friday <span>9 AM - 5 PM</span></li>
-                                            <li>Saturday <span>9 AM - 5 PM</span></li>
-                                            <li>Sunday <span>Closed</span></li>
+                                            <li>Viernes <span>9 AM - 5 PM</span></li>
+                                            <li>Sábado <span>9 AM - 5 PM</span></li>
+                                            <li>Domingo <span>Cerrado</span></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <!-- /opening -->
 							<hr>
-							<h5>Starters</h5>
+							<h5>Menu del día</h5>
 							<div class="row add_bottom_15">
                                 <div class="col-lg-6 col-md-12">
                                     <ul class="menu_list">
@@ -178,15 +192,6 @@ $db->charset();
                                             <h6>Imported Salmon Steak <span>$12</span></h6>
                                             <p>
                                                 Salmon / Veggies / Oil
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_2.jpg" alt="">
-                                            </div>
-                                            <h6>Baked Potato Pizza <span>$22</span></h6>
-                                            <p>
-                                                Potato / Bread / Cheese
                                             </p>
                                         </li>
                                     </ul>
@@ -202,103 +207,9 @@ $db->charset();
                                                 Chicken / Olive Oil / Salt
                                             </p>
                                         </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_4.jpg" alt="">
-                                            </div>
-                                            <h6>Crab With Curry Sources <span>$15</span></h6>
-                                            <p>
-                                                Crab / Potatoes / Rice
-                                            </p>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /row -->
-                            <h5>Main Courses</h5>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <ul class="menu_list">
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_5.jpg" alt="">
-                                            </div>
-                                            <h6>Spicy Crab Ramen <span>$12</span></h6>
-                                            <p>
-                                                Crab / Veggie / Soup
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_6.jpg" alt="">
-                                            </div>
-                                            <h6>Grilled Salmon Sushi <span>$22</span></h6>
-                                            <p>
-                                                Rice / Salmon / Shoyu
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_7.jpg" alt="">
-                                            </div>
-                                            <h6>Source Mushroom <span>$22</span></h6>
-                                            <p>
-                                                Mushroom / Garlic / Veggies
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_8.jpg" alt="">
-                                            </div>
-                                            <h6>Baked Potato Pizza <span>$22</span></h6>
-                                            <p>
-                                                Potato / Bread / Cheese
-                                            </p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <ul class="menu_list">
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_9.jpg" alt="">
-                                            </div>
-                                            <h6>Fresh Crab With Lemon <span>$16</span></h6>
-                                            <p>
-                                                Crab / Lemon / Garlic
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_10.jpg" alt="">
-                                            </div>
-                                            <h6>Fried Chicken Salad <span>$22</span></h6>
-                                            <p>
-                                                Chicken / Butter / Veggies
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_11.jpg" alt="">
-                                            </div>
-                                            <h6>Fried Potatoes With Garlic <span>$22</span></h6>
-                                            <p>
-                                                Potatoes / Olive Oil / Garlic
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="thumb">
-                                                <img src="assets/public/img/menu_list_12.jpg" alt="">
-                                            </div>
-                                            <h6>Crab With Curry Sources <span>$22</span></h6>
-                                            <p>
-                                                Crab / Potatoes / Rice
-                                            </p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- /row -->
 							<hr>
 							<h3>Location</h3>
 							<div id="map" class="map map_single add_bottom_45"></div>
@@ -307,7 +218,7 @@ $db->charset();
 						<!-- /section -->
 					
 						<section id="reviews">
-							<h2>Reviews</h2>
+							<h2>Calificaciones</h2>
 							<div class="reviews-container add_bottom_30">
 								<div class="row">
 									<div class="col-lg-3">
@@ -369,7 +280,6 @@ $db->charset();
 							</div>
 
 							<div class="reviews-container">
-
 								<div class="review-box clearfix">
 									<figure class="rev-thumb"><img src="assets/public/img/avatar1.jpg" alt="">
 									</figure>
@@ -387,43 +297,6 @@ $db->charset();
 										</div>
 									</div>
 								</div>
-								<!-- /review-box -->
-								<div class="review-box clearfix">
-									<figure class="rev-thumb"><img src="assets/public/img/avatar2.jpg" alt="">
-									</figure>
-									<div class="rev-content">
-										<div class="rating">
-											<i class="icon-star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-										</div>
-										<div class="rev-info">
-											Ahsan – April 01, 2016:
-										</div>
-										<div class="rev-text">
-											<p>
-												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
-											</p>
-										</div>
-									</div>
-								</div>
-								<!-- /review-box -->
-								<div class="review-box clearfix">
-									<figure class="rev-thumb"><img src="assets/public/img/avatar3.jpg" alt="">
-									</figure>
-									<div class="rev-content">
-										<div class="rating">
-											<i class="icon-star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-										</div>
-										<div class="rev-info">
-											Sara – March 31, 2016:
-										</div>
-										<div class="rev-text">
-											<p>
-												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
-											</p>
-										</div>
-									</div>
-								</div>
-								<!-- /review-box -->
 							</div>
 							<!-- /review-container -->
 						</section>
@@ -431,19 +304,11 @@ $db->charset();
 						<hr>
 
 							<div class="add-review">
-								<h5>Leave a Review</h5>
+								<h5>Deja tu Calificacion</h5>
 								<form>
 									<div class="row">
 										<div class="form-group col-md-6">
-											<label>Name and Lastname *</label>
-											<input type="text" name="name_review" id="name_review" placeholder="" class="form-control">
-										</div>
-										<div class="form-group col-md-6">
-											<label>Email *</label>
-											<input type="email" name="email_review" id="email_review" class="form-control">
-										</div>
-										<div class="form-group col-md-6">
-											<label>Rating </label>
+											<label>Puntaje </label>
 											<div class="custom-select-form">
 											<select name="rating_review" id="rating_review" class="wide">
 												<option value="1">1 (lowest)</option>
@@ -460,11 +325,11 @@ $db->charset();
 											</div>
 										</div>
 										<div class="form-group col-md-12">
-											<label>Your Review</label>
+											<label>Tu comentario</label>
 											<textarea name="review_text" id="review_text" class="form-control" style="height:130px;"></textarea>
 										</div>
 										<div class="form-group col-md-12 add_top_20 add_bottom_30">
-											<input type="submit" value="Submit" class="btn_1" id="submit-review">
+											<input type="submit" value="Enviar" class="btn_1" id="submit-review">
 										</div>
 									</div>
 								</form>
@@ -475,25 +340,21 @@ $db->charset();
 					<aside class="col-lg-4" id="sidebar">
 						<div class="box_detail booking">
 							<div class="price">
-								<h5 class="d-inline">Book Now</h5>
-								<div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
+								<h5 class="d-inline">Reservar</h5>
+								<div class="score"><span>Bueno<em>350 Calificaciones</em></span><strong>7.0</strong></div>
 							</div>
 
 							<div class="form-group" id="input-dates">
-								<input class="form-control" type="text" name="dates" placeholder="When..">
+								<input class="form-control" type="text" name="dates" placeholder="Cuando..">
 								<i class="icon_calendar"></i>
 							</div>
 
 							<div class="panel-dropdown">
-								<a href="#">Guests <span class="qtyTotal">1</span></a>
+								<a href="#">Cantidad <span class="qtyTotal">1</span></a>
 								<div class="panel-dropdown-content right">
 									<div class="qtyButtons">
-										<label>Adults</label>
+										<label>Personas</label>
 										<input type="text" name="qtyInput" value="1">
-									</div>
-									<div class="qtyButtons">
-										<label>Childrens</label>
-										<input type="text" name="qtyInput" value="0">
 									</div>
 								</div>
 							</div>

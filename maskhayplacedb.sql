@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2018 a las 23:24:31
+-- Tiempo de generación: 08-11-2018 a las 23:44:56
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -38,6 +38,11 @@ CREATE TABLE `calificacion` (
   `respuesta` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `calificacion`
+--
+
+TRUNCATE TABLE `calificacion`;
 -- --------------------------------------------------------
 
 --
@@ -51,6 +56,11 @@ CREATE TABLE `contacto` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `contacto`
+--
+
+TRUNCATE TABLE `contacto`;
 -- --------------------------------------------------------
 
 --
@@ -67,6 +77,11 @@ CREATE TABLE `farmacia` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `farmacia`
+--
+
+TRUNCATE TABLE `farmacia`;
 -- --------------------------------------------------------
 
 --
@@ -87,6 +102,11 @@ CREATE TABLE `horario` (
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `horario`
+--
+
+TRUNCATE TABLE `horario`;
 -- --------------------------------------------------------
 
 --
@@ -113,6 +133,11 @@ CREATE TABLE `hotel` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `hotel`
+--
+
+TRUNCATE TABLE `hotel`;
 -- --------------------------------------------------------
 
 --
@@ -126,6 +151,11 @@ CREATE TABLE `imagen` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `imagen`
+--
+
+TRUNCATE TABLE `imagen`;
 -- --------------------------------------------------------
 
 --
@@ -145,6 +175,18 @@ CREATE TABLE `lugar` (
   `categoria` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `lugar`
+--
+
+TRUNCATE TABLE `lugar`;
+--
+-- Volcado de datos para la tabla `lugar`
+--
+
+INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`) VALUES
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', 0, 0, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '.', 1, 'Restaurante');
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +204,11 @@ CREATE TABLE `medicamento` (
   `imagen_medicamento` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
 
+--
+-- Truncar tablas antes de insertar `medicamento`
+--
+
+TRUNCATE TABLE `medicamento`;
 -- --------------------------------------------------------
 
 --
@@ -176,6 +223,11 @@ CREATE TABLE `menu` (
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `menu`
+--
+
+TRUNCATE TABLE `menu`;
 -- --------------------------------------------------------
 
 --
@@ -191,6 +243,11 @@ CREATE TABLE `menu_plato` (
   `imagen_menuplato` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `menu_plato`
+--
+
+TRUNCATE TABLE `menu_plato`;
 -- --------------------------------------------------------
 
 --
@@ -208,6 +265,11 @@ CREATE TABLE `pieza` (
   `imagen_pieza` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `pieza`
+--
+
+TRUNCATE TABLE `pieza`;
 -- --------------------------------------------------------
 
 --
@@ -225,6 +287,11 @@ CREATE TABLE `reserva` (
   `estado` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `reserva`
+--
+
+TRUNCATE TABLE `reserva`;
 -- --------------------------------------------------------
 
 --
@@ -233,7 +300,6 @@ CREATE TABLE `reserva` (
 
 CREATE TABLE `restaurante` (
   `id_restaurante` int(11) NOT NULL,
-  `horario` int(11) NOT NULL,
   `categoria` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
   `parqueo` tinyint(1) NOT NULL DEFAULT '0',
   `recreativo` tinyint(1) NOT NULL DEFAULT '0',
@@ -244,6 +310,11 @@ CREATE TABLE `restaurante` (
   `reserva_mesa` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `restaurante`
+--
+
+TRUNCATE TABLE `restaurante`;
 -- --------------------------------------------------------
 
 --
@@ -258,6 +329,11 @@ CREATE TABLE `superusuario` (
   `apellidos` varchar(35) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Truncar tablas antes de insertar `superusuario`
+--
+
+TRUNCATE TABLE `superusuario`;
 -- --------------------------------------------------------
 
 --
@@ -274,6 +350,18 @@ CREATE TABLE `usuarioregistrado` (
   `negocio` tinyint(1) NOT NULL DEFAULT '0',
   `celular` varchar(10) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Truncar tablas antes de insertar `usuarioregistrado`
+--
+
+TRUNCATE TABLE `usuarioregistrado`;
+--
+-- Volcado de datos para la tabla `usuarioregistrado`
+--
+
+INSERT INTO `usuarioregistrado` (`id_usuarioregistrado`, `usuario`, `password`, `nombre`, `apellidos`, `correo`, `negocio`, `celular`) VALUES
+(1, 'topx777', 'slr8830213', 'Abel', 'Lopez Paniagua', 'topx777@gmail.com', 1, '65706492');
 
 --
 -- Índices para tablas volcadas
@@ -370,8 +458,7 @@ ALTER TABLE `reserva`
 --
 ALTER TABLE `restaurante`
   ADD PRIMARY KEY (`id_restaurante`),
-  ADD KEY `lugar` (`lugar`),
-  ADD KEY `horario` (`horario`);
+  ADD KEY `lugar` (`lugar`);
 
 --
 -- Indices de la tabla `superusuario`
@@ -408,7 +495,7 @@ ALTER TABLE `farmacia`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `hotel`
 --
@@ -423,7 +510,7 @@ ALTER TABLE `imagen`
 -- AUTO_INCREMENT de la tabla `lugar`
 --
 ALTER TABLE `lugar`
-  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `medicamento`
 --
@@ -463,7 +550,7 @@ ALTER TABLE `superusuario`
 -- AUTO_INCREMENT de la tabla `usuarioregistrado`
 --
 ALTER TABLE `usuarioregistrado`
-  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --
@@ -546,8 +633,7 @@ ALTER TABLE `reserva`
 -- Filtros para la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
-  ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`lugar`) REFERENCES `lugar` (`id_lugar`),
-  ADD CONSTRAINT `restaurante_ibfk_2` FOREIGN KEY (`horario`) REFERENCES `horario` (`id_horario`);
+  ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`lugar`) REFERENCES `lugar` (`id_lugar`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
