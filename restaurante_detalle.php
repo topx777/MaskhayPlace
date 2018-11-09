@@ -1,3 +1,15 @@
+<?php
+
+$idLugar = 
+
+include('helpers/class.Conexion.php');
+
+$db = new Conexion();
+$db->charset();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="MaskhayPlace - Detalle de Lugar">
     <meta name="author" content="UPDS">
-    <title>MaskhayPlace | Detalle de Lugar</title>
+    <title>MaskhayPlace | Detalle de Restaurante</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -81,7 +93,7 @@
 		<div class="hero_in restaurant_detail">
 			<div class="wrapper">
 				<span class="magnific-gallery">
-					<a href="assets/public/img/gallery/hotel_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">View photos</a>
+					<a href="assets/public/img/gallery/hotel_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">Ver Fotos</a>
 					<a href="assets/public/img/gallery/hotel_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
 					<a href="assets/public/img/gallery/hotel_list_3.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
 				</span>
@@ -92,9 +104,9 @@
 		<nav class="secondary_nav sticky_horizontal_2">
 			<div class="container">
 				<ul class="clearfix">
-					<li><a href="#description" class="active">Description</a></li>
-					<li><a href="#reviews">Reviews</a></li>
-					<li><a href="#sidebar">Booking</a></li>
+					<li><a href="#description" class="active">Descripción</a></li>
+					<li><a href="#reviews">Calificaciones</a></li>
+					<li><a href="#sidebar">Reservas</a></li>
 				</ul>
 			</div>
 		</nav>

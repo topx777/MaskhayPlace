@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2018 a las 10:51:23
+-- Tiempo de generación: 08-11-2018 a las 23:24:31
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -141,7 +141,8 @@ CREATE TABLE `lugar` (
   `usuario` int(11) NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `logo` varchar(55) COLLATE utf8_spanish_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT '0'
+  `activo` tinyint(1) NOT NULL DEFAULT '0',
+  `categoria` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
