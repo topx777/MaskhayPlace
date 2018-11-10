@@ -7,11 +7,31 @@ include('helpers/class.Conexion.php');
 $db = new Conexion();
 $db->charset();
 
-$obtenerLugarQ = $db->query("SELECT * FROM Lugar WHERE id_lugar = $idLugar LIMIT 1");
+//Obtener Datos Lugar
+$obtenerLugarQ = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
 $resLugar = $db->recorrer($obtenerLugarQ);
 
-$obtenerRestoQ = $db->query("SELECT * FROM Restaurante WHERE lugar = $idLugar LIMIT 1");
+//Obtener Datos Retaurante realionado lugar
+$obtenerRestoQ = $db->query("SELECT * FROM restaurante WHERE lugar = $idLugar LIMIT 1");
 $resResto = $db->recorrer($obtenerRestoQ);
+
+//Obtener Imagenes
+$obtenerImgs = $db->query("SELECT * FROM imagen WHERE lugar = $idLugar");
+if($db->rows($obtenerImgs) > 0) {
+	while($resImg = $db->recorrer($obtenerImgs)) {
+		$imgsResto[] = array(
+			'id' => $resImg["id_imagen"],
+			'desc' => $resImg["descripcion"],
+			'url' => $resImg["url"],
+		);
+	}
+}
+
+$idResto = $resResto["id_restaurante"];
+
+//Obtener Horarios de Atencion
+$obtenerHorario = $db->query("SELECT * FROM horario WHERE restaurante = $idResto LIMIT 1");
+$resHorario = $db->recorrer($obtenerHorario);
 
 ?>
 
@@ -56,7 +76,7 @@ $resResto = $db->recorrer($obtenerRestoQ);
 				<div class="col-lg-3 col-12">
 					<div id="logo">
 						<a href="index.html">
-							<img src="assets/public/img/logo_sticky.svg" width="165" height="35" alt="" class="logo_sticky">
+							<img src="assets/public/img/logo.png" width="165" height="35" alt="" class="logo_sticky">
 						</a>
 					</div>
 				</div>
@@ -98,9 +118,23 @@ $resResto = $db->recorrer($obtenerRestoQ);
 		<div class="hero_in restaurant_detail">
 			<div class="wrapper">
 				<span class="magnific-gallery">
-					<a href="assets/public/img/gallery/hotel_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">Ver Fotos</a>
-					<a href="assets/public/img/gallery/hotel_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
-					<a href="assets/public/img/gallery/hotel_list_3.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+				<?php
+				if(isset($imgsResto)) {
+				$cantimg = count($imgsResto);
+				$i = 0;
+					foreach($imgsResto as $img) {
+						if($i == 0) {
+					?>
+						<a href="<?=$img['url']?>" class="btn_photos" title="<?=$img['desc']?>" data-effect="mfp-zoom-in">Ver Fotos</a>
+					<?php		
+						} else {
+					?>
+						<a href="<?=$img['url']?>" title="<?=$img['desc']?>" data-effect="mfp-zoom-in"></a>
+					<?php
+						}
+					}
+				}
+				?>
 				</span>
 			</div>
 		</div>
@@ -154,7 +188,10 @@ $resResto = $db->recorrer($obtenerRestoQ);
 									</ul>
 								</div>
 							</div>
-							<!-- /row -->						
+							<!-- /row -->
+							<?php 
+							if($resHorario != null) {
+							?>
 							<div class="opening">
                                 <div class="ribbon">
                                     <span class="open">Ahora Abierto</span>
@@ -164,21 +201,34 @@ $resResto = $db->recorrer($obtenerRestoQ);
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul>
-                                            <li>Lunes <span>9 AM - 5 PM</span></li>
-                                            <li>Martes <span>9 AM - 5 PM</span></li>
-                                            <li>Miercoles <span>9 AM - 5 PM</span></li>
-                                            <li>Jueves <span>9 AM - 5 PM</span></li>
+									<?php
+										if($resHorario["semanal"] == 1) {
+									?>
+											<li>Lunes a Viernes <span><?=$resHorario["lun_vier"]?></span></li>
+									<?php
+										} else {
+									?>
+											<li>Lunes <span><?=$resHorario["lunes"]?></span></li>
+                                            <li>Martes <span><?=$resHorario["martes"]?></span></li>
+                                            <li>Miercoles <span><?=$resHorario["miercoles"]?></span></li>
+                                            <li>Jueves <span><?=$resHorario["jueves"]?></span></li>
+                                            <li>Viernes <span><?=$resHorario["viernes"]?></span></li>
+									<?php
+										}
+									?>         
                                         </ul>
                                     </div>
                                     <div class="col-md-6">
                                         <ul>
-                                            <li>Viernes <span>9 AM - 5 PM</span></li>
-                                            <li>Sábado <span>9 AM - 5 PM</span></li>
-                                            <li>Domingo <span>Cerrado</span></li>
+                                            <li>Sábado <span><?=$resHorario["sabado"]?></span></li>
+                                            <li>Domingo <span><?=$resHorario["domingo"]?></span></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+							<?php
+							}
+							?>						
                             <!-- /opening -->
 							<hr>
 							<h5>Menu del día</h5>
