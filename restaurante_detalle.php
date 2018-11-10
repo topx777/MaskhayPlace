@@ -33,6 +33,45 @@ $idResto = $resResto["id_restaurante"];
 $obtenerHorario = $db->query("SELECT * FROM horario WHERE restaurante = $idResto LIMIT 1");
 $resHorario = $db->recorrer($obtenerHorario);
 
+
+//Obetener Menu del dia
+setlocale(LC_ALL,"es_ES");
+$dia_semana = strftime("%A");
+$obtenerMenu = $db->query("SELECT * FROM menu WHERE restaurante = $idResto AND dia_semana = '$dia_semana' LIMIT 1");
+if($db->rows($obtenerMenu) > 0) {
+	$resMenu = $db->recorrer($obtenerMenu);
+	$idMenu = $resMenu["id_menu"];
+	$obtenerPlatos = $db->query("SELECT * FROM menuplato WHERE menu = $idMenu");
+	$cantPlatos = $db->rows($obtenerPlatos);
+	if($cantPlatos > 0) {
+		while($resPlato = $db->recorrer($obtenerMenu)) {
+			$platos[] = array(
+				'id' => $resPlato["id_menu_plato"],
+				'nombre' => $resPlato["nombre_plato"],
+				'precio' => $resPlato["precio_plato"],
+				'desc' => $resPlato["descripcion_plato"],
+				'img' => $resPlato["imagen_menuplato"],
+			);	
+		}
+
+		$mitad = $cantPlatos / 2;
+		$mitad = ceil($mitad);
+
+		if($mitad == $cantPlatos) {
+			$lista_platos1 = $platos;
+		} else {
+			for ($i=0; $i < $mitad; $i++) { 
+				$lista_platos1[] = $platos[$i];
+			}
+			for ($j=$mitad; $j < count($platos); $j++) { 
+				$lista_platos2[] = $platos[$j];
+			}
+		}
+
+	}
+	$db->liberar($obtenerMenu);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -156,6 +195,7 @@ $resHorario = $db->recorrer($obtenerHorario);
 						<section id="description">
 							<div class="detail_title_1">
 								<h1><?=$resLugar["nombre_lugar"]?></h1>
+								<h5><?=$resResto["categoria"]?></h5>
 								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361"><?=$resLugar["direccion"]?></a>
 							</div>
 							<p><?=$resLugar["descripcion"]?></p>
@@ -231,36 +271,62 @@ $resHorario = $db->recorrer($obtenerHorario);
 							?>						
                             <!-- /opening -->
 							<hr>
-							<h5>Menu del día</h5>
+							<?php
+							if(isset($resMenu)) {
+							?>
+							<h5>Menu del día - <?=$resMenu["dia_semana"]?></h5>
+							<h4><?=$resMenu["nombre_menu"]?></h4>
+							<p><?=$resMenu["descripcion_menu"]?></p>
 							<div class="row add_bottom_15">
                                 <div class="col-lg-6 col-md-12">
                                     <ul class="menu_list">
-                                        <li>
+                                    <?php
+									foreach ($lista_platos1 as $key => $plato) {
+									?>
+										<li>
                                             <div class="thumb">
-                                                <img src="assets/public/img/menu_list_1.jpg" alt="">
+                                                <img src="<?= $plato["img"] != null || $plato["img"] != '' ? $plato["img"] : "assets/public/img/menu_list_1.jpg"?>" alt="<?=$plato["desc"]?>">
                                             </div>
-                                            <h6>Imported Salmon Steak <span>$12</span></h6>
+                                            <h6><?=$plato["nombre"]?> <span><?=$plato["precio"]?>.Bs</span></h6>
                                             <p>
-                                                Salmon / Veggies / Oil
+												<?=$plato["desc"]?>
                                             </p>
                                         </li>
+									<?php
+									}
+									?>
                                     </ul>
                                 </div>
+								<?php
+								if(isset($lista_platos2)) {
+								?>
                                 <div class="col-lg-6 col-md-12">
                                     <ul class="menu_list">
-                                        <li>
+                                    <?php
+									foreach ($lista_platos1 as $key => $plato) {
+									?>
+										<li>
                                             <div class="thumb">
-                                                <img src="assets/public/img/menu_list_3.jpg" alt="">
+                                                <img src="<?= $plato["img"] != null || $plato["img"] != '' ? $plato["img"] : "assets/public/img/menu_list_3.jpg"?>" alt="<?=$plato["desc"]?>">
                                             </div>
-                                            <h6>Salted Fried Chicken <span>$18</span></h6>
+                                            <h6><?=$plato["nombre"]?> <span><?=$plato["precio"]?>.Bs</span></h6>
                                             <p>
-                                                Chicken / Olive Oil / Salt
+												<?=$plato["desc"]?>
                                             </p>
                                         </li>
+									<?php
+									}
+									?>
                                     </ul>
                                 </div>
+								<?php
+								}
+								?>
                             </div>
 							<hr>
+							<?php
+							}
+							?>
 							<h3>Ubicación</h3>
 							<div id="map" class="map map_single add_bottom_45"></div>
 							<!-- End Map -->
