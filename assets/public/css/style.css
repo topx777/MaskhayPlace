@@ -4246,6 +4246,14 @@ section#reviews {
   margin-bottom: 10px;
 }
 
+.reviews-container .rev-title {
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-style: normal;
+  color: #000;
+  margin-bottom: 7px;
+}
+
 .box_detail {
   background-color: #fff;
   padding: 25px 25px 15px 25px;

@@ -83,12 +83,13 @@ if($cantCalificaciones > 0) {
 		$total_calif += $califRes["calificacion"];
 
 		$idUsuario = $califRes["usuario"];
-		$obtenerUsuario = $db->query("SELECT usuario FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
+		$obtenerUsuario = $db->query("SELECT usuario, nombre, apellidos FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
 		$resUsuario = $db->recorrer($obtenerUsuario);
 
 		$calificaciones[] = array(
 			'id' => $califRes["id_calificacion"],
 			'usuario' => $resUsuario["usuario"],
+			'nombre_usuario' => $resUsuario["nombre"] . " " . $resUsuario["apellidos"],
 			'calificacion' => $califRes["calificacion"],
 			'comentario' => $califRes["comentario"],
 			'fecha' => $califRes["fecha"],
@@ -110,14 +111,22 @@ if($cantCalificaciones > 0) {
 		$cate_calif = "Excelente";
 	}
 
+	$calificacionesCat = array(
+		array('calificacion' => 1, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 2, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 3, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 4, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 5, 'cant' => 0, 'porcentaje' => 0));
+
 	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = 1 GROUP BY calificacion ORDER BY calificacion");
 	while ($resCatCalif = $db->recorrer($obtenerCatCalif)) {
-		$porcentaje = ($cantCalificaciones / 100) * $resCatCalif["cantidad"];
-		$calificacionesCat[] = array(
-			'calificaciones' => $resCatCalif["calificacion"],
-			'cant' => $resCatCalif["cantidad"],
-			'porcentaje' => $porcentaje
-		);
+		$porcentaje = (100 / $cantCalificaciones) * $resCatCalif["cantidad"];
+		foreach ($calificacionesCat as $key => $calificacion) {
+			if($calificacion["calificacion"] == $resCatCalif["calificacion"]) {
+				$calificacionesCat[$key]["cant"] = $resCatCalif["cantidad"];
+				$calificacionesCat[$key]["porcentaje"] = $porcentaje;
+			}
+		}
 	}
 	
 	$db->liberar($obtenerCalificaciones, $obtenerCatCalif);
@@ -397,74 +406,53 @@ $db->close();
 										</div>
 									</div>
 									<div class="col-lg-9">
+									<?php
+									foreach ($calificacionesCat as $key => $calificacionCat) {
+									?>
 										<div class="row">
 											<div class="col-lg-10 col-9">
 												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+													<div class="progress-bar" role="progressbar" style="width: <?=$calificacionCat["porcentaje"]?>%" aria-valuenow="<?=$calificacionCat["porcentaje"]?>" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>5 estrellas</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong><?=$calificacionCat["calificacion"]?> estrellas</strong></small></div>
 										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>4 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>3 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>2 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>1 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
+									<?php
+									}
+									?>
 									</div>
 								</div>
 								<!-- /row -->
 							</div>
 
 							<div class="reviews-container">
+								
+							<?php
+							foreach ($calificaciones as $key => $calificacion) {
+							?>
 								<div class="review-box clearfix">
 									<figure class="rev-thumb"><img src="assets/public/img/avatar1.jpg" alt="">
 									</figure>
 									<div class="rev-content">
+										<div class="rev-title">
+											<b><?=$calificacion["nombre_usuario"]?></b>
+										</div>
 										<div class="rating">
 											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
 										</div>
 										<div class="rev-info">
-											Admin – April 03, 2016:
+											<?=$calificacion["usuario"]?> – <?=$calificacion["fecha"]?>:
 										</div>
 										<div class="rev-text">
 											<p>
-												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+												<?=$calificacion["comentario"]?>
 											</p>
 										</div>
 									</div>
 								</div>
+							<?php
+							}
+							?>
 							</div>
 							<!-- /review-container -->
 						</section>
