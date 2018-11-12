@@ -16,6 +16,18 @@ class mHotel
         $this->db->query($sql);
         return $this->db->getRegistros();
     }
+
+    public function buscarHotelesNombre($limit=null, $claveBusqueda)
+    {
+        $sql="SELECT * FROM hotel h 
+                INNER JOIN lugar l ON h.lugar=l.id_lugar
+                WHERE l.nombre_lugar LIKE '%{$claveBusqueda}%'";
+        if ($limit!=null) {
+            $sql.="LIMIT {$limit}";
+        }
+        $this->db->query($sql);
+        return $this->db->getRegistros();
+    }
     
     public function numHoteles()
     {
@@ -24,5 +36,4 @@ class mHotel
         return $this->db->getRegistro()->numHoteles;
     }
 }
-
 ?>
