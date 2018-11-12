@@ -72,6 +72,58 @@ if($db->rows($obtenerMenu) > 0) {
 	$db->liberar($obtenerMenu);
 }
 
+//Obtener Calificaciones de Lugar
+
+$obtenerCalificaciones = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar");
+$cantCalificaciones = $db->rows($obtenerCalificaciones);
+if($cantCalificaciones > 0) {
+	$total_calif = 0;
+	while($califRes = $db->recorrer($obtenerCalificaciones)) {
+		
+		$total_calif += $califRes["calificacion"];
+
+		$idUsuario = $califRes["usuario"];
+		$obtenerUsuario = $db->query("SELECT usuario FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
+		$resUsuario = $db->recorrer($obtenerUsuario);
+
+		$calificaciones[] = array(
+			'id' => $califRes["id_calificacion"],
+			'usuario' => $resUsuario["usuario"],
+			'calificacion' => $califRes["calificacion"],
+			'comentario' => $califRes["comentario"],
+			'fecha' => $califRes["fecha"],
+			'respuesta' => $califRes["respuesta"],
+		);
+
+		$db->liberar($obtenerUsuario);
+	}
+
+	$promedio_calif = $total_calif / $cantCalificaciones;
+	
+	if($promedio_calif > 0 and $promedio_calif <= 1.8) {
+		$cate_calif = "Malo";
+	} else if($promedio_calif > 1.8 and $promedio_calif <= 3.6) {
+		$cate_calif = "Regular";
+	} else if($promedio_calif > 3.6 and $promedio_calif <= 4.5) {
+		$cate_calif = "Bueno";
+	} else {
+		$cate_calif = "Excelente";
+	}
+
+	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = 1 GROUP BY calificacion ORDER BY calificacion");
+	while ($resCatCalif = $db->recorrer($obtenerCatCalif)) {
+		$porcentaje = ($cantCalificaciones / 100) * $resCatCalif["cantidad"];
+		$calificacionesCat[] = array(
+			'calificaciones' => $resCatCalif["calificacion"],
+			'cant' => $resCatCalif["cantidad"],
+			'porcentaje' => $porcentaje
+		);
+	}
+	
+	$db->liberar($obtenerCalificaciones, $obtenerCatCalif);
+}
+
+$db->close();
 ?>
 
 <!DOCTYPE html>
@@ -331,17 +383,17 @@ if($db->rows($obtenerMenu) > 0) {
 							<div id="map" class="map map_single add_bottom_45"></div>
 							<!-- End Map -->
 						</section>
+						
 						<!-- /section -->
-					
 						<section id="reviews">
 							<h2>Calificaciones</h2>
 							<div class="reviews-container add_bottom_30">
 								<div class="row">
 									<div class="col-lg-3">
 										<div id="review_summary">
-											<strong>8.5</strong>
-											<em>Superb</em>
-											<small>Based on 4 reviews</small>
+											<strong><?=isset($promedio_calif) ? $promedio_calif : 0?></strong>
+											<em><?=isset($cate_calif) ? $cate_calif : "Sin Calificacion"?></em>
+											<small>Basado en <?=$cantCalificaciones?> calificaciones</small>
 										</div>
 									</div>
 									<div class="col-lg-9">
@@ -418,6 +470,7 @@ if($db->rows($obtenerMenu) > 0) {
 						</section>
 						<!-- /section -->
 						<hr>
+					
 
 							<div class="add-review">
 								<h5>Deja tu Calificacion</h5>
