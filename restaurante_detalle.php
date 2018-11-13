@@ -1,6 +1,14 @@
 <?php
+session_start();
+
+$_SESSION["usuario"] = array(
+	'id' => 3,
+	'nombre' => 'Carlos'
+);
 
 $idLugar = $_GET['id'];
+
+$usuarioID = $_SESSION["usuario"]["id"];
 
 include('helpers/class.Conexion.php');
 
@@ -83,12 +91,13 @@ if($cantCalificaciones > 0) {
 		$total_calif += $califRes["calificacion"];
 
 		$idUsuario = $califRes["usuario"];
-		$obtenerUsuario = $db->query("SELECT usuario FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
+		$obtenerUsuario = $db->query("SELECT usuario, nombre, apellidos FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
 		$resUsuario = $db->recorrer($obtenerUsuario);
 
 		$calificaciones[] = array(
 			'id' => $califRes["id_calificacion"],
 			'usuario' => $resUsuario["usuario"],
+			'nombre_usuario' => $resUsuario["nombre"] . " " . $resUsuario["apellidos"],
 			'calificacion' => $califRes["calificacion"],
 			'comentario' => $califRes["comentario"],
 			'fecha' => $califRes["fecha"],
@@ -110,17 +119,33 @@ if($cantCalificaciones > 0) {
 		$cate_calif = "Excelente";
 	}
 
+	$calificacionesCat = array(
+		array('calificacion' => 1, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 2, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 3, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 4, 'cant' => 0, 'porcentaje' => 0),
+		array('calificacion' => 5, 'cant' => 0, 'porcentaje' => 0));
+
 	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = 1 GROUP BY calificacion ORDER BY calificacion");
 	while ($resCatCalif = $db->recorrer($obtenerCatCalif)) {
-		$porcentaje = ($cantCalificaciones / 100) * $resCatCalif["cantidad"];
-		$calificacionesCat[] = array(
-			'calificaciones' => $resCatCalif["calificacion"],
-			'cant' => $resCatCalif["cantidad"],
-			'porcentaje' => $porcentaje
-		);
+		$porcentaje = (100 / $cantCalificaciones) * $resCatCalif["cantidad"];
+		foreach ($calificacionesCat as $key => $calificacion) {
+			if($calificacion["calificacion"] == $resCatCalif["calificacion"]) {
+				$calificacionesCat[$key]["cant"] = $resCatCalif["cantidad"];
+				$calificacionesCat[$key]["porcentaje"] = $porcentaje;
+			}
+		}
 	}
 	
 	$db->liberar($obtenerCalificaciones, $obtenerCatCalif);
+}
+
+//Obtener Caificacion Usuario
+$lugarCalificado = false;
+$obtenerCalfUsuario = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar AND usuario = $usuarioID");
+$cantCalifUsuario = $db->rows($obtenerCalfUsuario);
+if($cantCalifUsuario > 0) {
+	$lugarCalificado = true;
 }
 
 $db->close();
@@ -397,112 +422,98 @@ $db->close();
 										</div>
 									</div>
 									<div class="col-lg-9">
+									<?php
+									foreach ($calificacionesCat as $key => $calificacionCat) {
+									?>
 										<div class="row">
 											<div class="col-lg-10 col-9">
 												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+													<div class="progress-bar" role="progressbar" style="width: <?=$calificacionCat["porcentaje"]?>%" aria-valuenow="<?=$calificacionCat["porcentaje"]?>" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
-											<div class="col-lg-2 col-3"><small><strong>5 estrellas</strong></small></div>
+											<div class="col-lg-2 col-3"><small><strong><?=$calificacionCat["calificacion"]?> estrellas</strong></small></div>
 										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>4 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>3 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>2 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
-										<div class="row">
-											<div class="col-lg-10 col-9">
-												<div class="progress">
-													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-											<div class="col-lg-2 col-3"><small><strong>1 estrellas</strong></small></div>
-										</div>
-										<!-- /row -->
+									<?php
+									}
+									?>
 									</div>
 								</div>
 								<!-- /row -->
 							</div>
 
-							<div class="reviews-container">
+							<div id="comentarios" class="reviews-container">
+								
+							<?php
+							foreach ($calificaciones as $key => $calificacion) {
+							?>
 								<div class="review-box clearfix">
 									<figure class="rev-thumb"><img src="assets/public/img/avatar1.jpg" alt="">
 									</figure>
 									<div class="rev-content">
+										<div class="rev-title">
+											<b><?=$calificacion["nombre_usuario"]?></b>
+										</div>
 										<div class="rating">
-											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+										<?php
+										$votacion = $calificacion["calificacion"];
+										for ($i=0; $i < 5; $i++) {
+										?>
+											<i class="icon_star <?=$votacion <= $i ? "" : "voted"?>"></i>
+										<?php
+										}
+										?>
 										</div>
 										<div class="rev-info">
-											Admin – April 03, 2016:
+											<?=$calificacion["usuario"]?> – <?=$calificacion["fecha"]?>:
 										</div>
 										<div class="rev-text">
 											<p>
-												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+												<?=$calificacion["comentario"]?>
 											</p>
 										</div>
 									</div>
 								</div>
+							<?php
+							}
+							?>
 							</div>
 							<!-- /review-container -->
 						</section>
 						<!-- /section -->
-						<hr>
-					
 
-							<div class="add-review">
+						<?php
+						if(!$lugarCalificado) {
+							?>
+						<hr>
+							<div id="realizarComentario" class="add-review">
 								<h5>Deja tu Calificacion</h5>
-								<form>
-									<div class="row">
-										<div class="form-group col-md-6">
-											<label>Puntaje </label>
-											<div class="custom-select-form">
-											<select name="rating_review" id="rating_review" class="wide">
-												<option value="1">1 (lowest)</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5" selected>5 (medium)</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10 (highest)</option>
-											</select>
-											</div>
-										</div>
-										<div class="form-group col-md-12">
-											<label>Tu comentario</label>
-											<textarea name="review_text" id="review_text" class="form-control" style="height:130px;"></textarea>
-										</div>
-										<div class="form-group col-md-12 add_top_20 add_bottom_30">
-											<input type="submit" value="Enviar" class="btn_1" id="submit-review">
+								<div class="row">
+									<div id="AJAXresponse"></div>
+									<div class="form-group col-md-6">
+										<label>Puntaje </label>
+										<div class="custom-select-form">
+										<select id="calificacion_puntaje" class="wide">
+											<option value="1">1 (Muy Mala)</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5" selected>5 (Excelente)</option>
+										</select>
 										</div>
 									</div>
-								</form>
+									<div class="form-group col-md-12">
+										<label>Tu comentario</label>
+										<textarea id="comentario" class="form-control" style="height:130px;"></textarea>
+									</div>
+									<div class="form-group col-md-12 add_top_20 add_bottom_30">
+										<input type="hidden" value="<?=$idLugar?>" id="idLugar">	
+										<button class="btn_1" id="btnEnviar">Enviar</button>
+									</div>
+								</div>
 							</div>
+						<?php
+						}
+						?>
 					</div>
 					<!-- /col -->
 					
@@ -1056,13 +1067,35 @@ $db->close();
 		});
 	};
 
-	// var map;
-	// 	function initMap() {
-	// 		map = new google.maps.Map(document.getElementById('map'), {
-	// 		center: {lat: -17.376269, lng: -66.183877},
-	// 		zoom: 16
-	// 	});
-	// }
+	$(document).on('click', '#btnEnviar', function() {
+		var puntaje = $('#calificacion_puntaje').val();
+		var comentario = $('#comentario').val();
+		var idLugar = $('#idLugar').val();
+
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/realizarComentario.request.php",
+			data: {
+				puntaje: puntaje,
+				comentario: comentario,
+				lugar: idLugar
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$("#comentarios").load(location.href + " #comentarios");
+					$('#AJAXresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Calificacion realizado con exito.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					setTimeout(() => {
+						$("#realizarComentario").load(location.href + " #realizarComentario");
+					}, 3000);
+				} else {
+					$('#AJAXresponse').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
+
+	});
+
     </script>
 	<script src="assets/public/js/infobox.js"></script>
 

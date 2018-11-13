@@ -10,25 +10,25 @@
     <title>SPARKER | Premium directory and listings template by Ansonika.</title>
 
     <!-- Favicons-->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+    <link rel="shortcut icon" href="assets/public/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="assets/public/img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="assets/public/img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="assets/public/img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="assets/public/img/apple-touch-icon-144x144-precomposed.png">
 
     <!-- GOOGLE WEB FONT -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
     <!-- BASE CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-	<link href="css/vendors.css" rel="stylesheet">
+    <link href="assets/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/public/css/style.css" rel="stylesheet">
+	<link href="assets/public/css/vendors.css" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="assets/public/css/custom.css" rel="stylesheet">
 	
 	<!-- Modernizr -->
-	<script src="js/modernizr.js"></script>
+	<script src="assets/public/js/modernizr.js"></script>
 
 </head>
 
@@ -39,8 +39,8 @@
 	<header class="header menu_fixed">
 		<div id="logo">
 			<a href="index.html" title="Sparker - Directory and listings template">
-				<img src="img/logo.svg" width="165" height="35" alt="" class="logo_normal">
-				<img src="img/logo_sticky.svg" width="165" height="35" alt="" class="logo_sticky">
+				<img src="assets/public/img/logo.svg" width="165" height="35" alt="" class="logo_normal">
+				<img src="assets/public/img/logo_sticky.svg" width="165" height="35" alt="" class="logo_sticky">
 			</a>
 		</div>
 		<ul id="top_menu">
@@ -151,29 +151,26 @@
 				<div class="container">
 					<h3>Find what you need!</h3>
 					<p>Discover top rated hotels, shops and restaurants around the world</p>
-					<form method="post" action="grid-listings-filterscol.html">
+					<form method="GET" action="grid-listings-filterscol-search-aside.html">
 						<div class="row no-gutters custom-search-input-2">
+
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="What are you looking for...">
+									<input class="form-control" name="buscar" type="text" placeholder="What are you looking for...">
 									<i class="icon_search"></i>
 								</div>
 							</div>
 							<div class="col-lg-3">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Where">
+									<input class="form-control"name="lugar" type="text" placeholder="Where">
 									<i class="icon_pin_alt"></i>
 								</div>
 							</div>
 							<div class="col-lg-3">
-								<select class="wide">
-									<option>All Categories</option>	
-									<option>Shops</option>
-									<option>Hotels</option>
-									<option>Restaurants</option>
-									<option>Bars</option>
-									<option>Events</option>
-									<option>Fitness</option>
+								<select name="categoria" class="wide">	
+									<option value="hotel">Hotel</option>
+									<option value="restaurante">Restaurante</option>
+									<option value="farmacia">Farmacia</option>
 								</select>
 							</div>
 							<div class="col-lg-2">
@@ -185,7 +182,7 @@
 				</div>
 			</div>
 			</div>
-			<img src="img/video_fix.png" alt="" class="header-video--media" data-video-src="video/intro" data-teaser-source="video/intro" data-provider="" data-video-width="1920" data-video-height="960">
+			<img src="assets/public/img/video_fix.png" alt="" class="header-video--media" data-video-src="assets/public/video/intro" data-teaser-source="assets/public/video/intro" data-provider="" data-video-width="1920" data-video-height="960">
 		</section>
 		<!-- /header-video -->
 
@@ -231,155 +228,34 @@
 		<div class="container margin_60_35">
 			<div class="main_title_3">
 				<span></span>
-				<h2>Restaurantes</h2>
-				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
-				<a href="grid-listings-filterscol.html">See all</a>
-			</div>
-			<div class="row add_bottom_30">
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-shop.html" class="grid_item small">
-						<figure>
-							<img src="img/shop_1.jpg" alt="">
-							<div class="info">
-								<h3>Victoria Secretes</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-shop.html" class="grid_item small">
-						<figure>
-							<img src="img/shop_2.jpg" alt="">
-							<div class="info">
-								<h3>Louis Vuitton</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-shop.html" class="grid_item small">
-						<figure>
-							<img src="img/shop_3.jpg" alt="">
-							<div class="info">
-								<h3>Burberry</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-shop.html" class="grid_item small">
-						<figure>
-							<img src="img/shop_4.jpg" alt="">
-							<div class="info">
-								<h3>Pinko</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-			</div>
-			<!-- /row -->
-			
-			<div class="main_title_3">
-				<span></span>
 				<h2>Popular Hotels</h2>
 				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
 				<a href="grid-listings-filterscol.html">See all</a>
 			</div>
-			<div class="row add_bottom_30">
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-hotel.html" class="grid_item small">
-						<figure>
-							<img src="img/hotel_1.jpg" alt="">
-							<div class="info">
-								<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-								<h3>Hotel Mariott</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-hotel.html" class="grid_item small">
-						<figure>
-							<img src="img/hotel_2.jpg" alt="">
-							<div class="info">
-								<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-								<h3>Hotel Concorde</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-hotel.html" class="grid_item small">
-						<figure>
-							<img src="img/hotel_3.jpg" alt="">
-							<div class="info">
-								<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-								<h3>Hotel La Defanse</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-hotel.html" class="grid_item small">
-						<figure>
-							<img src="img/hotel_4.jpg" alt="">
-							<div class="info">
-								<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-								<h3>Hotel Carlton</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
+			<div class="row add_bottom_30" id="divTopHoteles">
+				
 			</div>
 			<!-- /row -->
 			
 			<div class="main_title_3">
 				<span></span>
-				<h2>Top Restaurants</h2>
+				<h2>Popular Restaurants</h2>
 				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
 				<a href="grid-listings-filterscol.html">See all</a>
 			</div>
-			<div class="row ">
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-restaurant.html" class="grid_item small">
-						<figure>
-							<img src="img/restaurant_1.jpg" alt="">
-							<div class="info">
-								<h3>Da Alfredo</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-restaurant.html" class="grid_item small">
-						<figure>
-							<img src="img/restaurant_2.jpg" alt="">
-							<div class="info">
-								<h3>Bistroter</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-restaurant.html" class="grid_item small">
-						<figure>
-							<img src="img/restaurant_3.jpg" alt="">
-							<div class="info">
-								<h3>Da Luigi</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<a href="detail-restaurant.html" class="grid_item small">
-						<figure>
-							<img src="img/restaurant_4.jpg" alt="">
-							<div class="info">
-								<h3>Marco King</h3>
-							</div>
-						</figure>
-					</a>
-				</div>
+			<div class="row add_bottom_30" id="divTopRestaurante">
+			
+			</div>
+			<!-- /row -->
+			
+			<div class="main_title_3">
+				<span></span>
+				<h2>Popular Farmacias</h2>
+				<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+				<a href="grid-listings-filterscol.html">See all</a>
+			</div>
+			<div class="row " id="divTopFarmacias">
+				
 			</div>
 			<!-- /row -->
 		</div>
@@ -435,7 +311,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<a class="box_news" href="blog.html">
-						<figure><img src="img/news_home_1.jpg" alt=""></figure>
+						<figure><img src="assets/public/img/news_home_1.jpg" alt=""></figure>
 						<ul>
 							<li>Restaurants</li>
 							<li>20.11.2017</li>
@@ -447,7 +323,7 @@
 				<!-- /box_news -->
 				<div class="col-lg-6">
 					<a class="box_news" href="blog.html">
-						<figure><img src="img/news_home_2.jpg" alt=""></figure>
+						<figure><img src="assets/public/img/news_home_2.jpg" alt=""></figure>
 						<ul>
 							<li>Shops</li>
 							<li>20.11.2017</li>
@@ -459,7 +335,7 @@
 				<!-- /box_news -->
 				<div class="col-lg-6">
 					<a class="box_news" href="blog.html">
-						<figure><img src="img/news_home_3.jpg" alt=""></figure>
+						<figure><img src="assets/public/img/news_home_3.jpg" alt=""></figure>
 						<ul>
 							<li>Shops</li>
 							<li>20.11.2017</li>
@@ -471,7 +347,7 @@
 				<!-- /box_news -->
 				<div class="col-lg-6">
 					<a class="box_news" href="blog.html">
-						<figure><img src="img/news_home_4.jpg" alt=""></figure>
+						<figure><img src="assets/public/img/news_home_4.jpg" alt=""></figure>
 						<ul>
 							<li>Bars</li>
 							<li>20.11.2017</li>
@@ -600,7 +476,7 @@
 								</select>
 							</div>
 						</li>
-						<li><img src="img/cards_all.svg" alt=""></li>
+						<li><img src="assets/public/img/cards_all.svg" alt=""></li>
 					</ul>
 				</div>
 				<div class="col-lg-6">
@@ -668,12 +544,12 @@
 	<div id="toTop"></div><!-- Back to top button -->
 	
 	<!-- COMMON SCRIPTS -->
-    <script src="js/common_scripts.js"></script>
-	<script src="js/functions.js"></script>
+    <script src="assets/public/js/common_scripts.js"></script>
+	<script src="assets/public/js/functions.js"></script>
 	<script src="assets/validate.js"></script>
 	
 	<!-- SPECIFIC SCRIPTS -->
-	<script src="js/video_header.js"></script>
+	<script src="assets/public/js/video_header.js"></script>
 	<script>
 		HeaderVideo.init({
 			container: $('.header-video'),
@@ -681,6 +557,70 @@
 			videoTrigger: $("#video-trigger"),
 			autoPlayVideo: true
 		});
+		$.getJSON('busqueda/controller/buscar.php',
+			function (data, textStatus, jqXHR) {
+				console.log(data)
+				var hoteles="";
+				var farmacias="";
+				var restaurantes="";
+				data.hoteles.forEach(hotel => {
+					hoteles+=`<div class="col-lg-3 col-sm-6">
+									<a href="detail-shop.html" class="grid_item small">
+										<figure>
+											<img src="${hotel.logo}" alt="">
+											<div class="info">
+													<div class="cat_star">
+															${puntuacion(hotel.promedio)}
+													</div> 
+												<h3>${hotel.nombre_lugar}</h3>
+											</div>
+										</figure>
+									</a>
+								</div>`;
+
+				});
+				$('#divTopHoteles').html(hoteles);
+				
+				data.restaurantes.forEach(restaurante => {
+					restaurantes+=`<div class="col-lg-3 col-sm-6">
+										<a href="detail-hotel.html" class="grid_item small">
+											<figure><img src="${restaurante.logo}" alt="">
+													<div class="info">
+														<div class="cat_star">
+															${puntuacion(restaurante.promedio)}
+														</div> 
+														<h3>${restaurante.nombre_lugar}</h3> 
+													</div>
+											</figure>
+										</a>
+									</div>`;
+				});
+				$('#divTopRestaurante').html(restaurantes);
+
+				data.farmacias.forEach(farmacia => {
+					farmacias+=`<div class="col-lg-3 col-sm-6">
+                				    <a href="detail-restaurant.html" class="grid_item small">
+                				        <figure>
+                				            <img src="${farmacia.logo}" alt="">
+                				            <div class="info">
+                				                <h3>${farmacia.nombre_lugar}</h3>
+                				            </div>
+                				        </figure>
+                				    </a>
+                				</div>`;
+				});
+				$('#divTopFarmacias').html(farmacias);
+
+				function puntuacion(puntos) {
+					var cad = ``;
+					for (let index = 1; index <= puntos; index++) {
+						cad += `<i class="icon_star"></i>`;
+					}
+					console.log(cad);
+					return cad;
+				}
+			}
+		);
 	</script>
 
 </body>
