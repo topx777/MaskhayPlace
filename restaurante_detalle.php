@@ -1,6 +1,14 @@
 <?php
+session_start();
+
+$_SESSION["usuario"] = array(
+	'id' => 3,
+	'nombre' => 'Carlos'
+);
 
 $idLugar = $_GET['id'];
+
+$usuarioID = $_SESSION["usuario"]["id"];
 
 include('helpers/class.Conexion.php');
 
@@ -130,6 +138,14 @@ if($cantCalificaciones > 0) {
 	}
 	
 	$db->liberar($obtenerCalificaciones, $obtenerCatCalif);
+}
+
+//Obtener Caificacion Usuario
+$lugarCalificado = false;
+$obtenerCalfUsuario = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar AND usuario = $usuarioID");
+$cantCalifUsuario = $db->rows($obtenerCalfUsuario);
+if($cantCalifUsuario > 0) {
+	$lugarCalificado = true;
 }
 
 $db->close();
@@ -425,7 +441,7 @@ $db->close();
 								<!-- /row -->
 							</div>
 
-							<div class="reviews-container">
+							<div id="comentarios" class="reviews-container">
 								
 							<?php
 							foreach ($calificaciones as $key => $calificacion) {
@@ -438,7 +454,14 @@ $db->close();
 											<b><?=$calificacion["nombre_usuario"]?></b>
 										</div>
 										<div class="rating">
-											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+										<?php
+										$votacion = $calificacion["calificacion"];
+										for ($i=0; $i < 5; $i++) {
+										?>
+											<i class="icon_star <?=$votacion <= $i ? "" : "voted"?>"></i>
+										<?php
+										}
+										?>
 										</div>
 										<div class="rev-info">
 											<?=$calificacion["usuario"]?> – <?=$calificacion["fecha"]?>:
@@ -457,40 +480,40 @@ $db->close();
 							<!-- /review-container -->
 						</section>
 						<!-- /section -->
-						<hr>
-					
 
-							<div class="add-review">
+						<?php
+						if(!$lugarCalificado) {
+							?>
+						<hr>
+							<div id="realizarComentario" class="add-review">
 								<h5>Deja tu Calificacion</h5>
-								<form>
-									<div class="row">
-										<div class="form-group col-md-6">
-											<label>Puntaje </label>
-											<div class="custom-select-form">
-											<select name="rating_review" id="rating_review" class="wide">
-												<option value="1">1 (lowest)</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5" selected>5 (medium)</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-												<option value="10">10 (highest)</option>
-											</select>
-											</div>
-										</div>
-										<div class="form-group col-md-12">
-											<label>Tu comentario</label>
-											<textarea name="review_text" id="review_text" class="form-control" style="height:130px;"></textarea>
-										</div>
-										<div class="form-group col-md-12 add_top_20 add_bottom_30">
-											<input type="submit" value="Enviar" class="btn_1" id="submit-review">
+								<div class="row">
+									<div id="AJAXresponse"></div>
+									<div class="form-group col-md-6">
+										<label>Puntaje </label>
+										<div class="custom-select-form">
+										<select id="calificacion_puntaje" class="wide">
+											<option value="1">1 (Muy Mala)</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5" selected>5 (Excelente)</option>
+										</select>
 										</div>
 									</div>
-								</form>
+									<div class="form-group col-md-12">
+										<label>Tu comentario</label>
+										<textarea id="comentario" class="form-control" style="height:130px;"></textarea>
+									</div>
+									<div class="form-group col-md-12 add_top_20 add_bottom_30">
+										<input type="hidden" value="<?=$idLugar?>" id="idLugar">	
+										<button class="btn_1" id="btnEnviar">Enviar</button>
+									</div>
+								</div>
 							</div>
+						<?php
+						}
+						?>
 					</div>
 					<!-- /col -->
 					
@@ -1044,13 +1067,35 @@ $db->close();
 		});
 	};
 
-	// var map;
-	// 	function initMap() {
-	// 		map = new google.maps.Map(document.getElementById('map'), {
-	// 		center: {lat: -17.376269, lng: -66.183877},
-	// 		zoom: 16
-	// 	});
-	// }
+	$(document).on('click', '#btnEnviar', function() {
+		var puntaje = $('#calificacion_puntaje').val();
+		var comentario = $('#comentario').val();
+		var idLugar = $('#idLugar').val();
+
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/realizarComentario.request.php",
+			data: {
+				puntaje: puntaje,
+				comentario: comentario,
+				lugar: idLugar
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$("#comentarios").load(location.href + " #comentarios");
+					$('#AJAXresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Calificacion realizado con exito.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					setTimeout(() => {
+						$("#realizarComentario").load(location.href + " #realizarComentario");
+					}, 3000);
+				} else {
+					$('#AJAXresponse').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
+
+	});
+
     </script>
 	<script src="assets/public/js/infobox.js"></script>
 
