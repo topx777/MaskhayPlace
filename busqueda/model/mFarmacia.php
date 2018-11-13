@@ -31,7 +31,33 @@ class mFarmacia
 
     public function buscarFarmaciasPuntuacion($limit=null, $puntaje)
     {
-        $sql="";
+        $sql="SELECT AVG(C.calificacion) AS promedio, F.*, L.*,C.*
+                FROM farmacia F 
+                INNER JOIN lugar L ON F.lugar=L.id_lugar
+                INNER JOIN calificacion C ON C.lugar=L.id_lugar
+                GROUP BY L.id_lugar
+                HAVING promedio={$puntaje}";
+        if($limit!=null)
+        {
+            $sql.="LIMIT {$limit}";
+        }
+        $this->db->query($sql);
+        return $this->db->getRegistros();
+    }
+    public function masPuntuados($limit=null)
+    {
+        $sql="SELECT AVG(C.calificacion) AS promedio, F.*, L.*,C.*
+                FROM farmacia F 
+                INNER JOIN lugar L ON F.lugar=L.id_lugar
+                INNER JOIN calificacion C ON C.lugar=L.id_lugar
+                GROUP BY L.id_lugar
+                ORDER BY promedio DESC";
+        if($limit!=null)
+        {
+            $sql.=" LIMIT {$limit}";
+        }
+        $this->db->query($sql);
+        return $this->db->getRegistros();
     }
     public function numFarmacias()
     {
