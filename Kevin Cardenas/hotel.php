@@ -71,5 +71,5 @@
     else
     $servicio = 0;
     } 
-    //falta registro comun entre todos
+    //falta registro comun los demas
 ?>
