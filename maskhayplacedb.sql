@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2018 a las 23:44:56
+-- Tiempo de generación: 14-11-2018 a las 08:51:18
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -39,10 +39,14 @@ CREATE TABLE `calificacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Truncar tablas antes de insertar `calificacion`
+-- Volcado de datos para la tabla `calificacion`
 --
 
-TRUNCATE TABLE `calificacion`;
+INSERT INTO `calificacion` (`id_calificacion`, `lugar`, `usuario`, `calificacion`, `comentario`, `fecha`, `respuesta`) VALUES
+(1, 1, 1, 3, 'Este es un buen restaurante', '2018-11-12', ''),
+(2, 1, 2, 4, 'Es restaurante es excelente, me encanta el ambiente, 100% recomendado', '2018-11-11', ''),
+(3, 1, 3, 2, 'No me parecio mucho el lugar', '2018-11-13', '');
+
 -- --------------------------------------------------------
 
 --
@@ -56,11 +60,6 @@ CREATE TABLE `contacto` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `contacto`
---
-
-TRUNCATE TABLE `contacto`;
 -- --------------------------------------------------------
 
 --
@@ -77,11 +76,6 @@ CREATE TABLE `farmacia` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `farmacia`
---
-
-TRUNCATE TABLE `farmacia`;
 -- --------------------------------------------------------
 
 --
@@ -102,11 +96,6 @@ CREATE TABLE `horario` (
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `horario`
---
-
-TRUNCATE TABLE `horario`;
 -- --------------------------------------------------------
 
 --
@@ -133,11 +122,6 @@ CREATE TABLE `hotel` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `hotel`
---
-
-TRUNCATE TABLE `hotel`;
 -- --------------------------------------------------------
 
 --
@@ -151,11 +135,6 @@ CREATE TABLE `imagen` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `imagen`
---
-
-TRUNCATE TABLE `imagen`;
 -- --------------------------------------------------------
 
 --
@@ -172,20 +151,19 @@ CREATE TABLE `lugar` (
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `logo` varchar(55) COLLATE utf8_spanish_ci NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
-  `categoria` varchar(15) COLLATE utf8_spanish_ci NOT NULL
+  `categoria` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
+  `revisado` tinyint(1) NOT NULL DEFAULT '0',
+  `encargado_rev` int(11) DEFAULT NULL,
+  `observaciones` text COLLATE utf8_spanish_ci,
+  `estado` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `lugar`
---
-
-TRUNCATE TABLE `lugar`;
 --
 -- Volcado de datos para la tabla `lugar`
 --
 
-INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`) VALUES
-(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', 0, 0, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '.', 1, 'Restaurante');
+INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`, `revisado`, `encargado_rev`, `observaciones`, `estado`) VALUES
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '.', 1, 'Restaurante', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,11 +182,6 @@ CREATE TABLE `medicamento` (
   `imagen_medicamento` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
 
---
--- Truncar tablas antes de insertar `medicamento`
---
-
-TRUNCATE TABLE `medicamento`;
 -- --------------------------------------------------------
 
 --
@@ -223,11 +196,6 @@ CREATE TABLE `menu` (
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `menu`
---
-
-TRUNCATE TABLE `menu`;
 -- --------------------------------------------------------
 
 --
@@ -243,11 +211,6 @@ CREATE TABLE `menu_plato` (
   `imagen_menuplato` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `menu_plato`
---
-
-TRUNCATE TABLE `menu_plato`;
 -- --------------------------------------------------------
 
 --
@@ -265,11 +228,6 @@ CREATE TABLE `pieza` (
   `imagen_pieza` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `pieza`
---
-
-TRUNCATE TABLE `pieza`;
 -- --------------------------------------------------------
 
 --
@@ -287,11 +245,6 @@ CREATE TABLE `reserva` (
   `estado` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `reserva`
---
-
-TRUNCATE TABLE `reserva`;
 -- --------------------------------------------------------
 
 --
@@ -311,10 +264,12 @@ CREATE TABLE `restaurante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Truncar tablas antes de insertar `restaurante`
+-- Volcado de datos para la tabla `restaurante`
 --
 
-TRUNCATE TABLE `restaurante`;
+INSERT INTO `restaurante` (`id_restaurante`, `categoria`, `parqueo`, `recreativo`, `area_fumadores`, `auto_servicio`, `internet`, `lugar`, `reserva_mesa`) VALUES
+(1, 'Polleria', 1, 0, 0, 0, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -329,11 +284,6 @@ CREATE TABLE `superusuario` (
   `apellidos` varchar(35) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Truncar tablas antes de insertar `superusuario`
---
-
-TRUNCATE TABLE `superusuario`;
 -- --------------------------------------------------------
 
 --
@@ -352,16 +302,13 @@ CREATE TABLE `usuarioregistrado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Truncar tablas antes de insertar `usuarioregistrado`
---
-
-TRUNCATE TABLE `usuarioregistrado`;
---
 -- Volcado de datos para la tabla `usuarioregistrado`
 --
 
 INSERT INTO `usuarioregistrado` (`id_usuarioregistrado`, `usuario`, `password`, `nombre`, `apellidos`, `correo`, `negocio`, `celular`) VALUES
-(1, 'topx777', 'slr8830213', 'Abel', 'Lopez Paniagua', 'topx777@gmail.com', 1, '65706492');
+(1, 'topx777', 'slr8830213', 'Abel', 'Lopez Paniagua', 'topx777@gmail.com', 1, '65706492'),
+(2, 'groverm', '1234', 'Grover', 'Mamani Veizan', 'groverf@gmail.com', 0, '66889832'),
+(3, 'carlangas', '12345', 'Carlos Rodrigo', 'Velasquez Castellon', 'carlas@gmail.com', 0, '68992212');
 
 --
 -- Índices para tablas volcadas
@@ -480,7 +427,7 @@ ALTER TABLE `usuarioregistrado`
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
@@ -495,7 +442,7 @@ ALTER TABLE `farmacia`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `hotel`
 --
@@ -540,7 +487,7 @@ ALTER TABLE `reserva`
 -- AUTO_INCREMENT de la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
-  MODIFY `id_restaurante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_restaurante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `superusuario`
 --
@@ -550,7 +497,7 @@ ALTER TABLE `superusuario`
 -- AUTO_INCREMENT de la tabla `usuarioregistrado`
 --
 ALTER TABLE `usuarioregistrado`
-  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --
