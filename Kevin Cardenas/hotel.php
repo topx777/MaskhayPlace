@@ -1,6 +1,6 @@
 <?php
 
-    if (isset($_POST['enviar'])) 
+    if (isset($_POST['enviarhotel'])) 
     {
     //tipo de hotel
     $tipo = $_POST['tipohotel'];
@@ -70,6 +70,15 @@
     $servicio = 1;
     else
     $servicio = 0;
+
+
+
+
+
+
+
+
+
     } 
     //falta registro comun los demas.
 ?>
