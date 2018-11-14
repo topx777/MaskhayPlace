@@ -301,124 +301,116 @@
 					<center>
 						<h2>FARMACIA</h2>
 					</center>
-
-					<div class="header_box version_2">
-						<h2><i class="fa fa-clock-o"></i>Horario</h2>
-					</div>
-					<div class="row">
-
-						<div class="col-md-5">
-							<div class="form-group">
-								<div class="styled-select">
-									<select>
-										<option>Desde</option>
-										<option>1 AM</option>
-										<option>2 AM</option>
-										<option>3 AM</option>
-										<option>4 AM</option>
-										<option>5 AM</option>
-										<option>6 AM</option>
-										<option>7 AM</option>
-										<option>8 AM</option>
-										<option>9 AM</option>
-										<option>10 AM</option>
-										<option>11 AM</option>
-										<option>12 AM</option>
-										<option>1 PM</option>
-										<option>2 PM</option>
-										<option>3 PM</option>
-										<option>4 PM</option>
-										<option>5 PM</option>
-										<option>6 PM</option>
-										<option>7 PM</option>
-										<option>8 PM</option>
-										<option>9 PM</option>
-										<option>10 PM</option>
-										<option>11 PM</option>
-										<option>12 PM</option>
-									</select>
+					<form action="farmacia.php" method="post" name="farma-form">
+						<div class="header_box version_2">
+							<h2><i class="fa fa-clock-o"></i>Horario</h2>
+						</div>
+						<div class="row">
+							<div class="col-md-5">
+								<div class="form-group">
+									<div class="styled-select">
+										<select name="desde">
+											<option selected>Desde</option>
+											<option value="1 AM">1 AM</option>
+											<option value="2 AM">2 AM</option>
+											<option value="3 AM">3 AM</option>
+											<option value="4 AM">4 AM</option>
+											<option value="5 AM">5 AM</option>
+											<option value="6 AM">6 AM</option>
+											<option value="7 AM">7 AM</option>
+											<option value="8 AM">8 AM</option>
+											<option value="9 AM">9 AM</option>
+											<option value="10 AM">10 AM</option>
+											<option value="11 AM">11 AM</option>
+											<option value="12 AM">12 AM</option>
+											<option value="1 PM">1 PM</option>
+											<option value="2 PM">2 PM</option>
+											<option value="3 PM">3 PM</option>
+											<option value="4 PM">4 PM</option>
+											<option value="5 PM">5 PM</option>
+											<option value="6 PM">6 PM</option>
+											<option value="7 PM">7 PM</option>
+											<option value="8 PM">8 PM</option>
+											<option value="9 PM">9 PM</option>
+											<option value="10 PM">10 PM</option>
+											<option value="11 PM">11 PM</option>
+											<option value="12 PM">12 PM</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<div class="styled-select">
+										<select name="hasta">
+											<option selected>Hasta</option>
+											<option value="1 AM">1 AM</option>
+											<option value="2 AM">2 AM</option>
+											<option value="3 AM">3 AM</option>
+											<option value="4 AM">4 AM</option>
+											<option value="5 AM">5 AM</option>
+											<option value="6 AM">6 AM</option>
+											<option value="7 AM">7 AM</option>
+											<option value="8 AM">8 AM</option>
+											<option value="9 AM">9 AM</option>
+											<option value="10 AM">10 AM</option>
+											<option value="11 AM">11 AM</option>
+											<option value="12 AM">12 AM</option>
+											<option value="1 PM">1 PM</option>
+											<option value="2 PM">2 PM</option>
+											<option value="3 PM">3 PM</option>
+											<option value="4 PM">4 PM</option>
+											<option value="5 PM">5 PM</option>
+											<option value="6 PM">6 PM</option>
+											<option value="7 PM">7 PM</option>
+											<option value="8 PM">8 PM</option>
+											<option value="9 PM">9 PM</option>
+											<option value="10 PM">10 PM</option>
+											<option value="11 PM">11 PM</option>
+											<option value="12 PM">12 PM</option>
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-5">
-							<div class="form-group">
-								<div class="styled-select">
-									<select>
-										<option>Hasta</option>
-										<option>1 AM</option>
-										<option>2 AM</option>
-										<option>3 AM</option>
-										<option>4 AM</option>
-										<option>5 AM</option>
-										<option>6 AM</option>
-										<option>7 AM</option>
-										<option>8 AM</option>
-										<option>9 AM</option>
-										<option>10 AM</option>
-										<option>11 AM</option>
-										<option>12 AM</option>
-										<option>1 PM</option>
-										<option>2 PM</option>
-										<option>3 PM</option>
-										<option>4 PM</option>
-										<option>5 PM</option>
-										<option>6 PM</option>
-										<option>7 PM</option>
-										<option>8 PM</option>
-										<option>9 PM</option>
-										<option>10 PM</option>
-										<option>11 PM</option>
-										<option>12 PM</option>
-									</select>
+						<div class="card " style="width:600px">
+							<ul class="list-group list-group-flush">
+								<div class="form-check-inline">
+									<li class="list-group-item "><label class="form-check-label">
+											<input type="checkbox" class="form-check-input" value="1" name="turno">Turno
+										</label></li>
 								</div>
-							</div>
+								<li class="list-group-item ">
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="checkbox" class="form-check-input" value="1" name="vacunas">Vacunas
+										</label>
+									</div>
+								</li>
+								<li class="list-group-item ">
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="checkbox" class="form-check-input" value="1" name="enfermeria">Servicio de enfermeria
+										</label>
+									</div>
+								</li>
+								<li class="list-group-item ">
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="checkbox" class="form-check-input" value="1" name="domicilio">Entrega a domiciolio
+										</label>
+									</div>
+								</li>
+							</ul>
 						</div>
-					</div>
-					<div class="card " style="width:600px">
-						<ul class="list-group list-group-flush">
-							<div class="form-check-inline">
-								<li class="list-group-item "><label class="form-check-label">
-										<input type="checkbox" class="form-check-input" value="">Turno
-									</label></li>
-							</div>
-							<li class="list-group-item ">
-								<div class="form-check-inline">
-									<label class="form-check-label">
-										<input type="checkbox" class="form-check-input" value="">Vacunas
-									</label>
-								</div>
-							</li>
-							<li class="list-group-item ">
-								<div class="form-check-inline">
-									<label class="form-check-label">
-										<input type="checkbox" class="form-check-input" value="">Servicio de enfermeria
-									</label>
-								</div>
-							</li>
-							<li class="list-group-item ">
-								<div class="form-check-inline">
-									<label class="form-check-label">
-										<input type="checkbox" class="form-check-input" value="">Entrega a domiciolio
-									</label>
-								</div>
-							</li>
-						</ul>
-					</div>
 				</div>
 			</div>
 			<!-- /row-->
-			<div class="row">
-				<div class="col-md-12">
-					<div class="form-group">
-						<label>logo</label>
-						<form action="/file-upload" class="dropzone"></form>
-					</div>
-				</div>
-			</div>
+		
 			<!-- /row-->
 		</div>
-
-		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
+		<td><input type="submit" name="enviarfarmacia" id="enviarfarmacia" value="enviarfarmacia" /></td>
+		</form>
 
 		<!-- /box_general-->
 		<!--FARMACIA-->
@@ -463,27 +455,27 @@
 
 			<form action="hotel.php" method="post" name="hotel-form">
 
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label>Categoria</label>
-						<div class="styled-select">
-							<select name="tipohotel">
-								<option value="Hotel" selected>Hotel</option>
-								<option value="Residecial">Residecial</option>
-								<option value="Hostal">Hostal</option>
-								<option value="Alojamiento">Alojamiento</option>
-							</select>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Categoria</label>
+							<div class="styled-select">
+								<select name="tipohotel">
+									<option value="Hotel" selected>Hotel</option>
+									<option value="Residecial">Residecial</option>
+									<option value="Hostal">Hostal</option>
+									<option value="Alojamiento">Alojamiento</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="card " style="width:600px">
-						<ul class="list-group list-group-flush">
+				<div class="card " style="width:600px">
+					<ul class="list-group list-group-flush">
 						<li class="list-group-item ">
 							<div class="form-check-inline">
 								<label class="form-check-label">
-									<input type="checkbox" class="form-check-input"  value="1" name="parqueo">Parqueo
+									<input type="checkbox" class="form-check-input" value="1" name="parqueo">Parqueo
 								</label>
 							</div>
 						</li>
@@ -494,24 +486,678 @@
 								</label>
 							</div>
 						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="recreativa">Area Recreativa
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="bar">Bar
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="cable">Cable
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="internet">Internet
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="aire">Aire acondicionado
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="desayuno">Desayuno
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="gym">Gimnasio
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="mascotas">Mascotas
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="spa">Spa
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="comedor">Comedor
+								</label>
+							</div>
+						</li>
+						<li class="list-group-item ">
+							<div class="form-check-inline">
+								<label class="form-check-label">
+									<input type="checkbox" class="form-check-input" value="1" name="servicio">Servicio a la habitacion
+								</label>
+							</div>
+						</li>
+						<br>
+						<td><input type="submit" name="enviarhotel" id="enviarhotel" value="enviarhotel" /></td>
+			</form>
+
+			<!-- /row-->
+
+		</div>
+		<!-- /box_general-->
+	</div>
+	<br>
+	<!--HOTEL-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="box_general padding_bottom" id="Restaurante">
+		<center>
+			<h2>Restaurante</h2>
+		</center>
+		<form action="restaurante.php" method="post" name="resta-form">
+
+		<div class="header_box version_2">
+			<h2><i class="fa fa-clock-o"></i>Horario</h2>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Lunes</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row-->
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">martes</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row-->
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Miercoles</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option> Desde </option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row-->
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Jueves</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row-->
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Viernes</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde </option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hata</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Sabado</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde </option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label class="fix_spacing">Domingo</label>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Desde </option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<div class="styled-select">
+						<select>
+							<option>Hasta</option>
+							<option>Cerrado</option>
+							<option>1 AM</option>
+							<option>2 AM</option>
+							<option>3 AM</option>
+							<option>4 AM</option>
+							<option>5 AM</option>
+							<option>6 AM</option>
+							<option>7 AM</option>
+							<option>8 AM</option>
+							<option>9 AM</option>
+							<option>10 AM</option>
+							<option>11 AM</option>
+							<option>12 AM</option>
+							<option>1 PM</option>
+							<option>2 PM</option>
+							<option>3 PM</option>
+							<option>4 PM</option>
+							<option>5 PM</option>
+							<option>6 PM</option>
+							<option>7 PM</option>
+							<option>8 PM</option>
+							<option>9 PM</option>
+							<option>10 PM</option>
+							<option>11 PM</option>
+							<option>12 PM</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card " style="width:600px">
+			<ul class="list-group list-group-flush">
 				<li class="list-group-item ">
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="recreativa">Area Recreativa
+							<input type="checkbox" class="form-check-input" value="1" name="parqueo">Parqueo
 						</label>
 					</div>
 				</li>
 				<li class="list-group-item ">
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="bar">Bar
+							<input type="checkbox" class="form-check-input" value="1" name="recreativo">Recreativo
 						</label>
 					</div>
 				</li>
 				<li class="list-group-item ">
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="cable">Cable
+							<input type="checkbox" class="form-check-input" value="1" name="fumadores">Area fumadores
+						</label>
+					</div>
+				</li>
+				<li class="list-group-item ">
+					<div class="form-check-inline">
+						<label class="form-check-label">
+							<input type="checkbox" class="form-check-input" value="1" name="servicio">Auto servicio
 						</label>
 					</div>
 				</li>
@@ -525,674 +1171,22 @@
 				<li class="list-group-item ">
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="aire">Aire acondicionado
+							<input type="checkbox" class="form-check-input" value="1" name="reserva">Reserva mesa
 						</label>
 					</div>
 				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="desayuno">Desayuno
-						</label>
-					</div>
-				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="gym">Gimnasio
-						</label>
-					</div>
-				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="mascotas">Mascotas
-						</label>
-					</div>
-				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="spa">Spa
-						</label>
-					</div>
-				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="comedor">Comedor
-						</label>
-					</div>
-				</li>
-				<li class="list-group-item ">
-					<div class="form-check-inline">
-						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" value="1" name="servicio">Servicio a la habitacion
-						</label>
-					</div>
-				</li>
-				<br>
-				<td><input type="submit" name="enviarhotel" id="enviarhotel" value="enviarhotel" /></td>
-		</form>
 
 				<!-- /row-->
-
-			</div>
-			<!-- /box_general-->
+				<br>
+				<td><input type="submit" name="enviarrestaurante" id="enviarrestaurante" value="enviarrestaurante" /></td>
+	</form>
 		</div>
-		<br>
-		<!--HOTEL-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div class="box_general padding_bottom" id="Restaurante">
-			<center>
-				<h2>Restaurante</h2>
-			</center>
-
-			<div class="header_box version_2">
-				<h2><i class="fa fa-clock-o"></i>Horario</h2>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Lunes</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /row-->
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">martes</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /row-->
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Miercoles</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option> Desde </option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /row-->
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Jueves</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /row-->
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Viernes</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde </option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hata</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Sabado</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde </option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<label class="fix_spacing">Domingo</label>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Desde </option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<div class="styled-select">
-							<select>
-								<option>Hasta</option>
-								<option>Cerrado</option>
-								<option>1 AM</option>
-								<option>2 AM</option>
-								<option>3 AM</option>
-								<option>4 AM</option>
-								<option>5 AM</option>
-								<option>6 AM</option>
-								<option>7 AM</option>
-								<option>8 AM</option>
-								<option>9 AM</option>
-								<option>10 AM</option>
-								<option>11 AM</option>
-								<option>12 AM</option>
-								<option>1 PM</option>
-								<option>2 PM</option>
-								<option>3 PM</option>
-								<option>4 PM</option>
-								<option>5 PM</option>
-								<option>6 PM</option>
-								<option>7 PM</option>
-								<option>8 PM</option>
-								<option>9 PM</option>
-								<option>10 PM</option>
-								<option>11 PM</option>
-								<option>12 PM</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="card " style="width:600px">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Parqueo
-							</label>
-						</div>
-					</li>
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Recreativo
-							</label>
-						</div>
-					</li>
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Area fumadores
-							</label>
-						</div>
-					</li>
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Auto servicio
-							</label>
-						</div>
-					</li>
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Internet
-							</label>
-						</div>
-					</li>
-					<li class="list-group-item ">
-						<div class="form-check-inline">
-							<label class="form-check-label">
-								<input type="checkbox" class="form-check-input" value="">Reserva mesa
-							</label>
-						</div>
-					</li>
-
-					<!-- /row-->
-
-			</div>
-		</div>
-		<!-- /box_general-->
-
-
-		<!-- /box_general-->
-		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
 	</div>
+	<!-- /box_general-->
+
+
+	<!-- /box_general-->
+	
 	<!-- /.container-fluid-->
 	</div>
 	<!-- /.container-wrapper-->

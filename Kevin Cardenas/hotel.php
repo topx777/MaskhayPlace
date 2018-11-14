@@ -2,10 +2,8 @@
 
     if (isset($_POST['enviarhotel'])) 
     {
-    //tipo de hotel
     $tipo = $_POST['tipohotel'];
 
-    //verifica si esta tiqueado
     if (isset($_POST['parqueo']) && $_POST['parqueo'] = '1')      
     $parqueo = 1;
     else
