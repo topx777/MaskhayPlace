@@ -267,7 +267,33 @@ $db->close();
 
     <!-- YOUR CUSTOM CSS -->
     <link href="assets/public/css/custom.css" rel="stylesheet">
-
+	<style>
+	.hero_in.restaurant_detail:before {
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+	.hero_in.restaurant_detail .wrapper {
+		background-color: black;
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	.hero_in:before {
+		animation: pop-in 5s 0.1s cubic-bezier(0, 0.5, 0, 1) forwards;
+		content: "";
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+	}
+	.hero_in .wrapper {
+		height: 100%;
+	}
+	
+	</style>
 </head>
 
 <body>
@@ -280,7 +306,7 @@ $db->close();
 				<div class="col-lg-3 col-12">
 					<div id="logo">
 						<a href="index.html">
-							<img src="assets/public/img/logo.png" width="165" height="35" alt="" class="logo_sticky">
+							<img src="assets/public/img/logo.png" width="165" height="35" class="logo_sticky">
 						</a>
 					</div>
 				</div>
@@ -319,7 +345,7 @@ $db->close();
 	<!-- /header -->
 	
 	<main>		
-		<div class="hero_in restaurant_detail">
+		<div class="hero_in restaurant_detail" style="background: url('<?=$imgsResto[0]["url"]?>') center center no-repeat; background-size: cover;">
 			<div class="wrapper">
 				<span class="magnific-gallery">
 				<?php
