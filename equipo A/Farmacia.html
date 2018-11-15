@@ -30,7 +30,11 @@
     <!-- WYSIWYG Editor -->
     <link rel="stylesheet" href="../assets/admin/js/editor/summernote-bs4.css">
     <!-- Estilos propios -->
+    <link rel="stylesheet" href="../assets/admin/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="mis css/mis estilos/estilo.css">
+    <link rel="stylesheet" href="mis js/timepicki/timepicki.css">
+    <!-- scripts previos -->
+    
 </head>
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation -->
@@ -97,7 +101,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" disabled="" style="width:600px">
+                                            <input type="text" class="form-control" disabled="" style="width:800px">
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
@@ -111,7 +115,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Direccion</label>
-                                            <input type="text" class="form-control" style="width:600px">
+                                            <input type="text" class="form-control" style="width:800px">
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +126,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="width:800px">
                                     <div class="radio">
                                         <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio" checked>Mañana</label>
                                     </div>
@@ -132,22 +136,78 @@
                                     <div class="radio">
                                         <label class="radiolabel"><input type="radio" name="optradio">Noche</label>
                                     </div>
+                                    <div class="radio">
+                                        <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio">24 hrs</label>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row" style="width:800px">
+                                    <div class="col-md-6">
+                                        <div class="form-group">          
+                                            <label>Horario</label><br>
+                                            <label style="margin-right: 300px">De las</label><label>A las</label>
+                                            <div class="input-group" style="width:800px">
+                                                <input id="timepicker1" type="text" name="timepicker1" style="margin-right: 180px"/>
+                                                <input id="timepicker2" type="text" name="timepicker2" style="margin-right: 180px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header_box version_2">
+                                    <h2><i class="fa fa-file"></i>Sevicios Ofrecidos</h2>
+                                </div>
+                                <div class="tablaSwich" style="width: 60%">
+                                    <li class="list-group-item">
+                                        <table class="sw">
+                                            <tr>
+                                                <td>
+                                                    <label id="lb">Vacunacion</label>
+                                                </td>
+                                                <td class="btnswich">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <div class="slider round"></div>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <table class="sw">
+                                            <tr>
+                                                <td>
+                                                    <label id="lb">Servicio de enfermeria</label>
+                                                </td>
+                                                <td class="btnswich">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <div class="slider round"></div>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <table class="sw">
+                                            <tr>
+                                                <td>
+                                                    <label id="lb">Entrega a domicilio</label>
+                                                </td>
+                                                <td class="btnswich">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <div class="slider round"></div>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </div>
+
+                                
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -220,5 +280,12 @@
         height: 200
       });
     </script>
+    <!-- Mis propios scripts -->
+    <script src="mis js/timepicki/timepicki.js"></script>
+    <script>
+	    $('#timepicker1').timepicki();
+        $('#timepicker2').timepicki();
+    </script>
+    <script src="../assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
