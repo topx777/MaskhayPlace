@@ -11,16 +11,19 @@ if($_POST) {
 		include('../../helpers/class.Conexion.php');
 		$db = new Conexion();
 
-		$verificarCalificacion
-		$agregarCalificacion = $db->query("INSERT INTO calificacion(lugar, usuario, calificacion, comentario, fecha) VALUES($idLugar, $idUsuario, $puntaje, '$comentario', '$fecha')");
-		if($agregarCalificacion) {
-			echo 1;
+		$verificarCalificacion = $db->query("SELECT * FROM calificacion WHERE usuario = $idUsuario AND lugar = $idLugar");
+		if($db->rows($verificarCalificacion) > 0) {
+			$agregarCalificacion = $db->query("INSERT INTO calificacion(lugar, usuario, calificacion, comentario, fecha) VALUES($idLugar, $idUsuario, $puntaje, '$comentario', '$fecha')");
+			if($agregarCalificacion) {
+				echo 1;
+			} else {
+				'No se pudo calificar el lugar, intentelo nuevamente';
+			}
 		} else {
-			'No se pudo calificar el lugar, intentelo nuevamente';
+			echo 'Ya realizaste una calificacion y comentario';
 		}
-
 	} else {
-		echo 'Datos Vacios, intente nuevamente';
+		echo 'Datos Vacios, el puntaje es requerido';
 	}
 }
 ?>

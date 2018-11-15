@@ -108,7 +108,8 @@ if($cantCalificaciones > 0) {
 	}
 
 	$promedio_calif = $total_calif / $cantCalificaciones;
-	
+
+	//Obtener Categorita dependiendo del promedio del lugar
 	if($promedio_calif > 0 and $promedio_calif <= 1.8) {
 		$cate_calif = "Malo";
 	} else if($promedio_calif > 1.8 and $promedio_calif <= 3.6) {
@@ -126,6 +127,7 @@ if($cantCalificaciones > 0) {
 		array('calificacion' => 4, 'cant' => 0, 'porcentaje' => 0),
 		array('calificacion' => 5, 'cant' => 0, 'porcentaje' => 0));
 
+	//Obtener las calificaciones del lugar
 	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = 1 GROUP BY calificacion ORDER BY calificacion");
 	while ($resCatCalif = $db->recorrer($obtenerCatCalif)) {
 		$porcentaje = (100 / $cantCalificaciones) * $resCatCalif["cantidad"];
@@ -140,7 +142,7 @@ if($cantCalificaciones > 0) {
 	$db->liberar($obtenerCalificaciones, $obtenerCatCalif);
 }
 
-//Obtener Caificacion Usuario
+//Obtener Caificacion Usuario al lugar
 $lugarCalificado = false;
 $obtenerCalfUsuario = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar AND usuario = $usuarioID");
 $cantCalifUsuario = $db->rows($obtenerCalfUsuario);
@@ -278,32 +280,28 @@ $db->close();
 							<p><?=$resLugar["descripcion"]?></p>
 							<h5 class="add_bottom_15">Caracteristicas</h5>
 							<div class="row add_bottom_30">
-								<div class="col-md-6">
-									<ul class="bullets">
-										<?php if($resResto["parqueo"] == 1) {?>
-										<li>Parqueo</li>
-										<?php } ?>
-										<?php if($resResto["recreativo"] == 1) {?>
-										<li>Recreativo</li>
-										<?php } ?>
-										<?php if($resResto["area_fumadores"] == 1) {?>
-										<li>Area Fumadores</li>
-										<?php } ?>
-										<?php if($resResto["auto_servicio"] == 1) {?>
-										<li>Auto Servicio</li>
-										<?php } ?>
-									</ul>
-								</div>
-								<div class="col-md-6">
-									<ul class="bullets">
-										<?php if($resResto["internet"] == 1) {?>
-										<li>Internet</li>
-										<?php } ?>
-										<?php if($resResto["reserva_mesa"] == 1) {?>
-										<li>Reserva Mesa</li>
-										<?php } ?>
-									</ul>
-								</div>
+								<ul class="hotel_facilities" style="margin-left: 20px;">
+								<?php 
+								if($resResto["parqueo"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/parqueo.svg" width="45">Parqueo</li>';
+								}
+								if($resResto["recreativo"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/recreativo.svg" width="45">Area Recreativa</li>';								
+								}
+								if($resResto["internet"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/wifi.svg" width="45">Wifi</li>';								
+								}
+								if($resResto["area_fumadores"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/fumadores.svg" width="45">Area Fumadores</li>';
+								}
+								if($resResto["auto_servicio"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/autoservicio.svg" width="45">Auto Servicio</li>';								
+								}
+								if($resResto["reserva_mesa"] == 1) {
+									echo '<li><img src="assets/public/img/iconos/reserva.svg" width="45">Reserva Mesa</li>';								
+								}
+								?>	
+								</ul>
 							</div>
 							<!-- /row -->
 							<?php 
@@ -517,15 +515,26 @@ $db->close();
 					</div>
 					<!-- /col -->
 					
+
 					<aside class="col-lg-4" id="sidebar">
+						<div id="AJAXreserva"></div>
+						
+					<?php
+					if($resResto["reserva_mesa"] == 1) {
+					?>
 						<div class="box_detail booking">
+
 							<div class="price">
 								<h5 class="d-inline">Reservar</h5>
-								<div class="score"><span>Bueno<em>350 Calificaciones</em></span><strong>7.0</strong></div>
+								<div class="score"><span><?=$cate_calif?><em><?=$cantCalificaciones?> Calificaciones</em></span><strong><?=$promedio_calif?></strong></div>
+							</div>
+
+							<div class="form-group">
+								<input class="form-control" type="text" id="nombre_reserva" placeholder="Para quien..">
 							</div>
 
 							<div class="form-group" id="input-dates">
-								<input class="form-control" type="text" name="dates" placeholder="Cuando..">
+								<input class="form-control" type="text" id="fecha_reserva" placeholder="Cuando..">
 								<i class="icon_calendar"></i>
 							</div>
 
@@ -534,29 +543,45 @@ $db->close();
 								<div class="panel-dropdown-content right">
 									<div class="qtyButtons">
 										<label>Personas</label>
-										<input type="text" name="qtyInput" value="1">
+										<input type="text" name="qtyInput" id="cant_reserva" value="1">
 									</div>
 								</div>
 							</div>
 
 							<div class="form-group clearfix">
 								<div class="custom-select-form">
-									<select class="wide">
-										<option>Time</option>	
-										<option>Lunch</option>
-										<option>Dinner</option>
+									<select class="wide" id="hora_reserva">
+										<option value="8:00">8:00</option>	
+										<option value="9:00">9:00</option>	
+										<option value="10:00">10:00</option>
+										<option value="11:00">11:00</option>
+										<option value="12:00">12:00</option>
+										<option value="13:00">13:00</option>
+										<option value="14:00">14:00</option>
+										<option value="15:00">15:00</option>
+										<option value="16:00">16:00</option>
+										<option value="17:00">17:00</option>
+										<option value="18:00">18:00</option>
+										<option value="19:00">19:00</option>
+										<option value="20:00">20:00</option>
+										<option value="21:00">21:00</option>
+										<option value="22:00">22:00</option>
+										<option value="23:00">23:00</option>
 									</select>
 								</div>
 							</div>
-							<a href="checkout.html" class=" add_top_30 btn_1 full-width purchase">Purchase</a>
-							<a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Add to wishlist</a>
-							<div class="text-center"><small>No money charged in this step</small></div>
+							<input type="hidden" id="idResto" value="<?=$resResto["id_restaurante"]?>">
+							<button id="EnviarReserva" class=" add_top_30 btn_1 full-width purchase">Reservar</button>
+							<div class="text-center"><small>No es necesario ningun pago extra</small></div>
 						</div>
-						<ul class="share-buttons">
+					<?php
+					}
+					?>
+						<!-- <ul class="share-buttons">
 							<li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
 							<li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
 							<li><a class="gplus-share" href="#0"><i class="social_googleplus"></i> Share</a></li>
-						</ul>
+						</ul> -->
 					</aside>
 				</div>
 				<!-- /row -->
@@ -694,15 +719,42 @@ $db->close();
 	
 	<!-- DATEPICKER  -->
 	<script>
-    $('input[name="dates"]').daterangepicker({
+
+    $('#fecha_reserva').daterangepicker({
         "singleDatePicker": true,
         "parentEl": '#input-dates',
-        "opens": "left"
-    }, function(start, end, label) {
-        console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
-	});
+		"opens": "left",
+		"locale": {
+			"format": "YYYY/MM/DD",
+			"separator": " - ",
+			"daysOfWeek": [
+				"Do",
+				"Lu",
+				"Ma",
+				"Mi",
+				"Ju",
+				"Vi",
+				"Sa"
+			],
+			"monthNames": [
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Augosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Deciembre"
+			]
+    	}
+    });
 
 	//Datos del Retaurante para marcadores
+
 	var 
 	mapObject,
 	markers = [],
@@ -713,11 +765,10 @@ $db->close();
 			name: '<?=$resLugar["nombre_lugar"]?>',
 			location_latitude: <?=$resLugar["latitud_gps"]?>, 
 			location_longitude: <?=$resLugar["longitud_gps"]?>,
-			map_image_url: 'assets/public/img/thumb_map_single_restaurant.jpg',
-			rate: 'Superb | 7.5',
+			map_image_url: '<?= $resLugar["logo"] != null && $resLugar["logo"] != '' ? $resLugar["logo"] : "assets/public/img/thumb_map_single_restaurant.jpg"?>',
+			rate: '<?=$cate_calif?> | <?=$promedio_calif?>',
 			name_point: '<?=$resLugar["nombre_lugar"]?>',
-			get_directions_start_address: '',
-			phone: '+3934245255'
+			description_point: '<?=$resLugar["descripcion"]?>'
 		}
 		]
 	};
@@ -1050,11 +1101,7 @@ $db->close();
 				'<span class="infobox_rate">'+ item.rate +'</span>' +
 				'<em>'+ item.type_point +'</em>' +
 				'<h3>'+ item.name_point +'</h3>' +
-			'<strong>'+ item.description_point +'</strong>' +
-			'<form action="http://maps.google.com/maps" method="get" target="_blank"><input name="saddr" value="'+ item.get_directions_start_address +'" type="hidden"><input type="hidden" name="daddr" value="'+ item.location_latitude +',' +item.location_longitude +'"><button type="submit" value="Get directions" class="btn_infobox_get_directions">Get directions</button></form>' +
-				'<a href="tel://'+ item.phone +'" class="btn_infobox_phone">'+ item.phone +'</a>' +
-				'</span>' +
-			'</div>',
+				'<em style="font-size:9px; text-align:justify">'+ item.description_point +'</em>',
 			disableAutoPan: false,
 			maxWidth: 0,
 			pixelOffset: new google.maps.Size(10, 92),
@@ -1094,6 +1141,38 @@ $db->close();
 			}
 		});
 
+	});
+
+	$(document).on('click', '#EnviarReserva', function() {
+		var nombre = $('#nombre_reserva').val();
+		var fecha = $('#fecha_reserva').val();
+		var cant = $('#cant_reserva').val();
+		var hora = $('#hora_reserva').val();
+		var id_resto = $('#idResto').val();
+		// alert('Reserva realizada con exito \n' + nombre + '\n' + fecha + '\n' + cant + '\n' + hora);
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/realizarReserva.request.php",
+			data: {
+				nombre: nombre,
+				fecha: fecha,
+				cant: cant,
+				hora: hora,
+				id_resto: id_resto
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$('#AJAXreserva').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Finalizado!</strong> Su reserva a sido enviada para su verificacion.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#nombre_reserva').val('');
+					$('#fecha_reserva').val('');
+					$('#cant_reserva').val('0');
+					$('.qtyTotal').html('0');
+				} else {
+					$('#AJAXreserva').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
 	});
 
     </script>

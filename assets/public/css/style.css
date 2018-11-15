@@ -1973,7 +1973,7 @@ ul.counter li:last-child {
 }
 .main_categories ul li {
   display: inline-block;
-  width: 20%;
+  width: 33%;
   float: left;
   border-right: 1px solid #d2d8dd;
 }
