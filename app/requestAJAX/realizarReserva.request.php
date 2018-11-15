@@ -13,13 +13,13 @@ if($_POST) {
 		include('../../helpers/class.Conexion.php');
 		$db = new Conexion();
 		
-		$realizarReserva = $db->query("INSERT INTO reserva(restaurante, usuario, nombre_reserva, fecha, hora, cantidad_personas) VALUES($idResto, $idUsuario, '$nombre', '$fecha', '$hora', $cant)");
-		echo $db->error;
-		// if($realizarReserva) {
-		// 	echo 1;
-		// } else {
-		// 	'No se pudo realizar la reserva, intentelo nuevamente';
-		// }
+
+		$realizarReserva = $db->query("INSERT INTO reserva(restaurante, usuario, nombre_reserva, fecha, hora, cantidad_personas, estado) VALUES($idResto, $idUsuario, '$nombre', '$fecha', '$hora', $cant, 'Pendiente')");
+		if($realizarReserva) {
+			echo 1;
+		} else {
+			'No se pudo realizar la reserva, intentelo nuevamente';
+		}
 
 	} else {
 		echo 'Datos Vacios, todos los campos son requeridos';

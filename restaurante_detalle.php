@@ -719,13 +719,39 @@ $db->close();
 	
 	<!-- DATEPICKER  -->
 	<script>
+
     $('#fecha_reserva').daterangepicker({
         "singleDatePicker": true,
         "parentEl": '#input-dates',
-        "opens": "left"
-    }, function(start, end, label) {
-        console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
-	});
+		"opens": "left",
+		"locale": {
+			"format": "YYYY/MM/DD",
+			"separator": " - ",
+			"daysOfWeek": [
+				"Do",
+				"Lu",
+				"Ma",
+				"Mi",
+				"Ju",
+				"Vi",
+				"Sa"
+			],
+			"monthNames": [
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Augosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Deciembre"
+			]
+    	}
+    });
 
 	//Datos del Retaurante para marcadores
 
@@ -1138,9 +1164,10 @@ $db->close();
 			success: function (response) {
 				if(response == 1) {
 					$('#AJAXreserva').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Finalizado!</strong> Su reserva a sido enviada para su verificacion.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-					setTimeout(() => {
-						$("#sidebar").load(location.href + " #sidebar");
-					}, 3000);
+					$('#nombre_reserva').val('');
+					$('#fecha_reserva').val('');
+					$('#cant_reserva').val('0');
+					$('.qtyTotal').html('0');
 				} else {
 					$('#AJAXreserva').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 				}
