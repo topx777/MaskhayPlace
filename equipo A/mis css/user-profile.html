@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Ansonika">
-  <title>Perfil de Usuario</title>
+  <title>Administrador Ususarios</title>
 	
   <!-- Favicons-->
   <link rel="shortcut icon" href="../assets/admin/img/favicon.ico" type="image/x-icon">
@@ -33,7 +33,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html"><img src="img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
+    <a class="navbar-brand" href="index.html"><img src="../assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -88,47 +88,14 @@
 
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!----------------------------------Mensaje de alerta------------------------------>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Lamentamos informale que la propuesta de su negocio fue <strong>Rechazada</strong>
-           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-      <!----------------------------------fin------------------------------>
-      <!----------------------------------Mensaje de alerta------------------------------>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Su negocio fue añadido <strong>Correctamente</strong>
-           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-      <!----------------------------------fin------------------------------>
-      <!----------------------------------Mensaje de alerta------------------------------>
-      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-            Su negocio aun no fue añadida, <strong>Espere a un nuevo aviso</strong>
-           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-      <!----------------------------------fin------------------------------>
-
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
 				<h2><i class="fa fa-user"></i>Perfil de Usuario</h2>
 			</div>
 			<div class="row">
-
-        <div class="col-md-5">
-          <div class="form-group">
-            <label>Nombre de Usuario</label>
-            <input type="text" class="form-control" disabled="">
-          </div>
-        </div>
 				
-				<div class="col-md-8">
+				<div class="col-md-8 add_top_30">
 					<div class="row">
-
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Nombre</label>
@@ -159,14 +126,54 @@
 					</div>
 					<!-- /row-->
 					
-          <p>
-            <a href="#" class="btn_1 medium" data-toggle="modal" data-target="#EditarPerfil">Editar Perfil</a>
-            <a href="#" class="btn_1 medium" data-toggle="modal" data-target="#CambiarContraseña">Cambiar Contraseña</a>
-          </p>
+          <p><a href="#" class="btn_1 medium" data-toggle="modal" data-target="#EditarPerfil">Editar Perfil</a></p>
 					<!-- /row-->
 				</div>
 			</div>
 		</div>
+		<!-- /box_general-->
+		<div class="row">
+			<div class="col-md-6">
+				<div class="box_general padding_bottom">
+					<div class="header_box version_2">
+						<h2><i class="fa fa-lock"></i>Change password</h2>
+					</div>
+					<div class="form-group">
+						<label>Old password</label>
+						<input class="form-control" type="password">
+					</div>
+					<div class="form-group">
+						<label>New password</label>
+						<input class="form-control" type="password">
+					</div>
+					<div class="form-group">
+						<label>Confirm new password</label>
+						<input class="form-control" type="password">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="box_general padding_bottom">
+					<div class="header_box version_2">
+						<h2><i class="fa fa-envelope"></i>Change email</h2>
+					</div>
+					<div class="form-group">
+						<label>Old email</label>
+						<input class="form-control" name="old_email" id="old_email" type="email">
+					</div>
+					<div class="form-group">
+						<label>New email</label>
+						<input class="form-control" name="new_email" id="new_email" type="email">
+					</div>
+					<div class="form-group">
+						<label>Confirm new email</label>
+						<input class="form-control" name="confirm_new_email" id="confirm_new_email" type="email">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row-->
+		<p><a href="#0" class="btn_1 medium">Save</a></p>
 	  </div>
 	  <!-- /.container-fluid-->
    	</div>
@@ -174,7 +181,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © MaskhayPlce 2018</small>
+          <small>Copyright © SPARKER 2018</small>
         </div>
       </div>
     </footer>
@@ -206,86 +213,71 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa fa-user"></i> Editar Perfil</h5>
+            <h5 class="modal-title" id="exampleModalCenterTitle">Editar Perfil</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-            <div class="modal-body">
-               <div class="form-group">
-                 <input type="text" class="form-control" placeholder="Nombre Usuario" required="">
-               </div>             
-               <div class="form-group">
-                 <input type="text" class="form-control" placeholder="Nombre/s" required="">
-               </div>
-               <div class="form-group">
-                 <input type="text" class="form-control" placeholder="Apellido/s" required="">
-               </div>
-               <div class="form-group">
-                 <input type="text" class="form-control" placeholder="Telefono/Celular" maxlength="8" required="">
-               </div>
-               <div class="form-group">
-                 <input type="email" class="form-control" placeholder="E-mail" required="">
-               </div>
+          <div class="modal-body">
+            
+            <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control">
+              </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Apellido</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-primary">Guardar Cambios</button>
           </div>
         </div>
       </div>
     </div>
 
 
-<!-----------------------MODAL DE PARA CAMBIAR CONTRASEÑA------------------------------->
-    <div class="modal fade" id="CambiarContraseña" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa fa-lock"></i> Cambiar Contraseña</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-             <div class="modal-body">
-               
-               <div class="form-group">
-                 <label>Contraseña Antigua</label>
-                 <input class="form-control" type="password">
-               </div>
-               <div class="form-group">
-                 <label>Nueva Contraseña</label>
-                 <input class="form-control" type="password">
-               </div>
-               <div class="form-group">
-                 <label>Confirmar Contraseña</label>
-                 <input class="form-control" type="password">
-               </div>
-             </div>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-      </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../assets/admin/vendor/jquery/jquery.min.js"></script>
-  <script src="../assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="../assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- Page level plugin JavaScript-->
-  <script src="../assets/admin/vendor/chart.js/Chart.min.js"></script>
-  <script src="../assets/admin/vendor/datatables/jquery.dataTables.js"></script>
-  <script src="../assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
-  <script src="../assets/admin/vendor/jquery.selectbox-0.2.js"></script>
-  <script src="../assets/admin/vendor/retina-replace.min.js"></script>
-  <script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="../assets/admin/js/admin.js"></script>
-  <!-- Custom scripts for this page-->
-  <script src="../assets/admin/vendor/dropzone.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../assets/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="../assets/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../assets/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+	<script src="../assets/admin/vendor/jquery.selectbox-0.2.js"></script>
+	<script src="../assets/admin/vendor/retina-replace.min.js"></script>
+	<script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../assets/admin/js/admin.js"></script>
+	<!-- Custom scripts for this page-->
+	<script src="../assets/admin/vendor/dropzone.min.js"></script>
 	
 </body>
 </html>
