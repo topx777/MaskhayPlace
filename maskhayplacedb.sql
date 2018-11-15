@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2018 a las 08:51:18
+-- Tiempo de generación: 14-11-2018 a las 23:17:59
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -163,7 +163,7 @@ CREATE TABLE `lugar` (
 --
 
 INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`, `revisado`, `encargado_rev`, `observaciones`, `estado`) VALUES
-(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '.', 1, 'Restaurante', 0, NULL, NULL, NULL);
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '', 1, 'Restaurante', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,12 +238,19 @@ CREATE TABLE `reserva` (
   `id_reserva` int(11) NOT NULL,
   `restaurante` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
-  `nombre_reserva` int(11) NOT NULL,
+  `nombre_reserva` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `cantidad_personas` int(11) NOT NULL,
   `estado` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `reserva`
+--
+
+INSERT INTO `reserva` (`id_reserva`, `restaurante`, `usuario`, `nombre_reserva`, `fecha`, `hora`, `cantidad_personas`, `estado`) VALUES
+(3, 1, 3, 'Abel Lopez', '0000-00-00', '15:00:00', 4, '');
 
 -- --------------------------------------------------------
 
@@ -482,7 +489,7 @@ ALTER TABLE `pieza`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `restaurante`
 --

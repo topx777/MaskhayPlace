@@ -515,8 +515,13 @@ $db->close();
 					</div>
 					<!-- /col -->
 					
+
 					<aside class="col-lg-4" id="sidebar">
 						<div id="AJAXreserva"></div>
+						
+					<?php
+					if($resResto["reserva_mesa"] == 1) {
+					?>
 						<div class="box_detail booking">
 
 							<div class="price">
@@ -565,9 +570,13 @@ $db->close();
 									</select>
 								</div>
 							</div>
+							<input type="hidden" id="idResto" value="<?=$resResto["id_restaurante"]?>">
 							<button id="EnviarReserva" class=" add_top_30 btn_1 full-width purchase">Reservar</button>
 							<div class="text-center"><small>No es necesario ningun pago extra</small></div>
 						</div>
+					<?php
+					}
+					?>
 						<!-- <ul class="share-buttons">
 							<li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
 							<li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
@@ -1113,8 +1122,30 @@ $db->close();
 		var fecha = $('#fecha_reserva').val();
 		var cant = $('#cant_reserva').val();
 		var hora = $('#hora_reserva').val();
-
-		alert('Reserva realizada con exito \n' + nombre + '\n' + fecha + '\n' + cant + '\n' + hora);
+		var id_resto = $('#idResto').val();
+		// alert('Reserva realizada con exito \n' + nombre + '\n' + fecha + '\n' + cant + '\n' + hora);
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/realizarReserva.request.php",
+			data: {
+				nombre: nombre,
+				fecha: fecha,
+				cant: cant,
+				hora: hora,
+				id_resto: id_resto
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$('#AJAXreserva').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Finalizado!</strong> Su reserva a sido enviada para su verificacion.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					setTimeout(() => {
+						$("#sidebar").load(location.href + " #sidebar");
+					}, 3000);
+				} else {
+					$('#AJAXreserva').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
 	});
 
     </script>
