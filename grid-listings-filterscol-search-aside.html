@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -188,13 +188,13 @@
 						<div class="row no-gutters custom-search-input-2 inner">
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="What are you looking for...">
+									<input class="form-control" type="text" placeholder="Que estas Buscando...">
 									<i class="icon_search"></i>
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Where">
+									<input class="form-control" type="text" placeholder="Donde">
 									<i class="icon_pin_alt"></i>
 								</div>
 							</div>
@@ -616,14 +616,34 @@
 	<!-- COMMON SCRIPTS -->
     <script src="assets/public/js/common_scripts.js"></script>
 	<script src="assets/public/js/functions.js"></script>
-	<script src="assets/validate.js"></script>
+	<!-- <script src="assets/validate.js"></script> -->
 	
 	<!-- Map -->
 	<script src="http://maps.googleapis.com/maps/api/js"></script>
 	<script src="assets/public/js/markerclusterer.js"></script>
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
-		
+	<script>
+			function getParameterByName(name) {
+				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+					results = regex.exec(location.search);
+				return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+			}
+			$.getJSON('busqueda/controller/busqueda.php',
+			{
+				buscar:getParameterByName('buscar'),
+				lugar:getParameterByName('lugar'),
+				categoria:getParameterByName('categoria'),
+				distaciaRad:'',
+				orden:'all',
+				puntaje:'05',
+			},
+				function (data, textStatus, jqXHR) {
+					console.log(data)
+				}
+			);
+	</script>		
   
 </body>
 </html>
