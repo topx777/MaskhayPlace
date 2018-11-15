@@ -34,6 +34,20 @@ if($db->rows($obtenerImgs) > 0) {
 		);
 	}
 }
+$db->liberar($obtenerImgs);
+
+//Obtener numeros de contacto
+$obtenerContactos = $db->query("SELECT * FROM contacto WHERE lugar = $idLugar");
+if($db->rows($obtenerContactos) > 0) {
+	while($resContact = $db->recorrer($obtenerContactos)) {
+		$contactsLugar[] = array(
+			'id' => $resContact["id_contacto"],
+			'tipo' => $resContact["tipo"],
+			'numero' => $resContact["numero"],
+		);
+	}
+}
+$db->liberar($obtenerContactos);
 
 $idResto = $resResto["id_restaurante"];
 
@@ -41,20 +55,92 @@ $idResto = $resResto["id_restaurante"];
 $obtenerHorario = $db->query("SELECT * FROM horario WHERE restaurante = $idResto LIMIT 1");
 $resHorario = $db->recorrer($obtenerHorario);
 
-
-//Obetener Menu del dia
+//Procesar Horario de Atencion
 setlocale(LC_ALL,"es_ES");
 $dia_semana = strftime("%A");
+$hora_actual = date('H:i');
+$hora_actual = explode(":", $hora_actual);
+
+$abierto = false;
+
+//Verificar si en el dia correspondiente esta abierto
+if($resHorario["semanal"]) {
+	
+	if($dia_semana == 'Sábado') {
+		if($resHorario["sabado"] != NULL and $resHorario["sabado"] != 'Cerrado') {
+			$horario_dia =  $resHorario["sabado"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana == 'Domingo') {
+		if($resHorario["domingo"] != NULL and $resHorario["domingo"] != 'Cerrado') {
+			$horario_dia =  $resHorario["domingo"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else {
+		if($resHorario["lun_vier"] != NULL and $resHorario["lun_vier"] != 'Cerrado') {
+			$horario_dia =  $resHorario["lun_vier"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	}
+} else {
+	if($dia_semana == 'Sábado') {
+		if($resHorario["sabado"] != NULL and $resHorario["sabado"] != 'Cerrado') {
+			$horario_dia =  $resHorario["sabado"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana == 'Domingo') {
+		if($resHorario["domingo"] != NULL and $resHorario["domingo"] != 'Cerrado') {
+			$horario_dia =  $resHorario["domingo"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana = 'Lunes'){
+		if($resHorario["lunes"] != NULL and $resHorario["lunes"] != 'Cerrado') {
+			$horario_dia =  $resHorario["lunes"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana = 'Martes'){
+		if($resHorario["martes"] != NULL and $resHorario["martes"] != 'Cerrado') {
+			$horario_dia =  $resHorario["martes"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana = 'Miercoles'){
+		if($resHorario["miercoles"] != NULL and $resHorario["miercoles"] != 'Cerrado') {
+			$horario_dia =  $resHorario["miercoles"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana = 'Jueves'){
+		if($resHorario["jueves"] != NULL and $resHorario["jueves"] != 'Cerrado') {
+			$horario_dia =  $resHorario["jueves"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	} else if($dia_semana = 'Viernes'){
+		if($resHorario["viernes"] != NULL and $resHorario["viernes"] != 'Cerrado') {
+			$horario_dia =  $resHorario["viernes"];
+			$horario_dia = explode("-",$horario_dia);
+		}
+	}
+}
+
+if(isset($horario_dia)) {
+	$horarioDiaInicio = explode(":",$horario_dia[0]);
+	$horarioDiaFinal = explode(":",$horario_dia[1]);
+
+	if($hora_actual[0] >= $horarioDiaInicio[0] and $hora_actual[0] <= $horarioDiaFinal[0]) {
+		$abierto = true;
+	}
+}
+
+//Obetener Menu del dia
 $obtenerMenu = $db->query("SELECT * FROM menu WHERE restaurante = $idResto AND dia_semana = '$dia_semana' LIMIT 1");
 if($db->rows($obtenerMenu) > 0) {
 	$resMenu = $db->recorrer($obtenerMenu);
 	$idMenu = $resMenu["id_menu"];
-	$obtenerPlatos = $db->query("SELECT * FROM menuplato WHERE menu = $idMenu");
+	$obtenerPlatos = $db->query("SELECT * FROM menu_plato WHERE menu = $idMenu");
 	$cantPlatos = $db->rows($obtenerPlatos);
 	if($cantPlatos > 0) {
-		while($resPlato = $db->recorrer($obtenerMenu)) {
+		while($resPlato = $db->recorrer($obtenerPlatos)) {
 			$platos[] = array(
-				'id' => $resPlato["id_menu_plato"],
+				'id' => $resPlato["id_menuplato"],
 				'nombre' => $resPlato["nombre_plato"],
 				'precio' => $resPlato["precio_plato"],
 				'desc' => $resPlato["descripcion_plato"],
@@ -181,7 +267,33 @@ $db->close();
 
     <!-- YOUR CUSTOM CSS -->
     <link href="assets/public/css/custom.css" rel="stylesheet">
-
+	<style>
+	.hero_in.restaurant_detail:before {
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+	.hero_in.restaurant_detail .wrapper {
+		background-color: black;
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	.hero_in:before {
+		animation: pop-in 5s 0.1s cubic-bezier(0, 0.5, 0, 1) forwards;
+		content: "";
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+	}
+	.hero_in .wrapper {
+		height: 100%;
+	}
+	
+	</style>
 </head>
 
 <body>
@@ -194,7 +306,7 @@ $db->close();
 				<div class="col-lg-3 col-12">
 					<div id="logo">
 						<a href="index.html">
-							<img src="assets/public/img/logo.png" width="165" height="35" alt="" class="logo_sticky">
+							<img src="assets/public/img/logo.png" width="165" height="35" class="logo_sticky">
 						</a>
 					</div>
 				</div>
@@ -233,7 +345,7 @@ $db->close();
 	<!-- /header -->
 	
 	<main>		
-		<div class="hero_in restaurant_detail">
+		<div class="hero_in restaurant_detail" style="background: url('<?=$imgsResto[0]["url"]?>') center center no-repeat; background-size: cover;">
 			<div class="wrapper">
 				<span class="magnific-gallery">
 				<?php
@@ -278,6 +390,30 @@ $db->close();
 								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361"><?=$resLugar["direccion"]?></a>
 							</div>
 							<p><?=$resLugar["descripcion"]?></p>
+
+							<?php
+							if(isset($contactsLugar)) {
+							?>
+							<h5 class="add_bottom_15">Contacto</h5>
+							<div class="row add_bottom_30">
+								<ul class="hotel_facilities" style="margin-left: 20px;">
+								<?php 
+								foreach ($contactsLugar as $key => $contacto) {
+									if($contacto["tipo"] == 'Celular') {
+										echo '<li><img src="assets/public/img/iconos/smartphone.svg" width="25">'.$contacto["numero"].'</li>';
+									} else if($contacto["tipo"] == 'Telefono') {
+										echo '<li><img src="assets/public/img/iconos/phone.svg" width="25">'.$contacto["numero"].'</li>';
+									} else if($contacto["tipo"] == 'Whatsapp') {
+										echo '<li><img src="assets/public/img/iconos/whatsapp.svg" width="25">'.$contacto["numero"].'</li>';
+									}
+								}
+								?>	
+								</ul>
+							</div>
+							<!-- /row -->
+							<?php
+							}
+							?>
 							<h5 class="add_bottom_15">Caracteristicas</h5>
 							<div class="row add_bottom_30">
 								<ul class="hotel_facilities" style="margin-left: 20px;">
@@ -309,7 +445,13 @@ $db->close();
 							?>
 							<div class="opening">
                                 <div class="ribbon">
-                                    <span class="open">Ahora Abierto</span>
+								<?php 
+								if($abierto) {
+									echo '<span class="open">Ahora Abierto</span>';
+								} else {
+									echo '<span class="closed">Ahora Cerrado</span>';
+								}
+								?>
                                 </div>
                                 <i class="icon_clock_alt"></i>
                                 <h4>Horario de Atencion</h4>
@@ -351,7 +493,7 @@ $db->close();
 							?>
 							<h5>Menu del día - <?=$resMenu["dia_semana"]?></h5>
 							<h4><?=$resMenu["nombre_menu"]?></h4>
-							<p><?=$resMenu["descripcion_menu"]?></p>
+							<p><?=$resMenu["decripcion_menu"]?></p>
 							<div class="row add_bottom_15">
                                 <div class="col-lg-6 col-md-12">
                                     <ul class="menu_list">
@@ -378,7 +520,7 @@ $db->close();
                                 <div class="col-lg-6 col-md-12">
                                     <ul class="menu_list">
                                     <?php
-									foreach ($lista_platos1 as $key => $plato) {
+									foreach ($lista_platos2 as $key => $plato) {
 									?>
 										<li>
                                             <div class="thumb">
@@ -515,8 +657,13 @@ $db->close();
 					</div>
 					<!-- /col -->
 					
+
 					<aside class="col-lg-4" id="sidebar">
 						<div id="AJAXreserva"></div>
+						
+					<?php
+					if($resResto["reserva_mesa"] == 1) {
+					?>
 						<div class="box_detail booking">
 
 							<div class="price">
@@ -565,9 +712,13 @@ $db->close();
 									</select>
 								</div>
 							</div>
+							<input type="hidden" id="idResto" value="<?=$resResto["id_restaurante"]?>">
 							<button id="EnviarReserva" class=" add_top_30 btn_1 full-width purchase">Reservar</button>
 							<div class="text-center"><small>No es necesario ningun pago extra</small></div>
 						</div>
+					<?php
+					}
+					?>
 						<!-- <ul class="share-buttons">
 							<li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
 							<li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
@@ -710,13 +861,40 @@ $db->close();
 	
 	<!-- DATEPICKER  -->
 	<script>
+
+	//DatePicker
     $('#fecha_reserva').daterangepicker({
         "singleDatePicker": true,
         "parentEl": '#input-dates',
-        "opens": "left"
-    }, function(start, end, label) {
-        console.log('New date range selected: ' + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
-	});
+		"opens": "left",
+		"locale": {
+			"format": "YYYY/MM/DD",
+			"separator": " - ",
+			"daysOfWeek": [
+				"Do",
+				"Lu",
+				"Ma",
+				"Mi",
+				"Ju",
+				"Vi",
+				"Sa"
+			],
+			"monthNames": [
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Augosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Deciembre"
+			]
+    	}
+    });
 
 	//Datos del Retaurante para marcadores
 
@@ -1113,8 +1291,31 @@ $db->close();
 		var fecha = $('#fecha_reserva').val();
 		var cant = $('#cant_reserva').val();
 		var hora = $('#hora_reserva').val();
-
-		alert('Reserva realizada con exito \n' + nombre + '\n' + fecha + '\n' + cant + '\n' + hora);
+		var id_resto = $('#idResto').val();
+		// alert('Reserva realizada con exito \n' + nombre + '\n' + fecha + '\n' + cant + '\n' + hora);
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/realizarReserva.request.php",
+			data: {
+				nombre: nombre,
+				fecha: fecha,
+				cant: cant,
+				hora: hora,
+				id_resto: id_resto
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$('#AJAXreserva').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Finalizado!</strong> Su reserva a sido enviada para su verificacion.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$('#nombre_reserva').val('');
+					$('#fecha_reserva').val('');
+					$('#cant_reserva').val('0');
+					$('.qtyTotal').html('0');
+				} else {
+					$('#AJAXreserva').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><strong>ERROR!</strong> '+response+'.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
 	});
 
     </script>

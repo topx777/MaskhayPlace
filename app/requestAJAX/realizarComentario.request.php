@@ -23,7 +23,7 @@ if($_POST) {
 			echo 'Ya realizaste una calificacion y comentario';
 		}
 	} else {
-		echo 'Datos Vacios, intente nuevamente';
+		echo 'Datos Vacios, el puntaje es requerido';
 	}
 }
 ?>

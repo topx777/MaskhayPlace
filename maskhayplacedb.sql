@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2018 a las 08:51:18
+-- Tiempo de generación: 15-11-2018 a las 12:13:30
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -60,6 +60,14 @@ CREATE TABLE `contacto` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `contacto`
+--
+
+INSERT INTO `contacto` (`id_contacto`, `tipo`, `numero`, `lugar`) VALUES
+(1, 'Telefono', '4414017', 1),
+(2, 'Celular', '65706492', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +103,13 @@ CREATE TABLE `horario` (
   `viernes` varchar(25) COLLATE utf8_spanish_ci DEFAULT NULL,
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `horario`
+--
+
+INSERT INTO `horario` (`id_horario`, `sabado`, `domingo`, `semanal`, `lun_vier`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `restaurante`) VALUES
+(1, '8:00 - 20:00', '11:00 - 17:00', 0, NULL, '8:00 - 22:00', '8:00 - 22:00', '8:00 - 22:00', '8:00 - 22:00', '8:00 - 23:00', 1);
 
 -- --------------------------------------------------------
 
@@ -135,6 +150,15 @@ CREATE TABLE `imagen` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `imagen`
+--
+
+INSERT INTO `imagen` (`id_imagen`, `descripcion`, `url`, `lugar`) VALUES
+(1, 'resto1', 'assets/public/img/imagenes/1_1.jpeg', 1),
+(2, 'resto2', 'assets/public/img/imagenes/1_2.jpeg', 1),
+(4, 'Resto3', 'assets/public/img/imagenes/1_3.jpeg', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -163,7 +187,7 @@ CREATE TABLE `lugar` (
 --
 
 INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`, `revisado`, `encargado_rev`, `observaciones`, `estado`) VALUES
-(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', '.', 1, 'Restaurante', 0, NULL, NULL, NULL);
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', 'assets/public/img/logos/1.jpg', 1, 'Restaurante', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -196,6 +220,13 @@ CREATE TABLE `menu` (
   `restaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `menu`
+--
+
+INSERT INTO `menu` (`id_menu`, `nombre_menu`, `decripcion_menu`, `dia_semana`, `restaurante`) VALUES
+(1, 'Especial', 'Menu para el dia a dia, con mucha variedad, visite nuestro restaurante para poder encontrar el plato que necesite a un precio acorde.', 'Jueves', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -210,6 +241,14 @@ CREATE TABLE `menu_plato` (
   `menu` int(11) NOT NULL,
   `imagen_menuplato` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `menu_plato`
+--
+
+INSERT INTO `menu_plato` (`id_menuplato`, `nombre_plato`, `precio_plato`, `descripcion_plato`, `menu`, `imagen_menuplato`) VALUES
+(1, 'Almuerzo Completo', 15, 'Sopa Esparragos / Albondiga', 1, NULL),
+(2, 'Chuleta de Cerdo', 20, 'Cerdo + Pure de Papa + Buffet Ensalada', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,12 +277,21 @@ CREATE TABLE `reserva` (
   `id_reserva` int(11) NOT NULL,
   `restaurante` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
-  `nombre_reserva` int(11) NOT NULL,
+  `nombre_reserva` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `cantidad_personas` int(11) NOT NULL,
   `estado` varchar(15) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `reserva`
+--
+
+INSERT INTO `reserva` (`id_reserva`, `restaurante`, `usuario`, `nombre_reserva`, `fecha`, `hora`, `cantidad_personas`, `estado`) VALUES
+(7, 1, 3, 'Abel Lopez', '2018-11-22', '20:00:00', 10, 'Pendiente'),
+(8, 1, 3, 'Abel Lopez', '2018-11-13', '11:00:00', 7, 'Pendiente'),
+(9, 1, 3, 'Abel Lopez', '2018-11-28', '22:00:00', 2, 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -432,7 +480,7 @@ ALTER TABLE `calificacion`
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `farmacia`
 --
@@ -442,7 +490,7 @@ ALTER TABLE `farmacia`
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_horario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `hotel`
 --
@@ -452,7 +500,7 @@ ALTER TABLE `hotel`
 -- AUTO_INCREMENT de la tabla `imagen`
 --
 ALTER TABLE `imagen`
-  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `lugar`
 --
@@ -467,12 +515,12 @@ ALTER TABLE `medicamento`
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `menu_plato`
 --
 ALTER TABLE `menu_plato`
-  MODIFY `id_menuplato` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menuplato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `pieza`
 --
@@ -482,7 +530,7 @@ ALTER TABLE `pieza`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `restaurante`
 --
