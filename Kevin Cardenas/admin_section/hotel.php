@@ -2,6 +2,20 @@
 
     if (isset($_POST['enviarhotel'])) 
     {
+
+        //recibimos el nombre 
+$nombre = $_POST['nombre'];
+
+//recibimos la direccion 
+$direccion = $_POST['direccion'];
+
+//recibimos la descripcion
+$descripcion = $_POST['descripcion'];
+
+
+
+//consulta para tabla lugar * falta logo, mapa, etc
+echo "insert into lugar (nombre_lugar,direccion,descripcion) values ($nombre,$direccion,$descripcion)";
     $tipo = $_POST['tipohotel'];
 
     if (isset($_POST['parqueo']) && $_POST['parqueo'] = '1')      
@@ -68,7 +82,7 @@
     $servicio = 1;
     else
     $servicio = 0;
-
+echo "insert into hotel (categoria,parqueo,piscina,area_recreativa,bar,cable,internet,aire_acondicionado,desayuno,gimnasio,mascotas,spa,comedor,servicio_habitacion) values ($tipo,$parqueo,$piscina,$area,$bar,$cable,$internet,$aire,$desayuno,$gym,$mascotas,$spa,$comedor,$servicio)";
 
 
 
