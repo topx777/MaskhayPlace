@@ -2,8 +2,8 @@
 session_start();
 
 $_SESSION["usuario"] = array(
-	'id' => 3,
-	'nombre' => 'Carlos'
+	'id' => 4,
+	'nombre' => 'Marcelo'
 );
 
 $idLugar = $_GET['id'];
@@ -1239,7 +1239,7 @@ $db->close();
 		return new InfoBox({
 			content:
 			'<div class="marker_info" id="marker_info">' +
-			'<img src="' + item.map_image_url + '" alt=""/>' +
+			'<img src="' + item.map_image_url + '" width="240" alt=""/>' +
 			'<span>'+ 
 				'<span class="infobox_rate">'+ item.rate +'</span>' +
 				'<em>'+ item.type_point +'</em>' +
