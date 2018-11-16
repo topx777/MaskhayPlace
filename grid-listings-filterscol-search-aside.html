@@ -256,19 +256,19 @@
 								<h6>Category</h6>
 								<ul>
 									<li>
-										<label class="container_check">Hotel <small>245</small>
+										<label class="container_check">Hotel <small id="numHoteles">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Restaurante <small>67</small>
+										<label class="container_check">Restaurante <small id="numRestaurantes">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Farmacia <small>32</small>
+										<label class="container_check">Farmacia <small id="numFarmacias">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
@@ -284,19 +284,19 @@
 								<h6>Rating</h6>
 								<ul>
 									<li>
-										<label class="container_check">Superb 5 <small>43</small>
+										<label class="container_check">Superb 5 <small id="pts5">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Good 3+ <small>56</small>
+										<label class="container_check">Good 3+ <small id="pts34">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Pleasant 1+ <small>23</small>
+										<label class="container_check">Pleasant 1+ <small id="pts02">0</small>
 										  <input type="checkbox">
 										  <span class="checkmark"></span>
 										</label>
@@ -624,12 +624,18 @@
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
 	<script>
+			var coordenadas={
+				latitud:'',
+				longitud:'',
+			}
 			function getParameterByName(name) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 					results = regex.exec(location.search);
 				return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
+			getLocation();
+
 			$.getJSON('busqueda/controller/busqueda.php',
 			{
 				buscar:getParameterByName('buscar'),
@@ -638,11 +644,33 @@
 				distaciaRad:'',
 				orden:'all',
 				puntaje:'05',
+				coordenada:coordenadas
 			},
 				function (data, textStatus, jqXHR) {
+					// numero de sitios
 					console.log(data)
+					$('#numHoteles').html(data.numSitios.hoteles);
+					$('#numRestaurantes').html(data.numSitios.restaurantes);
+					$('#numFarmacias').html(data.numSitios.farmacias);
+					// puntajes
+					$('#pts5').html(data.sitiosPuntaje.pts5);
+					$('#pts34').html(data.sitiosPuntaje.pts34);
+					$('#pts02').html(data.sitiosPuntaje.pts02);
 				}
 			);
+			///Coordenadas de Usuario
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function(pos){
+						coordenadas.latitud=pos.coords.latitude;
+						coordenadas.longitud=pos.coords.longitude;
+						console.log('latitud'+coordenadas.latitud);
+						console.log('longitud'+coordenadas.longitud);
+					});
+				} else {
+					console.log("No soportado.");
+				}
+			}
 	</script>		
   
 </body>
