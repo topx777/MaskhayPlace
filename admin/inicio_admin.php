@@ -5,6 +5,27 @@ if(!isset($_SESSION["admin"])) {
     header('Location: login_admin.php');
 }
 
+include('../helpers/class.Conexion.php');
+$db = new Conexion();
+$db->charset();
+
+$obtenerLugares = $db->query("SELECT * FROM lugar");
+if($db->rows($obtenerLugares) > 0) {
+  while($resLugar = $db->recorrer($obtenerLugares)) {
+    $idUsuario = $resLugar["usuario"];
+    $obtenerUsu = $db->query("SELECT nombre FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
+    $resUsuario = $db->recorrer($obtenerUsu);
+    $lugares[] = array(
+      'id' => $resLugar["id_lugar"],
+      'nombre' => $resLugar["nombre_lugar"],
+      'usuario' => $resUsuario["nombre"],
+      'logo' => $resLugar["logo"],
+      'categoria' => $resLugar["categoria"],
+      'estado' => $resLugar["estado"]
+    );
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +37,7 @@ if(!isset($_SESSION["admin"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Ansonika">
-  <title>SPARKER - Admin dashboard</title>
+  <title>Panel de Administracion</title>
 	
   <!-- Favicons-->
   <link rel="shortcut icon" href="../assets/admin/img/favicon.ico" type="image/x-icon">
@@ -47,79 +68,34 @@ if(!isset($_SESSION["admin"])) {
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-          <a class="nav-link" href="messages.html">
-            <i class="fa fa-fw fa-envelope-open"></i>
-            <span class="nav-link-text">Messages</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
-          <a class="nav-link" href="bookings.html">
-            <i class="fa fa-fw fa-calendar-check-o"></i>
-            <span class="nav-link-text">Bookings <span class="badge badge-pill badge-primary">6 New</span></span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings" data-parent="#mylistings">
             <i class="fa fa-fw fa-list"></i>
-            <span class="nav-link-text">My listings</span>
+            <span class="nav-link-text">Publicaciones Lugar</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMylistings">
             <li>
-              <a href="listings.html">Pending <span class="badge badge-pill badge-primary">6</span></a>
+              <a href="listings.html">Todos <span class="badge badge-pill badge-primary">6</span></a>
             </li>
-			<li>
-              <a href="listings.html">Active <span class="badge badge-pill badge-success">6</span></a>
-            </li>
-			<li>
-              <a href="listings.html">Expired <span class="badge badge-pill badge-danger">6</span></a>
-            </li>
-          </ul>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
-          <a class="nav-link" href="reviews.html">
-            <i class="fa fa-fw fa-star"></i>
-            <span class="nav-link-text">Reviews</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
-          <a class="nav-link" href="bookmarks.html">
-            <i class="fa fa-fw fa-heart"></i>
-            <span class="nav-link-text">Bookmarks</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
-          <a class="nav-link" href="add-listing.html">
-            <i class="fa fa-fw fa-plus-circle"></i>
-            <span class="nav-link-text">Add listing</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="user-profile.html">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text">My Profile</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#Components">
-            <i class="fa fa-fw fa-gear"></i>
-            <span class="nav-link-text">Components</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="charts.html">Charts</a>
+              <a href="listings.html">Pendientes <span class="badge badge-pill badge-warning">6</span></a>
             </li>
-			<li>
-              <a href="tables.html">Tables</a>
+            <li>
+              <a href="listings.html">Activos <span class="badge badge-pill badge-success">6</span></a>
+            </li>
+			      <li>
+              <a href="listings.html">Rechazados <span class="badge badge-pill badge-danger">6</span></a>
             </li>
           </ul>
         </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-calendar-check-o"></i>
+            <span class="nav-link-text">Mis revisiones <span class="badge badge-pill badge-primary">6 New</span></span>
+          </a>
+        </li>
+
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -129,95 +105,7 @@ if(!isset($_SESSION["admin"])) {
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-envelope"></i>
-            <span class="d-lg-none">Messages
-              <span class="badge badge-pill badge-primary">12 New</span>
-            </span>
-            <span class="indicator text-primary d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-            <h6 class="dropdown-header">Nuevos mensajes:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>David Miller</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">¡Hola! Esta nueva versión de SB Admin es bastante impresionante! ¡Estos mensajes se cortan cuando llegan al final del cuadro para que no se desborden a los lados!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>Jane Smith</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Me preguntaba si podría reunirse para una cita a las 3:00 en lugar de las 4:00. ¡Gracias!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <strong>John Doe</strong>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">He enviado los archivos finales a usted para su revisión. Cuando puedas darte de baja, avísame y podemos discutir la distribución.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">Ver todos los mensajes</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">Alerts
-              <span class="badge badge-pill badge-warning">6 New</span>
-            </span>
-            <span class="indicator text-warning d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">Nuevas alertas:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Actualizacion de estados</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Este es un mensaje de respuesta del servidor automatizado. Todos los sistemas están en línea.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-danger">
-                <strong>
-                  <i class="fa fa-long-arrow-down fa-fw"></i>Actualizacion de estados</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Este es un mensaje de respuesta del servidor automatizado. Todos los sistemas están en línea.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Actualizacion de estado</strong>
-              </span>
-              <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Este es un mensaje de respuesta del servidor automatizado. Todos los sistemas están en línea.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">Ver todas las alertas</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-              <input class="form-control search-top" type="text" placeholder="Buscar. . .">
-              <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-          </form>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Cerrar sesion</a>
@@ -228,16 +116,9 @@ if(!isset($_SESSION["admin"])) {
   <!-- /Navigation-->
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Tablero</a>
-        </li>
-        <li class="breadcrumb-item active">Lista de negocios</li>
-      </ol>
 		<div class="box_general">
 			<div class="header_box">
-				<h2 class="d-inline-block">Lista de negocios</h2>
+				<h2 class="d-inline-block">Lista de negocios: Todos</h2>
 				<div class="filter">
 					<select name="orderby" class="selectbox">
 						<option value="Any status">Cualquier Estatus</option>
@@ -249,22 +130,26 @@ if(!isset($_SESSION["admin"])) {
 			</div>
 			<div class="list_general">
 				<ul>
-					<li>
-						<figure><img src="../assets/admin/img/item_1.jpg" alt=""></figure>
-						<h4>Brandon triveño <i class="pending">Pendiente</i></h4>
-						<ul class="booking_list">
-							<li><strong>Start date</strong> 11 November 2017</li>
-							<li><strong>End date</strong> 11 April 2018</li>
-							<li><strong>Booking details</strong> 2 People</li>
-							<li><strong>Client</strong> Mark Twain</li>
-						</ul>
-						<p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-envelope"></i> Enviar Mensaje</a></p>
-						<ul class="buttons">
-							<li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aceptar</a></li>
-							<li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</a></li>
-						</ul>
-					</li>
-					<li>
+        <?php
+        foreach ($lugares as $key => $lugar) {
+        ?>
+          <li>
+            <figure><img src="../<?=$lugar["logo"]?>" alt=""></figure>
+            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"]?></i></h4>
+            <ul class="booking_list">
+              <li><strong>Usuario</strong> <?=$lugar["usuario"]?></li>
+              <li><strong>Categoria</strong> <?=$lugar["categoria"]?></li>
+            </ul>
+            <p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-envelope"></i> Enviar Mensaje</a></p>
+            <ul class="buttons">
+              <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aceptar</a></li>
+              <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</a></li>
+            </ul>
+          </li>
+        <?php
+        }
+        ?>
+					<!-- <li>
 						<figure><img src="../assets/admin/img/item_2.jpg" alt=""></figure>
 						<h4>Abel Lopez <i class="cancel">Cancelado</i></h4>
 						<ul class="booking_list">
@@ -291,7 +176,7 @@ if(!isset($_SESSION["admin"])) {
 							<li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aceptar</a></li>
 							<li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</a></li>
 						</ul>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</div>
@@ -317,7 +202,7 @@ if(!isset($_SESSION["admin"])) {
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © SPARKER 2018</small>
+          <small>Copyright © Maskayplace 2018</small>
         </div>
       </div>
     </footer>
