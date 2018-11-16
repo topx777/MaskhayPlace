@@ -1,14 +1,15 @@
 <?php
 session_start();
 
-$_SESSION["usuario"] = array(
-	'id' => 3,
-	'nombre' => 'Carlos'
-);
+// $_SESSION["usuario"] = array(
+// 	'id' => 3,
+// 	'nombre' => 'Carlos'
+// );
 
 $idLugar = $_GET['id'];
 
-$usuarioID = $_SESSION["usuario"]["id"];
+if(isset($_SESSION["usuario"]))
+	$usuarioID = $_SESSION["usuario"]["id"];
 
 include('helpers/class.Conexion.php');
 
@@ -230,10 +231,12 @@ if($cantCalificaciones > 0) {
 
 //Obtener Caificacion Usuario al lugar
 $lugarCalificado = false;
-$obtenerCalfUsuario = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar AND usuario = $usuarioID");
-$cantCalifUsuario = $db->rows($obtenerCalfUsuario);
-if($cantCalifUsuario > 0) {
-	$lugarCalificado = true;
+if(isset($_SESSION["usuario"])) {
+	$obtenerCalfUsuario = $db->query("SELECT * FROM calificacion WHERE lugar = $idLugar AND usuario = $usuarioID");
+	$cantCalifUsuario = $db->rows($obtenerCalfUsuario);
+	if($cantCalifUsuario > 0) {
+		$lugarCalificado = true;
+	}
 }
 
 $db->close();
@@ -313,7 +316,11 @@ $db->close();
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
 						<li><a href="account.html" class="btn_add">Publicar Lugar</a></li>
-						<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Iniciar Sesión">Iniciar Sesión</a></li>
+					<?php
+					if(!isset($_SESSION["usuario"])) {
+						echo '<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+					}
+					?>
 						<!-- <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li> -->
 					</ul>
 					<!-- /top_menu -->
@@ -333,7 +340,29 @@ $db->close();
                                     <li><a href="#">Restaurantes</a></li>
                                     <li><a href="#">Farmacias</a></li>
                                 </ul>
-                            </li>
+							</li>
+						<?php
+						if(isset($_SESSION["usuario"])){
+						?>
+							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
+								<ul>
+									<li><a href="#">
+										<span class="ti-dashboard"> </span>
+										Administrar mi Negocio</a>
+									</li>
+									<li><a href="#">
+										<span class="ti-agenda"> </span>
+										Mis Reservas</a>
+									</li>
+									<li><a href="app/requestAJAX/cerrarSesion.request.php">
+										<span class="ti-shift-left"> </span>
+										Cerrar Sesion</a>
+									</li>
+								</ul>
+							</li>
+						<?php
+						}
+						?>
                         </ul>
                     </nav>
 				</div>
@@ -713,7 +742,14 @@ $db->close();
 								</div>
 							</div>
 							<input type="hidden" id="idResto" value="<?=$resResto["id_restaurante"]?>">
-							<button id="EnviarReserva" class=" add_top_30 btn_1 full-width purchase">Reservar</button>
+						<?php
+						if(isset($_SESSION["usuario"])) 
+						{
+							echo '<button id="EnviarReserva" class="add_top_30 btn_1 full-width purchase">Reservar</button>';
+						} else {
+							echo '<button class="add_top_30 btn_1 full-width purchase disabled">Reservar</button>';
+						}
+						?>
 							<div class="text-center"><small>No es necesario ningun pago extra</small></div>
 						</div>
 					<?php
