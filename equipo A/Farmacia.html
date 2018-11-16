@@ -33,8 +33,79 @@
     <link rel="stylesheet" href="../assets/admin/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="mis css/mis estilos/estilo.css">
     <link rel="stylesheet" href="mis js/timepicki/timepicki.css">
+    <style> 
+  	  #map {
+        height: 100%;
+      }
+     
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	</style> 
     <!-- scripts previos -->
-    
+    <!-- Agregar la librería de Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
+    <script src="mis js/google/google-api.js"></script>
+    <script>
+        var marker;
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 6,
+            center: {lat: 40.4165000, lng: -3.7025600}
+            });
+
+            marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {lat: 40.4165000, lng: -3.7025600}
+            });
+            marker.addListener('click', toggleBounce);
+
+            marker.addListener( 'dragend', function (event)
+            {
+                //escribimos las coordenadas de la posicion actual del marcador dentro del input #coords
+                document.getElementById("coordenadasEquipo").value = this.getPosition().lat()+","+ this.getPosition().lng();
+            });
+        }
+
+        // permite arrastar el marcador
+        function toggleBounce() {
+            if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+            } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+
+        // captura el evento click sobre le marcador
+        function funcionClick() {
+            if (marker.getAnimation() != null) {
+            marker.setAnimation(null);
+            } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+
+        // cargamos el mapa en la ventana modal
+        $('#ModalEquipos').on('shown.bs.modal', function(){
+            initMap();
+        });
+
+        google.maps.event.addListener( map, "click", function(ele) {
+            // codigo que crea el marcador
+            new google.maps.Marker({
+                map: map
+            })
+        });
+
+      </script>
+    <!-- <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"
+    type="text/javascript"></script> -->
+
 </head>
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation -->
@@ -89,19 +160,17 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Area para personalizacion -->
-            <div class="content-wrapper">
-                <div class="container-fluid">
                     <div class="box_general padding_bottom">
                         <div class="header_box version_2">
                                 <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
                         </div>
                         <div class="row">                            
-                            <div class="col-md-8 add_top_30">
+                            <div class="col-md-12 add_top_30">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" disabled="" style="width:800px">
+                                            <input type="text" class="form-control" disabled="" style="width:90%">
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
@@ -112,10 +181,10 @@
                                     </div> -->
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Direccion</label>
-                                            <input type="text" class="form-control" style="width:800px">
+                                            <input type="text" class="form-control" style="width:90%">
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="width:800px">
+                                <div class="row">
                                     <div class="radio">
                                         <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio" checked>Mañana</label>
                                     </div>
@@ -140,7 +209,7 @@
                                         <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio">24 hrs</label>
                                     </div>
                                 </div>
-                                <div class="row" style="width:800px">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">          
                                             <label>Horario</label><br>
@@ -202,16 +271,78 @@
                                         </table>
                                     </li>
                                 </div>
-
+                                
                                 
                         </div>
                     </div>
                 </div>
+         <!-- -------------------------------------Lugar------------------------------------->
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+              <h2><i class="fa fa-user"></i>Lugar</h2>
             </div>
-
-
-
-
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label>Logo</label>
+                    <form action="/file-upload" class="dropzone"></form>
+                </div>
+              </div>
+              <div class="col-md-8 add_top_30">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nombre</label>
+                      <input type="text" class="form-control" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Direccion</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Longitud</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Latitud</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Descripcion</label>
+                      <textarea style="height:100px;" class="form-control" placeholder="Personal info"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+            </div>
+        </div>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2" style="width:300px;">
+                <h2>
+                    <label>Geolocalizacion:</label><br>
+                </h2>                
+            </div>
+            <div class="row">
+                <!-- Mapa de GOOGLE -->
+                <div  id="map" style="width:8000px; height:500px; float: left"></div>
+            </div>
+            <div class="modal-footer modal-lg">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
+            </div>
         </div>
         <!-- /container-fluid -->
     </div>
@@ -264,7 +395,7 @@
     <script src="../assets/admin/vendor/bootstrap-datepicker.js"></script>
     <script>$('input.date-pick').datepicker();</script>
     <!-- WYSIWYG Editor -->
-	<script src="js/editor/summernote-bs4.min.js"></script>
+	<script src="../assets/admin/js/editor/summernote-bs4.min.js"></script>
 	<script>
       $('.editor').summernote({
 		fontSizes: ['10', '14'],
