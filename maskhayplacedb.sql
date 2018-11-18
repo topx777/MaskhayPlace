@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2018 a las 12:13:30
+-- Tiempo de generación: 17-11-2018 a las 23:22:25
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -45,7 +45,10 @@ CREATE TABLE `calificacion` (
 INSERT INTO `calificacion` (`id_calificacion`, `lugar`, `usuario`, `calificacion`, `comentario`, `fecha`, `respuesta`) VALUES
 (1, 1, 1, 3, 'Este es un buen restaurante', '2018-11-12', ''),
 (2, 1, 2, 4, 'Es restaurante es excelente, me encanta el ambiente, 100% recomendado', '2018-11-11', ''),
-(3, 1, 3, 2, 'No me parecio mucho el lugar', '2018-11-13', '');
+(3, 1, 3, 2, 'No me parecio mucho el lugar', '2018-11-13', ''),
+(5, 2, 3, 5, 'Me encanto el hotel, atencion de primera, ambientes limpios y confortantes', '2018-11-16', ''),
+(8, 2, 2, 2, 'No me gusto el lugar, falta mejorar atencion', '2018-11-16', ''),
+(11, 3, 2, 3, 'Este es mi comentario', '2018-11-17', '');
 
 -- --------------------------------------------------------
 
@@ -66,7 +69,12 @@ CREATE TABLE `contacto` (
 
 INSERT INTO `contacto` (`id_contacto`, `tipo`, `numero`, `lugar`) VALUES
 (1, 'Telefono', '4414017', 1),
-(2, 'Celular', '65706492', 1);
+(2, 'Celular', '65706492', 1),
+(3, 'Celular', '77999124', 2),
+(4, 'Telefono', '4221556', 2),
+(5, 'Telefono', '4567781', 2),
+(6, 'Celular', '70763369', 3),
+(7, 'Whatsapp', '67899121', 3);
 
 -- --------------------------------------------------------
 
@@ -83,6 +91,13 @@ CREATE TABLE `farmacia` (
   `entrega_domicilio` tinyint(1) NOT NULL DEFAULT '0',
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `farmacia`
+--
+
+INSERT INTO `farmacia` (`id_farmacia`, `horario`, `turno`, `vacunas`, `servicio_enfermeria`, `entrega_domicilio`, `lugar`) VALUES
+(1, '7:00 - 23:00', 0, 0, 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -137,6 +152,13 @@ CREATE TABLE `hotel` (
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `hotel`
+--
+
+INSERT INTO `hotel` (`id_hotel`, `categoria`, `nivel`, `parqueo`, `piscina`, `area_recreativa`, `bar`, `cable`, `internet`, `aire_acondicionado`, `desayuno`, `gimnasio`, `mascota`, `spa`, `comedor`, `servicio_habitacion`, `lugar`) VALUES
+(1, 'Hotel', 3, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -157,7 +179,13 @@ CREATE TABLE `imagen` (
 INSERT INTO `imagen` (`id_imagen`, `descripcion`, `url`, `lugar`) VALUES
 (1, 'resto1', 'assets/public/img/imagenes/1_1.jpeg', 1),
 (2, 'resto2', 'assets/public/img/imagenes/1_2.jpeg', 1),
-(4, 'Resto3', 'assets/public/img/imagenes/1_3.jpeg', 1);
+(4, 'Resto3', 'assets/public/img/imagenes/1_3.jpeg', 1),
+(8, 'Hotel1', 'assets/public/img/imagenes/2_1.jpeg', 2),
+(9, 'Hotel2', 'assets/public/img/imagenes/2_2.jpeg', 2),
+(10, 'Hotel3', 'assets/public/img/imagenes/2_3.jpeg', 2),
+(11, 'Farma1', 'assets/public/img/imagenes/3_1.jpeg', 3),
+(12, 'Farma2', 'assets/public/img/imagenes/3_2.jpeg', 3),
+(13, 'Farma3', 'assets/public/img/imagenes/3_3.jpeg', 3);
 
 -- --------------------------------------------------------
 
@@ -187,7 +215,9 @@ CREATE TABLE `lugar` (
 --
 
 INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`, `revisado`, `encargado_rev`, `observaciones`, `estado`) VALUES
-(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', 'assets/public/img/logos/1.jpg', 1, 'Restaurante', 0, NULL, NULL, NULL);
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', 'assets/public/img/logos/1.jpeg', 1, 'Restaurante', 0, NULL, NULL, NULL),
+(2, 'Hotel Diplomat', 'Av. Peru entre Visconte Almanza 2445', -66.180914, -17.377673, 3, 'Hotel Diplomat el lugar que usted necesita para descansar, confie en nuestros servicios contamos con ambientes completos y diversos para toda nuestra poblacion.', 'assets/public/img/logos/2.jpeg', 1, 'Hotel', 0, NULL, NULL, NULL),
+(3, 'Farmacia \"Los Angeles\"', 'Av. Villa de Galindo 256', -66.165169, -17.378824, 2, 'Le ofrecemos los mejores medicamentos, a su alcance al mejor precio, damos la mejor atencion posible, por que usted es primero para nosotros', 'assets/public/img/logos/3.jpeg', 1, 'Farmacia', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -205,6 +235,14 @@ CREATE TABLE `medicamento` (
   `farmacia` int(11) NOT NULL,
   `imagen_medicamento` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `medicamento`
+--
+
+INSERT INTO `medicamento` (`id_medicamento`, `nombre_medicamento`, `precio_medicamento`, `descuento`, `precio_descuento`, `descripcion`, `farmacia`, `imagen_medicamento`) VALUES
+(1, 'Paracetamol Forte', 45, 1, 34.5, 'Blester de 10 Unidades', 1, NULL),
+(2, 'Biodem', 155, 1, 120, 'Calmante - 125mL', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,6 +305,14 @@ CREATE TABLE `pieza` (
   `imagen_pieza` varchar(55) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `pieza`
+--
+
+INSERT INTO `pieza` (`id_pieza`, `nombre_pieza`, `descripcion_pieza`, `precio_noche`, `sanitario_privado`, `frigobar`, `hotel`, `imagen_pieza`) VALUES
+(1, 'Simple', 'Pieza simple de una cama, generalmente para una sola persona.', 125, 1, 1, 1, NULL),
+(2, 'Matrimonial', 'Habitacion con cama matrimonial. especialmente para dos personas, buen ambiente y jacuzzi incluido', 185, 1, 1, 1, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -289,9 +335,8 @@ CREATE TABLE `reserva` (
 --
 
 INSERT INTO `reserva` (`id_reserva`, `restaurante`, `usuario`, `nombre_reserva`, `fecha`, `hora`, `cantidad_personas`, `estado`) VALUES
-(7, 1, 3, 'Abel Lopez', '2018-11-22', '20:00:00', 10, 'Pendiente'),
-(8, 1, 3, 'Abel Lopez', '2018-11-13', '11:00:00', 7, 'Pendiente'),
-(9, 1, 3, 'Abel Lopez', '2018-11-28', '22:00:00', 2, 'Pendiente');
+(9, 1, 3, 'Carlos Velasquez', '2018-11-30', '20:00:00', 4, 'Pendiente'),
+(10, 1, 3, 'Marcelo', '2018-11-27', '10:00:00', 2, 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -356,7 +401,8 @@ CREATE TABLE `usuarioregistrado` (
 INSERT INTO `usuarioregistrado` (`id_usuarioregistrado`, `usuario`, `password`, `nombre`, `apellidos`, `correo`, `negocio`, `celular`) VALUES
 (1, 'topx777', 'slr8830213', 'Abel', 'Lopez Paniagua', 'topx777@gmail.com', 1, '65706492'),
 (2, 'groverm', '1234', 'Grover', 'Mamani Veizan', 'groverf@gmail.com', 0, '66889832'),
-(3, 'carlangas', '12345', 'Carlos Rodrigo', 'Velasquez Castellon', 'carlas@gmail.com', 0, '68992212');
+(3, 'carlangas', '12345', 'Carlos Rodrigo', 'Velasquez Castellon', 'carlas@gmail.com', 0, '68992212'),
+(4, 'shakir', '123', 'Marcelo', 'Vargas', 'marce@gmail.com', 0, '67892222');
 
 --
 -- Índices para tablas volcadas
@@ -475,17 +521,17 @@ ALTER TABLE `usuarioregistrado`
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `farmacia`
 --
 ALTER TABLE `farmacia`
-  MODIFY `id_farmacia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_farmacia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `horario`
 --
@@ -495,22 +541,22 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `imagen`
 --
 ALTER TABLE `imagen`
-  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `lugar`
 --
 ALTER TABLE `lugar`
-  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `medicamento`
 --
 ALTER TABLE `medicamento`
-  MODIFY `id_medicamento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
@@ -525,12 +571,12 @@ ALTER TABLE `menu_plato`
 -- AUTO_INCREMENT de la tabla `pieza`
 --
 ALTER TABLE `pieza`
-  MODIFY `id_pieza` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pieza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `restaurante`
 --
@@ -545,7 +591,7 @@ ALTER TABLE `superusuario`
 -- AUTO_INCREMENT de la tabla `usuarioregistrado`
 --
 ALTER TABLE `usuarioregistrado`
-  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --

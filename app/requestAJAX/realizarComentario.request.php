@@ -3,7 +3,7 @@ if($_POST) {
 	if(!empty($_POST["puntaje"]) and !empty($_POST["lugar"])) {
 		$puntaje = $_POST["puntaje"];
 		$comentario = $_POST["comentario"];
-		$idUsuario = 3;
+		$idUsuario = 2;
 		$idLugar = $_POST["lugar"];
 
 		$fecha = date("Y-m-d");
@@ -12,7 +12,7 @@ if($_POST) {
 		$db = new Conexion();
 
 		$verificarCalificacion = $db->query("SELECT * FROM calificacion WHERE usuario = $idUsuario AND lugar = $idLugar");
-		if($db->rows($verificarCalificacion) > 0) {
+		if($db->rows($verificarCalificacion) == 0) {
 			$agregarCalificacion = $db->query("INSERT INTO calificacion(lugar, usuario, calificacion, comentario, fecha) VALUES($idLugar, $idUsuario, $puntaje, '$comentario', '$fecha')");
 			if($agregarCalificacion) {
 				echo 1;

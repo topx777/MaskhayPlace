@@ -151,7 +151,9 @@ if($db->rows($obtenerMenu) > 0) {
 		}
 
 		$mitad = $cantPlatos / 2;
-		$mitad = ceil($mitad);
+		if($cantPlatos % 2 > 0) {
+			$mitad = ceil($mitad);
+		}
 
 		if($mitad == $cantPlatos) {
 			$lista_platos1 = $platos;
@@ -216,7 +218,7 @@ if($cantCalificaciones > 0) {
 		array('calificacion' => 5, 'cant' => 0, 'porcentaje' => 0));
 
 	//Obtener las calificaciones del lugar
-	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = 1 GROUP BY calificacion ORDER BY calificacion");
+	$obtenerCatCalif = $db->query("SELECT COUNT(*) AS 'cantidad' , calificacion FROM calificacion WHERE lugar = $idLugar GROUP BY calificacion ORDER BY calificacion");
 	while ($resCatCalif = $db->recorrer($obtenerCatCalif)) {
 		$porcentaje = floor((100 / $cantCalificaciones) * $resCatCalif["cantidad"]);
 		foreach ($calificacionesCat as $key => $calificacion) {
@@ -255,11 +257,11 @@ $db->close();
     <title>MaskhayPlace | Detalle de Restaurante</title>
 
     <!-- Favicons-->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+    <link rel="shortcut icon" href="assets/public/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="assets/public/img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="assets/public/img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="assets/public/img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="assets/public/img/apple-touch-icon-144x144-precomposed.png">
 
     <!-- GOOGLE WEB FONT -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
@@ -351,7 +353,7 @@ $db->close();
 										<span class="ti-dashboard"> </span>
 										Administrar mi Negocio</a>
 									</li>
-									<li><a href="#">
+									<li><a href="reservas_usuario.php">
 										<span class="ti-agenda"> </span>
 										Mis Reservas</a>
 									</li>
@@ -375,7 +377,7 @@ $db->close();
 	<!-- /header -->
 	
 	<main>		
-		<div class="hero_in restaurant_detail" style="background: url('<?=$imgsResto[0]["url"]?>') center center no-repeat; background-size: cover;">
+		<div class="hero_in restaurant_detail" <?php if(isset($imgsResto)) { ?>style="background: url('<?=$imgsResto[0]["url"]?>') center center no-repeat; background-size: cover;"<?php } ?>>
 			<div class="wrapper">
 				<span class="magnific-gallery">
 				<?php
@@ -532,7 +534,7 @@ $db->close();
 									?>
 										<li>
                                             <div class="thumb">
-                                                <img src="<?= $plato["img"] != null || $plato["img"] != '' ? $plato["img"] : "assets/public/img/menu_list_1.jpg"?>" alt="<?=$plato["desc"]?>">
+                                                <img src="<?= $plato["img"] != null && $plato["img"] != '' ? $plato["img"] : "assets/public/img/menu_list_1.jpg"?>" alt="<?=$plato["desc"]?>">
                                             </div>
                                             <h6><?=$plato["nombre"]?> <span><?=$plato["precio"]?>.Bs</span></h6>
                                             <p>
@@ -593,6 +595,7 @@ $db->close();
 									</div>
 									<div class="col-lg-9">
 									<?php
+								if(isset($calificacionesCat)) {
 									foreach ($calificacionesCat as $key => $calificacionCat) {
 									?>
 										<div class="row">
@@ -605,6 +608,7 @@ $db->close();
 										</div>
 									<?php
 									}
+								}
 									?>
 									</div>
 								</div>
@@ -614,6 +618,7 @@ $db->close();
 							<div id="comentarios" class="reviews-container">
 								
 							<?php
+						if(isset($calificaciones)) {
 							foreach ($calificaciones as $key => $calificacion) {
 							?>
 								<div class="review-box clearfix">
@@ -645,6 +650,7 @@ $db->close();
 								</div>
 							<?php
 							}
+						}
 							?>
 							</div>
 							<!-- /review-container -->
@@ -962,7 +968,7 @@ $db->close();
 			location_latitude: <?=$resLugar["latitud_gps"]?>, 
 			location_longitude: <?=$resLugar["longitud_gps"]?>,
 			map_image_url: '<?= $resLugar["logo"] != null && $resLugar["logo"] != '' ? $resLugar["logo"] : "assets/public/img/thumb_map_single_restaurant.jpg"?>',
-			rate: '<?=$cate_calif?> | <?=$promedio_calif?>',
+			rate: '<?=isset($cate_calif) ? $cate_calif : "Sin Calificacion"?> | <?=isset($promedio_calif) ? $promedio_calif : 0?>',
 			name_point: '<?=$resLugar["nombre_lugar"]?>',
 			description_point: '<?=$resLugar["descripcion"]?>'
 		}
@@ -1326,7 +1332,7 @@ $db->close();
 			cache: false,
 			success: function (response) {
 				if(response == 1) {
-					$("#comentarios").load(location.href + " #comentarios");
+					$("#reviews").load(location.href + " #reviews");
 					$('#AJAXresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Calificacion realizado con exito.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					setTimeout(() => {
 						$("#realizarComentario").load(location.href + " #realizarComentario");
