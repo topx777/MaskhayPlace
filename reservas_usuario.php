@@ -1,9 +1,5 @@
 <?php
-
-$_SESSION["usuario"] = array(
-	'id' => 3,
-	'nombre' => 'Carlos Rodrigo'
-);
+session_start();
 
 if(!isset($_SESSION["usuario"])) {
 	header('Location: index-2.html');

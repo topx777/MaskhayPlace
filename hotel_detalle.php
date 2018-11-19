@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-$_SESSION["usuario"] = array(
-	'id' => 2,
-	'nombre' => 'Grover'
-);
-
 $idLugar = $_GET['id'];
 
 if(isset($_SESSION["usuario"]))
@@ -220,10 +215,19 @@ $db->close();
 				</div>
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
-						<li><a href="#" class="btn_add">Publicar Lugar</a></li>
+					<?php
+						if(isset($_SESSION["usuario"])) {
+							if($_SESSION["usuario"]["negocio"] == 0) {
+								echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+							}
+						} else {
+							echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+						}
+					?>
+						
 					<?php
 					if(!isset($_SESSION["usuario"])) {
-						echo '<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+						echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
 					}
 					?>
 						<!-- <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li> -->
@@ -563,7 +567,7 @@ $db->close();
 										<input type="hidden" value="<?=$idLugar?>" id="idLugar">	
 									<?php
 									if(!isset($_SESSION["usuario"])) {
-										echo '<a href="#sign-in-dialog" class="logearse btn_1">Enviar</a>';
+										echo '<a href="#sign-in-dialog" class="logearsePOP btn_1">Enviar</a>';
 									} else {
 										echo '<button class="btn_1" id="btnEnviar">Enviar</button>';
 									}
@@ -686,6 +690,7 @@ $db->close();
 			<h3>Iniciar Sesion</h3>
 		</div>
 		<div class="login-box">
+			<div id="LOGINresponse"></div>
 			<div class="sign-in-wrapper">
 				<div class="form-group">
 					<label>Usuario</label>
@@ -719,6 +724,19 @@ $db->close();
 	
 	<!-- DATEPICKER  -->
 	<script>
+
+	$('.logearsePOP').magnificPopup({
+		type: 'inline',
+		fixedContentPos: true,
+		fixedBgPos: true,
+		overflowY: 'auto',
+		closeBtnInside: true,
+		preloader: true,
+		midClick: true,
+		removalDelay: 300,
+		closeMarkup: '<button title="%title%" type="button" class="mfp-close"></button>',
+		mainClass: 'my-mfp-zoom-in'
+	});
 
 	//Datos del Hotel para marcadores
 
@@ -1080,6 +1098,32 @@ $db->close();
 			enableEventPropagation: true
 		});
 	};
+
+	//Evento para Iniciar Sesion
+	$(document).on('click', '#Logearse', function() {
+			var usuario = $('#usuario').val();
+		var password = $('#password').val();
+		
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/logearseSesion.request.php",
+			data: {
+				usuario: usuario,
+				password: password
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$('#LOGINresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Usuario Logeado con exito!.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					location.reload();
+				} else {
+					$('#LOGINresponse').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>ERROR:</strong> '+response+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
+
+	});
+
 
 	$(document).on('click', '#btnEnviar', function() {
 		var puntaje = $('#calificacion_puntaje').val();
