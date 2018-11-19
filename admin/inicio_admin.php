@@ -135,15 +135,15 @@ if($db->rows($obtenerLugares) > 0) {
         ?>
           <li>
             <figure><img src="../<?=$lugar["logo"]?>" alt=""></figure>
-            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"]?></i></h4>
+            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"] != null ? $lugar["lugar"] : "Pendiente"?></i></h4>
             <ul class="booking_list">
               <li><strong>Usuario</strong> <?=$lugar["usuario"]?></li>
               <li><strong>Categoria</strong> <?=$lugar["categoria"]?></li>
             </ul>
-            <p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-envelope"></i> Enviar Mensaje</a></p>
+            <p><button data-toggle="modal" data-target="#observacionesNegocio" class="btn_1 gray"><i class="fa fa-fw fa-envelope"></i> Observaciones</button><button data-toggle="modal" data-target="#infoNegocioModal" class="btn_1 gray" data-idl="<?=$lugar["id"]?>"> <i class="fa fa-fw fa-info"></i> Ver Detalles</button></p>
             <ul class="buttons">
-              <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aceptar</a></li>
-              <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</a></li>
+              <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</a></li>
+              <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Rechazar</a></li>
             </ul>
           </li>
         <?php
@@ -181,7 +181,7 @@ if($db->rows($obtenerLugares) > 0) {
 			</div>
 		</div>
 		<!-- /box_general-->
-		<nav aria-label="...">
+		<!-- <nav aria-label="...">
 			<ul class="pagination pagination-sm add_bottom_30">
 				<li class="page-item disabled">
 					<a class="page-link" href="#" tabindex="-1">Anterior</a>
@@ -193,7 +193,7 @@ if($db->rows($obtenerLugares) > 0) {
 					<a class="page-link" href="#">Siguiente</a>
 				</li>
 			</ul>
-		</nav>
+		</nav> -->
 		<!-- /pagination-->
 	  </div>
 	  <!-- /container-fluid-->
@@ -228,6 +228,51 @@ if($db->rows($obtenerLugares) > 0) {
         </div>
       </div>
     </div>
+
+      <!-- Detalles de Negocio -->
+    <div class="modal fade" id="infoNegocioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalle Negocio</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <h5 id="nombre_lugar"></h5>
+            <p id="direccion_lugar"></p>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Obervaciones Negocio -->
+    <div class="modal fade" id="observacionesNegocio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Observaciones del Negocio</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="../assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -242,6 +287,41 @@ if($db->rows($obtenerLugares) > 0) {
 	<script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="../assets/admin/js/admin.js"></script>
-	
+  
+    <script>
+    
+    $(document).on('show.bs.modal', '#infoNegocioModal', function(event) {
+
+      var modal = $(this);
+
+      var button = $(event.relatedTarget);
+
+      var idLugar = button.data('idl');
+
+      $.ajax({
+        type: "GET",
+        url: "request/obtenerInfoLugar.request.php",
+        data: {
+          id: idLugar
+        },
+        cache: false,
+        success: function (response) {
+          if(response != 0) {
+            var jsonData = JSON.parse(response);
+            for (var i = 0; i < jsonData.data.length; i++) {
+              var lugar = jsonData.data[i];
+            }
+            $('#nombre_lugar').html(lugar.nombre_lugar);
+            $('#direccion_lugar').html(lugar.direccion);
+          }
+        }
+      });
+      // console.log(idLugar);
+    });
+    
+    
+    </script>
+
+
 </body>
 </html>
