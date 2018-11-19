@@ -153,21 +153,18 @@
 			<a href="#" class="side_panel"><i class="icon_close"></i></a>
 			<div class="custom-search-input-2">
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="What are you looking..">
+					<input class="form-control" type="text" id="inpBuscarMob" placeholder="Que estas Buscando...">
 					<i class="icon_search"></i>
 				</div>
 				<div class="form-group">
 					<input class="form-control" type="text" placeholder="Where">
 					<i class="icon_pin_alt"></i>
 				</div>
-				<select class="wide">
-					<option>All Categories</option>	
-					<option>Shops</option>
-					<option>Hotels</option>
-					<option>Restaurants</option>
-					<option>Bars</option>
-					<option>Events</option>
-					<option>Fitness</option>
+				<select class="wide" id="selectCategoriaMob">
+					<option value="">Categoria</option>	
+					<option value="hotel">Hotel</option>
+					<option value="restaurante">Restaurante</option>
+					<option value="farmacia">Farmacia</option>
 				</select>
 				<input type="submit" value="Search">
 			</div>
@@ -181,14 +178,14 @@
 		   <div class="container">
 			   <div class="row">
 				   <div class="col-lg-3 col-md-4 col-10">
-					   <h4><strong>145</strong>resultado para todos los listados</h4>
+					   <h4><strong id="numResBusqueda">0 </strong>resultado para todos los listados</h4>
 				   </div>
 				   <div class="col-lg-9 col-md-8 col-2">
 					   <a href="#0" class="side_panel btn_search_mobile"></a> <!-- /open search panel -->
 						<div class="row no-gutters custom-search-input-2 inner">
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Que estas Buscando...">
+									<input class="form-control" type="text" id="inpBuscarDesk" placeholder="Que estas Buscando...">
 									<i class="icon_search"></i>
 								</div>
 							</div>
@@ -199,14 +196,11 @@
 								</div>
 							</div>
 							<div class="col-lg-3">
-								<select class="wide">
-									<option>All Categories</option>	
-									<option>Shops</option>
-									<option>Hotels</option>
-									<option>Restaurants</option>
-									<option>Bars</option>
-									<option>Events</option>
-									<option>Fitness</option>
+								<select class="wide" id="selectCategoriaDesk">
+										<option value="">Categoria</option>	
+										<option value="hotel">Hotel</option>
+										<option value="restaurante">Restaurante</option>
+										<option value="farmacia">Farmacia</option>
 								</select>
 							</div>
 							<div class="col-lg-1">
@@ -226,11 +220,11 @@
 				<ul class="clearfix">
 					<li>
 						<div class="switch-field">
-							<input type="radio" id="all" name="listing_filter" value="all" checked>
+							<input class="orden" type="radio" id="all" name="listing_filter" value="all" checked>
 							<label for="all">All</label>
-							<input type="radio" id="popular" name="listing_filter" value="popular">
+							<input class="orden" type="radio" id="popular" name="listing_filter" value="pop">
 							<label for="popular">Popular</label>
-							<input type="radio" id="latest" name="listing_filter" value="latest">
+							<input class="orden" type="radio" id="latest" name="listing_filter" value="ult">
 							<label for="latest">Latest</label>
 						</div>
 					</li>
@@ -257,19 +251,19 @@
 								<ul>
 									<li>
 										<label class="container_check">Hotel <small id="numHoteles">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxCat" value="catHotel" id="catHotel">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
 										<label class="container_check">Restaurante <small id="numRestaurantes">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxCat" value="catRestaurante" id="catRestaurante">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
 										<label class="container_check">Farmacia <small id="numFarmacias">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxCat" value="catFarmacia" id="catFarmacia">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
@@ -285,19 +279,19 @@
 								<ul>
 									<li>
 										<label class="container_check">Superb 5 <small id="pts5">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxPts" id="cPts5">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
 										<label class="container_check">Good 3+ <small id="pts34">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxPts" id="cPts34">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
 										<label class="container_check">Pleasant 1+ <small id="pts02">0</small>
-										  <input type="checkbox">
+										  <input type="checkbox" class="chboxPts" id="cPts02">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
@@ -624,10 +618,14 @@
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
 	<script>
-			var coordenadas={
-				latitud:'',
-				longitud:'',
-			}
+			var busqueda;
+			var lugar;
+			var categoria=[];
+			var radio;
+			var puntos=[];
+			var orden='all';
+
+			//Parametros Url
 			function getParameterByName(name) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -635,18 +633,17 @@
 				return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
 			getLocation();
-
+			//primera Vez
 			$.getJSON('busqueda/controller/busqueda.php',
 			{
 				buscar:getParameterByName('buscar'),
 				lugar:getParameterByName('lugar'),
-				categoria:getParameterByName('categoria'),
+				categoria:[getParameterByName('categoria')],
 				distaciaRad:'',
 				orden:'all',
-				puntaje:'05',
-				coordenada:coordenadas
+				puntaje:varPuntos()
 			},
-				function (data, textStatus, jqXHR) {
+			function (data, textStatus, jqXHR) {
 					// numero de sitios
 					console.log(data)
 					$('#numHoteles').html(data.numSitios.hoteles);
@@ -656,21 +653,121 @@
 					$('#pts5').html(data.sitiosPuntaje.pts5);
 					$('#pts34').html(data.sitiosPuntaje.pts34);
 					$('#pts02').html(data.sitiosPuntaje.pts02);
+					//num Resultados
+					$('#numResBusqueda').html(data.sitios.length+' ');
 				}
 			);
+			// $.ajax({
+			// 	type: "GET",
+			// 	url: "busqueda/controller/busqueda.php",
+			// 	data: {
+			// 		buscar:getParameterByName('buscar'),
+			// 		lugar:getParameterByName('lugar'),
+			// 		categoria:[getParameterByName('categoria')],
+			// 		distaciaRad:'',
+			// 		orden:'all',
+			// 		puntaje:varPuntos()
+			// 	},
+			// 	success: function (response) {
+			// 		console.log(response);
+			// 	}
+			// });
+
+			// buscar
+			function varBuscar()
+			{
+				var data;
+				var buscDesk=document.getElementById('inpBuscarDesk').value;
+				var buscMob=document.getElementById('inpBuscarMob').value;
+				var width=window.innerWidth;
+				data=(width>991)?buscDesk:buscMob;
+				return data;
+			}
+			//categorias
+			function varCategorias()
+			{
+				var categorias=[];
+				//checkBox categorias
+				chkbHoteles=document.getElementById('catHotel');
+				chkbRestaurante=document.getElementById('catRestaurante');
+				chkbFarmacia=document.getElementById('catFarmacia');
+				var sCatDesk=document.getElementById('selectCategoriaDesk').value;//select Desktop
+				var sCatMob=document.getElementById('selectCategoriaMob').value;//select Mobile
+				if(chkbHoteles.checked==true ||(sCatDesk!=''&& sCatDesk=='hotel')||(sCatMob!=''&& sCatMob=='hotel'))
+				{
+					categorias.push('Hotel')
+				}
+				if(chkbFarmacia.checked==true ||(sCatDesk!=''&& sCatDesk=='farmacia')||(sCatMob!=''&& sCatMob=='farmacia'))
+				{
+					categorias.push('Farmacia')					
+				}
+				if(chkbRestaurante.checked==true ||(sCatDesk!=''&& sCatDesk=='restaurante')||(sCatMob!=''&& sCatMob=='restaurante'))
+				{
+					categorias.push('Restaurante')					
+				}
+				console.log(categorias)
+			}
+			// puntos
+			function varPuntos()
+			{
+				var puntos=[];
+				chkbPts5=document.getElementById('cPts5');
+				chkbPts34=document.getElementById('cPts34');
+				chkbPts02=document.getElementById('cPts02');
+				if(chkbPts5.checked==true)
+				{
+					puntos.push('5')
+				}
+				if(chkbPts34.checked==true)
+				{
+					puntos.push('34')					
+				}
+				if(chkbPts02.checked==true)
+				{
+					puntos.push('02')					
+				}
+				console.log(puntos)
+				return puntos;
+			}
 			///Coordenadas de Usuario
 			function getLocation() {
+
 				if (navigator.geolocation) {
+					var coordenadas = {
+						latitud: '',
+						longitud: '',
+					}
 					navigator.geolocation.getCurrentPosition(function(pos){
 						coordenadas.latitud=pos.coords.latitude;
 						coordenadas.longitud=pos.coords.longitude;
-						console.log('latitud'+coordenadas.latitud);
-						console.log('longitud'+coordenadas.longitud);
 					});
 				} else {
 					console.log("No soportado.");
 				}
+				return coordenadas;
 			}
+			
+			function data(ord) {
+				data={
+					buscar: varBuscar(),
+					lugar: '',
+					categoria: varCategorias(),
+					distanciaRad:'',
+					orden: ord,
+					puntaje: varPuntos()
+				}
+			}
+
+			// $('.chboxCat').click(function () { 
+
+			// });
+			// $('.chboxPts').click(function () { 
+				
+			// });
+			// $('.orden').click(function () { 
+			// 	console.log($(this).val())
+			// });
+			
 	</script>		
   
 </body>
