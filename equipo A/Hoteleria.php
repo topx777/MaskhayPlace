@@ -1,5 +1,5 @@
 <?php 
-  include('helpers/class.Conexion.php');
+  include('../helpers/class.Conexion.php');
   
   $_SESSION["usuario"] = array(
     'id' => 1,
@@ -61,26 +61,26 @@
   <title>Administracion de Hoteleria</title>
 	
   <!-- Favicons-->
-  <link rel="shortcut icon" href="assets/admin/img/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" type="image/x-icon" href="assets/admin/img/apple-touch-icon-57x57-precomposed.png">
-  <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="assets/admin/img/apple-touch-icon-72x72-precomposed.png">
-  <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="assets/admin/img/apple-touch-icon-114x114-precomposed.png">
-  <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="assets/admin/img/apple-touch-icon-144x144-precomposed.png">
+  <link rel="shortcut icon" href="../assets/admin/img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" type="image/x-icon" href="../assets/admin/img/apple-touch-icon-57x57-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="../assets/admin/img/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="../assets/admin/img/apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="../assets/admin/img/apple-touch-icon-144x144-precomposed.png">
 	
   <!-- Bootstrap core CSS-->
-  <link href="assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Main styles -->
-  <link href="assets/admin/css/admin.css" rel="stylesheet">
+  <link href="../assets/admin/css/admin.css" rel="stylesheet">
   <!-- Icon fonts-->
-  <link href="assets/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="../assets/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Plugin styles -->
-  <link href="assets/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-  <link href="assets/admin/vendor/dropzone.css" rel="stylesheet">
-  <link href="assets/admin/css/date_picker.css" rel="stylesheet">
+  <link href="../assets/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="../assets/admin/vendor/dropzone.css" rel="stylesheet">
+  <link href="../assets/admin/css/date_picker.css" rel="stylesheet">
   <!-- Your custom styles -->
-  <link href="assets/admin/css/custom.css" rel="stylesheet">
+  <link href="../assets/admin/css/custom.css" rel="stylesheet">
   <!-- WYSIWYG Editor -->
-  <link rel="stylesheet" href="assets/admin/js/editor/summernote-bs4.css">
+  <link rel="stylesheet" href="../assets/admin/js/editor/summernote-bs4.css">
 
 
 
@@ -92,7 +92,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html"><img src="assets/admin/img/logo1.png" data-retina="true" alt="" width="165" height="36"></a>
+    <a class="navbar-brand" href="index.html"><img src="../assets/admin/img/logo1.png" data-retina="true" alt="" width="165" height="36"></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -652,25 +652,25 @@
       </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="assets/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="assets/admin/vendor/chart.js/Chart.min.js"></script>
-    <script src="assets/admin/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
-	<script src="assets/admin/vendor/jquery.selectbox-0.2.js"></script>
-	<script src="assets/admin/vendor/retina-replace.min.js"></script>
-	<script src="assets/admin/vendor/jquery.magnific-popup.min.js"></script>
+    <script src="../assets/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../assets/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+	<script src="../assets/admin/vendor/jquery.selectbox-0.2.js"></script>
+	<script src="../assets/admin/vendor/retina-replace.min.js"></script>
+	<script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="assets/admin/js/admin.js"></script>
+    <script src="../assets/admin/js/admin.js"></script>
 	<!-- Custom scripts for this page-->
-	<script src="assets/admin/vendor/dropzone.min.js"></script>
-	<script src="assets/admin/vendor/bootstrap-datepicker.js"></script>
+	<script src="../assets/admin/vendor/dropzone.min.js"></script>
+	<script src="../assets/admin/vendor/bootstrap-datepicker.js"></script>
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
-	<script src="assets/admin/js/editor/summernote-bs4.min.js"></script>
+	<script src="../assets/admin/js/editor/summernote-bs4.min.js"></script>
 	<script>
       $('.editor').summernote({
 		fontSizes: ['10', '14'],
