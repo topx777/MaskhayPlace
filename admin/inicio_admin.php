@@ -140,10 +140,10 @@ if($db->rows($obtenerLugares) > 0) {
               <li><strong>Usuario</strong> <?=$lugar["usuario"]?></li>
               <li><strong>Categoria</strong> <?=$lugar["categoria"]?></li>
             </ul>
-            <p><button data-toggle="modal" data-target="#observacionesNegocio" class="btn_1 gray"><i class="fa fa-fw fa-envelope"></i> Observaciones</button><button data-toggle="modal" data-target="#infoNegocioModal" class="btn_1 gray" data-idl="<?=$lugar["id"]?>"> <i class="fa fa-fw fa-info"></i> Ver Detalles</button></p>
+            <p><button data-toggle="modal" data-target="#observacionesNegocio" class="btn_1 gray" data-idl="<?=$lugar["id"]?>"><i class="fa fa-fw fa-envelope"></i> Observaciones</button><button data-toggle="modal" data-target="#infoNegocioModal" class="btn_1 gray" data-idl="<?=$lugar["id"]?>"> <i class="fa fa-fw fa-info"></i> Ver Detalles</button></p>
             <ul class="buttons">
-              <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</a></li>
-              <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Rechazar</a></li>
+              <li><button onclick="aprobarLugar(<?=$lugar["id"]?>);" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</button></li>
+              <li><button onclick="rechazarLugar(<?=$lugar["id"]?>);" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Rechazar</button></li>
             </ul>
           </li>
         <?php
@@ -263,8 +263,17 @@ if($db->rows($obtenerLugares) > 0) {
             </button>
           </div>
           <div class="modal-body">
-
-
+            <div class="row" style="padding: 35px;">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Observaciones</label>
+                  <textarea class="form-control" id="observacionesLugar" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-primary btn-block">Guardar Observaciones</button>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
@@ -318,7 +327,52 @@ if($db->rows($obtenerLugares) > 0) {
       });
       // console.log(idLugar);
     });
-    
+
+    $(document).on('show.bs.modal', '#observacionesNegocio', function(event) {
+        var modal = $(this);
+
+        var button = $(event.relatedTarget);
+
+        var idLugar = button.data('idl');
+
+        $.ajax({
+          type: "GET",
+          url: "request/obtenerObservacionesLugar.request.php",
+          data: {
+            id: idLugar
+          },
+          cache: false,
+          success: function (response) {
+            if(response != 0) {
+              var jsonData = JSON.parse(response);
+              for (var i = 0; i < jsonData.data.length; i++) {
+                var observacion = jsonData.data[i];
+              }
+              $('#observacionesLugar').html(observacion.observaciones);
+            }
+          }
+        });
+    });
+
+    function aprobarLugar(id) {
+      $.ajax({
+        type: "GET",
+        url: "request/aprobarLugar.request.php",
+        data: {id:id},
+        success: function(response) {
+          if(response == 1) {
+            alert('Lugar Aprobado');
+          }else {
+            alert('Error: ' + response);
+          }
+        }
+      });
+    }
+
+    function rechazarLugar(id) {
+      alert('Lugar Rechazado');
+    }
+
     
     </script>
 
