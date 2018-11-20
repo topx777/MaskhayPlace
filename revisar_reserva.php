@@ -51,13 +51,6 @@ INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
 
 
 
-$modificaraprovado=$database->query("UPDATE reserva SET estado=Aceptado WHERE id_restaurante!=Aceptado");
-
-
-
-
-$modificarcancelado=$database->query("UPDATE reserva SET estado= Rechazado Where id_restaurante!=Rechazado");
-
 
 
 ?>
@@ -315,21 +308,22 @@ $modificarcancelado=$database->query("UPDATE reserva SET estado= Rechazado Where
 			</div>
 			<div class="list_general">
 				<ul>
-/* Informacion de la Base de Datos */
+<!--Informacion de la Base de Datos-->
 <?php while($resDatos = $database->recorrer($consulta)):?>
 					<li>
 						<figure><img src="<?= $resDatos["logo"]?>" alt=""></figure>
-						<h4><?= $resDatos["nombre_lugar"];?><i class="pending"><?= $resDatos["estado_reserva"];?></i></h4>
+						<h4><?= $resDatos["nombre_lugar"];?><i class="approved"><?= $resDatos["estado_reserva"];?></i></h4>
 						<ul class="booking_list">
 							<li><strong>Fecha de Reserva</strong> <?= $resDatos["fecha"];?></li>
 							<li><strong>Cantidad de Personas</strong> <?= $resDatos["cantidad_personas"];?></li>
               <li><strong>Cliente</strong> <?= $resDatos["nombre_reserva"];?></li>
               <li><strong>Hora</strong><?= $resDatos["hora"];?></li>
+              <li><strong>ID Reserva</strong><?= $resDatos["id_reserva"];?></li>
+              
             </ul>
-
 						<ul class="buttons">
-							<li><button onclick="mostrar();" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</button></li>
-							<li><button onclick="mostrarrechazado();" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</button></li>
+							<li><button onclick="aceptarReserva(<?=$resDatos["id_reserva"]?>);" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</button></li>
+							<li><button onclick="rechazarReserva(<?=$resDatos["id_reserva"]?>);" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</button></li>
 						</ul>
           </li>
 <?php endwhile;?>
@@ -399,39 +393,37 @@ $modificarcancelado=$database->query("UPDATE reserva SET estado= Rechazado Where
     <!-- Custom scripts for all pages-->
     <script src="assets/admin/js/admin.js"></script>
     <script type="text/javascript">
-  function mostrar(){
-    
-    var pre = document.createElement('pre');
-      //custom style.
-      pre.style.maxHeight = "400px";
-      pre.style.margin = "0";
-      pre.style.padding = "24px";
-      pre.style.whiteSpace = "pre-wrap";
-      pre.style.textAlign = "justify";
-      pre.appendChild(document.createTextNode($('#booking_list').text()));
-      //show as confirm
-      alertify.confirm(pre, function(){
-      alertify.success('Accepted');
-      
-      },function(){
-      alertify.error('Declined');
-      }).set({labels:{ok:'Accept', cancel: 'Decline'}, padding: false});
+
+/*  Aceptar, Rechazar Reservas  */
+  function aceptarReserva(id){
+    $.ajax({
+      type: "GET",
+      url: "app/requestAJAX/aceptarReserva.request.php",
+      data: { id: id },
+      success: function(response) {
+        if(response == 1) {
+          alertify.success("Reserva Aceptada");
+          location.reload();    
+        } else {
+          alertify.error("ERROR: " + response);
+        }
+      }
+    });
   }
-  function mostrarrechazado(){
-    //custom style.
-    pre.style.maxHeight = "400px";
-      pre.style.margin = "0";
-      pre.style.padding = "24px";
-      pre.style.whiteSpace = "pre-wrap";
-      pre.style.textAlign = "justify";
-      pre.appendChild(document.createTextNode($('#booking_list').text()));
-      //show as confirm
-      alertify.confirm(pre, function(){
-      alertify.success('Accepted');
-      
-      },function(){
-      alertify.error('Declined');
-      }).set({labels:{ok:'Accept', cancel: 'Decline'}, padding: false});
+  function rechazarReserva(id){
+    $.ajax({
+      type: "GET",
+      url: "app/requestAJAX/rechazasReserva.request.php",
+      data: { id: id },
+      success: function(response) {
+        if(response == 1) {
+          alertify.success("Reserva Rechazada");
+          location.reload();    
+        } else {
+          alertify.error("ERROR: " + response);
+        }
+      }
+    });
   }
   </script>
 </body>
