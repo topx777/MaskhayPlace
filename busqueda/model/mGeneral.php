@@ -104,7 +104,7 @@ class mGeneral
                 array_push($sqlPts, ' promedio = 5 ');
 
             }
-            if($pt=='05')
+            if($pt=='all')
             {
                 array_push($sqlPts, ' promedio BETWEEN 0 AND 5 ');
             }
@@ -112,7 +112,7 @@ class mGeneral
         $sqlPuntaje=join(' OR ', $sqlPts);
         $sqlPuntaje=($sqlPuntaje == '')?' ':"HAVING {$sqlPuntaje}";
 
-        $sql="SELECT AVG(calificacion.calificacion) as promedio, lugar.*, calificacion.*
+        $sql="SELECT AVG(calificacion.calificacion) as promedio, COUNT(calificacion.calificacion) as numCalificaciones, lugar.*, calificacion.*
             FROM lugar
             INNER JOIN calificacion ON lugar.id_lugar=calificacion.lugar
             WHERE {$sqlBuscar}
@@ -120,7 +120,7 @@ class mGeneral
             GROUP BY lugar.id_lugar
             {$sqlPuntaje}
             ORDER BY {$sqlOrd} ";
-        // echo $sql;
+         //echo $sql.'<br><br>';
         $this->db->query($sql);
         return $this->db->getRegistros();
     }

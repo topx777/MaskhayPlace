@@ -28,10 +28,15 @@ $num34=$mGeneral->numeroSitiosPorPuntaje(3)+$mGeneral->numeroSitiosPorPuntaje(4)
 $num5=$mGeneral->numeroSitiosPorPuntaje(5);
 $sitiosPuntaje=['pts5'=>$num5, 'pts34'=>$num34, 'pts02'=>$num02];
 
+// foreach ($sitios as $sitio) {
+//     print_r($sitio);
+//     echo '<br> <br>';
+// }
+
 $data=['numSitios'=>$numeroSitios,
         'sitiosPuntaje'=>$sitiosPuntaje,
-        'sitios'=>$sitios];
-
+        'sitios'=>$sitios,
+        'get'=>$_GET];
 
 
 echo json_encode($data)
