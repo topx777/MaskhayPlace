@@ -135,7 +135,7 @@ if($db->rows($obtenerLugares) > 0) {
         ?>
           <li>
             <figure><img src="../<?=$lugar["logo"]?>" alt=""></figure>
-            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"] != null ? $lugar["lugar"] : "Pendiente"?></i></h4>
+            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"] != null ? $lugar["estado"] : "Pendiente"?></i></h4>
             <ul class="booking_list">
               <li><strong>Usuario</strong> <?=$lugar["usuario"]?></li>
               <li><strong>Categoria</strong> <?=$lugar["categoria"]?></li>

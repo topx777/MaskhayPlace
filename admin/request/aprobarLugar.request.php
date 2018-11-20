@@ -1,4 +1,5 @@
 <?php
+session_start();
 if($_GET) {
 
     $idLugar = $_GET["id"];
