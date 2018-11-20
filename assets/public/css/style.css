@@ -7715,6 +7715,14 @@ a.social_bt.google:before {
   border-radius: 3px;
 }
 
+.old-price {
+  font-size: 12px;
+  font-style: oblique;
+  margin-right: 3px;
+  line-height: 1.5;
+  text-decoration-line: line-through;
+  color: red;
+
 @media only screen and (max-width: 1024px) {
   #style-switcher {
     display: none;

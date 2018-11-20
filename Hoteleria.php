@@ -1,3 +1,62 @@
+<?php 
+  include('helpers/class.Conexion.php');
+  
+  $_SESSION["usuario"] = array(
+    'id' => 3,
+    'nombre' => "Carlos Rodrigo"
+  );
+
+  $db = new Conexion();
+  $db->charset();
+  //--------------------------OBTENER DATOS DE LA TABLA LUGAR-----------------------------------
+  //-------------OBTENER NOMBRE DEL LUGAR-----------------------------
+  $idUsuario = $_SESSION["usuario"]["id"];
+  $obtenerLugar = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerLugar) > 0) {
+    $resLugar = $db->recorrer($obtenerLugar);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  //-------------OBTENER DIRECCION-----------------------------
+  $obtenerDireccion = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerDireccion) > 0) {
+    $resDireccion = $db->recorrer($obtenerDireccion);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  //-------------OBTENER DESCRIPCION-----------------------------
+  $obtenerDescripcion = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerDescripcion) > 0) {
+    $resDescripcion = $db->recorrer($obtenerDescripcion);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  //-------------OBTENER LONGITUD-----------------------------
+  $obtenerLongitud = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerLongitud) > 0) {
+    $resLongitud = $db->recorrer($obtenerLongitud);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  //-------------OBTENER LATITUD-----------------------------
+  $obtenerLatitud = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerLatitud) > 0) {
+    $resLatitud = $db->recorrer($obtenerLatitud);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  //-------------OBTENER LOGO-----------------------------
+  $obtenerLogo = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  if($db->rows($obtenerLogo) > 0) {
+    $resLogo = $db->recorrer($obtenerLogo);
+  } else {
+    header('Location: HoteleriaVacia.html');
+  }
+  
+
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,31 +68,40 @@
   <meta name="author" content="Ansonika">
   <title>Administracion de Hoteleria</title>
 	
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="../assets/admin/img/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="../assets/admin/img/apple-touch-icon-57x57-precomposed.png" type="image/x-icon">
-  <link rel="apple-touch-icon" href="../assets/admin/img/apple-touch-icon-72x72-precomposed.png" type="image/x-icon">
-  <link rel="apple-touch-icon" href="../assets/admin/img/apple-touch-icon-114x114-precomposed.png" type="image/x-icon">
-  <link rel="apple-touch-icon" href="../assets/admin/img/apple-touch-icon-144x144-precomposed.png" type="image/x-icon">
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="../assets/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Favicons-->
+  <link rel="shortcut icon" href="assets/admin/img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" type="image/x-icon" href="assets/admin/img/apple-touch-icon-57x57-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="assets/admin/img/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="assets/admin/img/apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="assets/admin/img/apple-touch-icon-144x144-precomposed.png">
+	
+  <!-- Bootstrap core CSS-->
+  <link href="assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Main styles -->
-  <link rel="stylesheet" href="../assets/admin/css/admin.css">
-  <!-- Icon fonts -->
-  <link rel="stylesheet" href="../assets/admin/vendor/font-awesome/css/font-awesome.min.css" type="text/css">
+  <link href="assets/admin/css/admin.css" rel="stylesheet">
+  <!-- Icon fonts-->
+  <link href="assets/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Plugin styles -->
-  <link rel="stylesheet" href="../assets/admin/vendor/datatables/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="../assets/admin/vendor/dropzone.css">
-  <link rel="stylesheet" href="../assets/admin/css/date_picker.css">
+  <link href="assets/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="assets/admin/vendor/dropzone.css" rel="stylesheet">
+  <link href="assets/admin/css/date_picker.css" rel="stylesheet">
   <!-- Your custom styles -->
-  <link rel="stylesheet" href="../assets/admin/css/custom.css">
+  <link href="assets/admin/css/custom.css" rel="stylesheet">
   <!-- WYSIWYG Editor -->
-  <link rel="stylesheet" href="../assets/admin/js/editor/summernote-bs4.css">
-  <!-- Estilos propios -->
-  <link rel="stylesheet" href="mis css/mis estilos/estilo.css">
+  <link rel="stylesheet" href="assets/admin/js/editor/summernote-bs4.css">
 
 
+  <link rel="stylesheet" type="text/css" href="estilo.css">
+
+
+
+
+  <!-- Agregar la librería de Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
+    <script src="mis js/google/google-api.js"></script>
+    <!--------------------ENLACE PARA EL CUADRO DE GOOGLE------------------------->
+    <script src="cuadroGoogle.js"></script>
+    
 
 
 	
@@ -42,7 +110,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html"><img src="img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
+    <a class="navbar-brand" href="index.html"><img src="assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,13 +131,13 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMylistings">
             <li>
-              <a href="Hoteleria.html">Hoteleria <span class="badge badge-pill badge-primary"></span></a>
+              <a href="Hoteleria.php">Hoteleria <span class="badge badge-pill badge-primary"></span></a>
             </li>
 			<li>
               <a href="Restaurante.html">Restaurante<span class="badge badge-pill badge-success"></span></a>
             </li>
 			<li>
-              <a href="Farmacia.html">Farmacia<span class="badge badge-pill badge-danger"></span></a>
+              <a href="listings.html">Farmacia<span class="badge badge-pill badge-danger"></span></a>
             </li>
           </ul>
         </li>
@@ -97,46 +165,38 @@
   <!-- /Navigation-->
   <div class="content-wrapper">
       <div class="container-fluid">
-
-      <!-- -------------------------------------Lugar------------------------------------->
+      <!-- -------------------------------------Lugar------------------------------------>
       <div class="box_general padding_bottom">
       <div class="header_box version_2">
         <h2><i class="fa fa-user"></i>Lugar</h2>
       </div>
+      <center>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" style="padding-top: 30px;">
           <div class="form-group">
-          <label>Logo</label>
-            <form action="/file-upload" class="dropzone"></form>
+            <form>
+              <img src="<?=$resLogo["logo"]?>" style="width: 100%;">
+              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
+            </form>
+
             </div>
         </div>
-        <div class="col-md-8 add_top_30">
+        </center>
+        
+        <div class="col-md-12 add_top_30">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" class="form-control" >
+                <label>Nombre del Negocio</label>
+                <form method="POST">
+                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="nombreLugar" required="">
+                </form>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Direccion</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-          <!-- /row-->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Longitud</label>
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Latitud</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="<?=$resDireccion["direccion"]?>" id="direccion" required="">
               </div>
             </div>
           </div>
@@ -145,21 +205,54 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Descripcion</label>
-                <textarea style="height:100px;" class="form-control" placeholder="Personal info"></textarea>
+                <textarea id="descripcion" style="height:100px;"  class="form-control" placeholder="Personal info"><?=$resDescripcion["descripcion"]?></textarea>
               </div>
             </div>
           </div>
           <!-- /row-->
+          <center>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Longitud</label>
+                <input type="text" class="form-control" value="<?=$resLongitud["longitud_gps"]?>" id="longitud" required="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Latitud</label>
+                <input type="text" class="form-control" value="<?=$resLatitud["latitud_gps"]?>" id="latitud" required="">
+              </div>
+            </div>
+          </div>
+          </center>
+          <!-- -------------------------------------GOOGLE------------------------------------->
+          <div>
+            <div class="header_box version_2" style="width:300px;">
+                <h2>
+                    <label>Geolocalizacion:</label><br>
+                </h2>                
+            </div>
+            <div class="row">
+                <!-- Mapa de GOOGLE -->
+                <div  id="map" style="width:8000px; height:500px; float: left"></div>
+            </div>
+            <div class="modal-footer modal-lg">
+            </div>
         </div>
-      </div>
+          <!-- /row-->
+        </div>
+        <input class="btn_1 medium" type="submit" name="btnGuardarLugar" value="Guardar">
+
+      
     </div>
    <!-- -------------------------------------AREAS DISPONIBLES------------------------------------->
-		<div class="box_general padding_bottom">
+		<div class="box_general padding_bottom" style="overflow: hidden;">
 			<div class="header_box version_2">
 				<h2><i class="fa fa-file"></i>Areas Disponibles</h2>
 			</div>
 			
-      <div class="tablaSwich" style="width: 60%">
+      <div class="tablaSwich" style="width: 50%; float: left;">
          <li class="list-group-item">
           <table class="sw">
             <tr>
@@ -168,7 +261,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" value="<?=$resChBParqueo["parqueo"]?>">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -224,7 +317,10 @@
           </table>
          </li>
 
-         <li class="list-group-item">
+      </div>
+
+    <div class="tablaSwich" style="width: 50%; float: right;">
+      <li class="list-group-item">
           <table class="sw">
             <tr>
               <td>
@@ -271,7 +367,6 @@
             </tr>
           </table>
          </li>
-
       </div>
 		</div>
 
@@ -404,20 +499,21 @@
 						<tr class="pricing-list-item">
 							<td>
 								<div class="row">
+                  
 									<div class="col-md-2">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Nombre">
+											<input type="text" class="form-control" placeholder="Nombre" required="">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Descripcion">
+											<input type="text" class="form-control" placeholder="Descripcion" required="">
 										</div>
 									</div>
                   
 									<div class="col-md-2">
 										<div class="form-group">
-											<input type="number" class="form-control" placeholder="Precio en $"  min="0">
+											<input type="number" class="form-control" placeholder="Precio"  min="0" required="">
 										</div>
 									</div>
 
@@ -457,16 +553,19 @@
                     </div>
                   </div>
 
-									<div class="col-md-2">
-										<div class="form-group">
-											<a class="delete" href="#"><i class="fa fa-fw fa-remove"></i>Eliminar</a>
-										</div>
-									</div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <form action="/file-upload" title="Click" class="dropzone"></form>
+                      <center><label>Imagen de la Habitacion</label></center>
+                      </div>
+                  </div>
+
 								</div>
 							</td>
 						</tr>
 					</table>
 					<a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Añadir</a>
+          <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Editar</a>
 					</div>
 			</div>
 			<!-- /row-->
@@ -500,6 +599,7 @@
         </button>
       </div>
       <div class="modal-body">
+
         <table>
           <tr>
             <td>
@@ -543,6 +643,20 @@
             </td>
           </tr>
         </table>
+        <center>
+          <table>
+            <tr>
+              <td>
+                <div style="width: 300px;">
+                    <div class="form-group">
+                      <form action="/file-upload" class="dropzone"></form>
+                      <center><label>Imagen de la Habitacion</label></center>
+                      </div>
+                  </div>
+              </td>
+            </tr>
+          </table>
+        </center>
                     
         </div>
       <div class="modal-footer">
@@ -555,7 +669,41 @@
 
 
     <!------------------------------fin modal habitacion------------------------------>
+    <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
+    <div class="modal fade" id="ModificarImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modificar Imagen</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" style="padding-left: 50px;">
+                  <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
+                    <br>
+                    <img style="width: 400px;" src="<?=$resLogo["logo"]?>"><br><br>
+                    
+                    <input type="file" name="Imagen" required="">
 
+                    
+      
+                    <div class="modal-footer" style="padding-left: 400px;">
+                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnAceptar" value="Cancelar">
+                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar">
+                    </div>
+
+                  </form>
+      
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
 
 
     <!------------------------------MODAL PARA CERRAR CESION------------------------------>
@@ -563,39 +711,39 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Desea salir?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Seguro que quiere cerrar cesion?</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="login.html">Aceptar</a>
           </div>
         </div>
       </div>
     </div>
-    <!-- Bootstrap core JaveScript -->
-    <script src="../assets/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript -->
-    <script src="../assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript -->
-    <script src="../assets/admin/vendor/chart.js/Chart.min.js"></script>
-    <script src="../assets/admin/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="../assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="../assets/admin/vendor/jquery.selectbox-0.2.js"></script>
-    <script src="../assets/admin/vendor/retina-replace.min.js"></script>
-    <script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
-    <!-- Custom scripts for all pages -->
-    <script src="../assets/admin/js/admin.js"></script>
-    <!-- Custom scripts for this page -->
-    <script src="../assets/admin/vendor/dropzone.min.js"></script>
-    <script src="../assets/admin/vendor/bootstrap-datepicker.js"></script>
-    <script>$('input.date-pick').datepicker();</script>
-    <!-- WYSIWYG Editor -->
-	<script src="js/editor/summernote-bs4.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="assets/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="assets/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="assets/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="assets/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+	<script src="assets/admin/vendor/jquery.selectbox-0.2.js"></script>
+	<script src="assets/admin/vendor/retina-replace.min.js"></script>
+	<script src="assets/admin/vendor/jquery.magnific-popup.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="assets/admin/js/admin.js"></script>
+	<!-- Custom scripts for this page-->
+	<script src="assets/admin/vendor/dropzone.min.js"></script>
+	<script src="assets/admin/vendor/bootstrap-datepicker.js"></script>
+	<script>$('input.date-pick').datepicker();</script>
+	<!-- WYSIWYG Editor -->
+	<script src="assets/admin/js/editor/summernote-bs4.min.js"></script>
 	<script>
       $('.editor').summernote({
 		fontSizes: ['10', '14'],

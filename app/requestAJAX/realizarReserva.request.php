@@ -1,4 +1,5 @@
 <?php
+session_start();
 if($_POST) {
 	if(!empty($_POST["nombre"]) and !empty($_POST["fecha"]) and !empty($_POST["cant"]) and !empty($_POST["hora"]) and !empty("id_resto")) {
 		
@@ -7,7 +8,7 @@ if($_POST) {
 		$cant = $_POST["cant"];
 		$hora = $_POST["hora"];
 		
-		$idUsuario = 3;
+		$idUsuario = $_SESSION["usuario"]["id"];
 		$idResto = $_POST["id_resto"];
 		
 		include('../../helpers/class.Conexion.php');

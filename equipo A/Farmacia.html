@@ -33,8 +33,133 @@
     <link rel="stylesheet" href="../assets/admin/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="mis css/mis estilos/estilo.css">
     <link rel="stylesheet" href="mis js/timepicki/timepicki.css">
+    <style> 
+  	  #map {
+        height: 100%;
+      }
+     
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	</style> 
     <!-- scripts previos -->
+    <!-- Agregar la librería de Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
+    <script src="mis js/google/google-api.js"></script>
+    <!-- google maps script -->
+    <script type="text/javascript">
+        window.onload = function(){
+        var pos_original = new google.maps.LatLng( -17.3895000, -66.1568000);
+        var options = {
+            zoom: 13,
+            center: pos_original,
+            mapTypeId: google.maps.MapTypeId.Mapa,
+            panControl: false,
+              zoomControl: false,
+              mapTypeControl: true,
+              scaleControl: false,
+              streetViewControl: true,
+              overviewMapControl: false
+        };
+        
+        var map = new google.maps.Map(document.getElementById('map'), options);
     
+    var contador = 0;
+    var listo = false;
+    var marcador = new google.maps.Marker({
+        position: pos_original,
+        map: map,
+        draggable:true,
+        animation: google.maps.Animation.DROP,
+    });
+    google.maps.event.addListener(map, 'click', function(resultado) 
+    {
+        contador++;
+        var cadena = "Marcador :" + contador;
+        console.log("click "+contador+" en lat:"+resultado.latLng.lat()+" , lng:"+resultado.latLng.lng());
+        // 
+        var newPos = {
+            lat: resultado.latLng.lat(),
+            lng: resultado.latLng.lng()
+        };
+
+        marcador.setPosition(newPos);
+        // map.setCenter(newPos);
+        // gernera_marcador(resultado.latLng.lat(),resultado.latLng.lng(),contador);
+        // contador++;
+    });
+    var array_marcadores = new Array();
+
+        function gernera_marcador(lat,lng,numero)
+        {  
+            var cadena="soy el marcador nº ";
+            cadena+=numero;
+            var marcador = new google.maps.Marker({
+                position: new google.maps.LatLng(lat,lng),
+                map: map,
+                draggable:true,
+                title: cadena,
+                animation: google.maps.Animation.DROP,
+                identificador: numero
+            });
+            //apilamos marcador
+            array_marcadores = new Array;
+            array_marcadores.push(marcador);
+    
+    
+            //añadimos evento click en el marcador
+            google.maps.event.addListener(marcador, 'click', function()
+            {
+        
+                for(var a=0;a<array_marcadores.length;a++)
+                    {
+                        if(array_marcadores[a]['identificador'] == this.identificador)
+                        {
+                            array_marcadores[a].setMap(null);  //borramos el marcador del mapa
+                            array_marcadores.splice(a, 1);	   //borramos el marcador de nuestro array	
+                        }
+                    }
+            });
+            listo = true;
+        }
+    
+    //para comprovar que se van guardando pondremos un evento 'rightclick' en el mapa que nos 
+    //muestre los valores del array
+    google.maps.event.addListener(map, 'rightclick', function() 
+    {
+    console.log('----------------------------------');
+    for(var a=0;a<array_marcadores.length;a++)
+        {
+            console.log(
+                "posición array : "+a+", identificador :"+ array_marcadores[a]['identificador']+", lat:"+array_marcadores[a].position.lat()+", lon :"+array_marcadores[a].position.lng()
+                );
+        }
+    });
+    
+    //montamos evento click en el boton para que borre todos los marcadores
+    //funcion para limpiar todos los marcadores del mapa
+        function eliminaMarcadores()
+        {	
+            console.log('Borrando todos los marcadores');
+            for(a in array_marcadores)
+            {
+                array_marcadores[a].setMap(null);
+            }
+            array_marcadores = [];
+        }
+        //añadimos la función al boton con hooo... un evento en el boton
+        document.getElementById('botonBorrar').addEventListener('click',eliminaMarcadores,false); //*******************************************************************************************
+    
+    };
+    
+    
+    </script>
+    <!-- google maps script final-->
+    <!-- <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"
+    type="text/javascript"></script> -->
+
 </head>
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation -->
@@ -89,19 +214,17 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Area para personalizacion -->
-            <div class="content-wrapper">
-                <div class="container-fluid">
                     <div class="box_general padding_bottom">
                         <div class="header_box version_2">
                                 <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
                         </div>
                         <div class="row">                            
-                            <div class="col-md-8 add_top_30">
+                            <div class="col-md-12 add_top_30">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input type="text" class="form-control" disabled="" style="width:800px">
+                                            <input type="text" class="form-control" disabled="" style="width:90%">
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-6">
@@ -112,10 +235,10 @@
                                     </div> -->
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Direccion</label>
-                                            <input type="text" class="form-control" style="width:800px">
+                                            <input type="text" class="form-control" style="width:90%">
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +249,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="width:800px">
+                                <div class="row">
                                     <div class="radio">
                                         <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio" checked>Mañana</label>
                                     </div>
@@ -140,7 +263,7 @@
                                         <label class="radiolabel" style="margin-left: 50px"><input type="radio" name="optradio">24 hrs</label>
                                     </div>
                                 </div>
-                                <div class="row" style="width:800px">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">          
                                             <label>Horario</label><br>
@@ -202,16 +325,79 @@
                                         </table>
                                     </li>
                                 </div>
-
+                                
                                 
                         </div>
                     </div>
                 </div>
+         <!-- -------------------------------------Lugar------------------------------------->
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+              <h2><i class="fa fa-user"></i>Lugar</h2>
             </div>
-
-
-
-
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label>Logo</label>
+                    <form action="/file-upload" class="dropzone"></form>
+                </div>
+              </div>
+              <div class="col-md-8 add_top_30">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nombre</label>
+                      <input type="text" class="form-control" >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Direccion</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Longitud</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Latitud</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Descripcion</label>
+                      <textarea style="height:100px;" class="form-control" placeholder="Personal info"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <!-- /row-->
+            </div>
+        </div>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2" style="width:300px;">
+                <h2>
+                    <label>Geolocalizacion:</label><br>
+                </h2>                
+            </div>
+            <div class="row">
+                <!-- Mapa de GOOGLE -->
+                <div  id="map" style="width:8000px; height:500px; float: left"></div>
+                <button type="button" id="botonBorrar">Elimina marcadores</button> 
+            </div>
+            <div class="modal-footer modal-lg">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
+            </div>
         </div>
         <!-- /container-fluid -->
     </div>
@@ -264,7 +450,7 @@
     <script src="../assets/admin/vendor/bootstrap-datepicker.js"></script>
     <script>$('input.date-pick').datepicker();</script>
     <!-- WYSIWYG Editor -->
-	<script src="js/editor/summernote-bs4.min.js"></script>
+	<script src="../assets/admin/js/editor/summernote-bs4.min.js"></script>
 	<script>
       $('.editor').summernote({
 		fontSizes: ['10', '14'],

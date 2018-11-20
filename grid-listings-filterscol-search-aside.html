@@ -153,21 +153,18 @@
 			<a href="#" class="side_panel"><i class="icon_close"></i></a>
 			<div class="custom-search-input-2">
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="What are you looking..">
+					<input class="form-control inpBuscar" type="text" id="inpBuscarMob" placeholder="Que estas Buscando...">
 					<i class="icon_search"></i>
 				</div>
 				<div class="form-group">
 					<input class="form-control" type="text" placeholder="Where">
 					<i class="icon_pin_alt"></i>
 				</div>
-				<select class="wide">
-					<option>All Categories</option>	
-					<option>Shops</option>
-					<option>Hotels</option>
-					<option>Restaurants</option>
-					<option>Bars</option>
-					<option>Events</option>
-					<option>Fitness</option>
+				<select class="wide selectCat" id="selectCategoriaMob">
+					<option value="">Categoria</option>	
+					<option value="hotel">Hotel</option>
+					<option value="restaurante">Restaurante</option>
+					<option value="farmacia">Farmacia</option>
 				</select>
 				<input type="submit" value="Search">
 			</div>
@@ -181,14 +178,14 @@
 		   <div class="container">
 			   <div class="row">
 				   <div class="col-lg-3 col-md-4 col-10">
-					   <h4><strong>145</strong>resultado para todos los listados</h4>
+					   <h4><strong id="numResBusqueda">0 </strong>resultado para todos los listados</h4>
 				   </div>
 				   <div class="col-lg-9 col-md-8 col-2">
 					   <a href="#0" class="side_panel btn_search_mobile"></a> <!-- /open search panel -->
 						<div class="row no-gutters custom-search-input-2 inner">
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Que estas Buscando...">
+									<input class="form-control inpBuscar" type="text" id="inpBuscarDesk" placeholder="Que estas Buscando...">
 									<i class="icon_search"></i>
 								</div>
 							</div>
@@ -199,14 +196,11 @@
 								</div>
 							</div>
 							<div class="col-lg-3">
-								<select class="wide">
-									<option>All Categories</option>	
-									<option>Shops</option>
-									<option>Hotels</option>
-									<option>Restaurants</option>
-									<option>Bars</option>
-									<option>Events</option>
-									<option>Fitness</option>
+								<select class="wide selectCat" id="selectCategoriaDesk">
+										<option value="">Categoria</option>	
+										<option value="hotel">Hotel</option>
+										<option value="restaurante">Restaurante</option>
+										<option value="farmacia">Farmacia</option>
 								</select>
 							</div>
 							<div class="col-lg-1">
@@ -226,11 +220,11 @@
 				<ul class="clearfix">
 					<li>
 						<div class="switch-field">
-							<input type="radio" id="all" name="listing_filter" value="all" checked>
+							<input class="orden" type="radio" id="all" name="listing_filter" value="all" checked>
 							<label for="all">All</label>
-							<input type="radio" id="popular" name="listing_filter" value="popular">
+							<input class="orden" type="radio" id="popular" name="listing_filter" value="pop">
 							<label for="popular">Popular</label>
-							<input type="radio" id="latest" name="listing_filter" value="latest">
+							<input class="orden" type="radio" id="latest" name="listing_filter" value="ult">
 							<label for="latest">Latest</label>
 						</div>
 					</li>
@@ -256,20 +250,20 @@
 								<h6>Category</h6>
 								<ul>
 									<li>
-										<label class="container_check">Hotel <small>245</small>
-										  <input type="checkbox">
+										<label class="container_check">Hotel <small id="numHoteles">0</small>
+										  <input type="checkbox" class="chboxCat" value="catHotel" id="catHotel">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Restaurante <small>67</small>
-										  <input type="checkbox">
+										<label class="container_check">Restaurante <small id="numRestaurantes">0</small>
+										  <input type="checkbox" class="chboxCat" value="catRestaurante" id="catRestaurante">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Farmacia <small>32</small>
-										  <input type="checkbox">
+										<label class="container_check">Farmacia <small id="numFarmacias">0</small>
+										  <input type="checkbox" class="chboxCat" value="catFarmacia" id="catFarmacia">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
@@ -284,20 +278,20 @@
 								<h6>Rating</h6>
 								<ul>
 									<li>
-										<label class="container_check">Superb 5 <small>43</small>
-										  <input type="checkbox">
+										<label class="container_check">Superb 5 <small id="pts5">0</small>
+										  <input type="checkbox" class="chboxPts" id="cPts5">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Good 3+ <small>56</small>
-										  <input type="checkbox">
+										<label class="container_check">Good 3+ <small id="pts34">0</small>
+										  <input type="checkbox" class="chboxPts" id="cPts34">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
 									<li>
-										<label class="container_check">Pleasant 1+ <small>23</small>
-										  <input type="checkbox">
+										<label class="container_check">Pleasant 1+ <small id="pts02">0</small>
+										  <input type="checkbox" class="chboxPts" id="cPts02">
 										  <span class="checkmark"></span>
 										</label>
 									</li>
@@ -311,7 +305,7 @@
 				<!-- /aside -->
 
 				<div class="col-lg-9">
-					<div class="row">
+					<div class="row" id="cardLugares">
 						<div class="col-md-6">
 							<div class="strip grid">
 								<figure>
@@ -336,7 +330,7 @@
 							</div>
 						</div>
 						<!-- /strip grid -->
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<div class="strip grid">
 								<figure>
 									<a href="#0" class="wish_bt"></a>
@@ -358,9 +352,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!-- /strip grid -->
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<div class="strip grid">
 								<figure>
 									<a href="#0" class="wish_bt"></a>
@@ -382,9 +376,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!-- /strip grid -->
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<div class="strip grid">
 								<figure>
 									<a href="#0" class="wish_bt"></a>
@@ -406,9 +400,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!-- /strip grid -->
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<div class="strip grid">
 								<figure>
 									<a href="#0" class="wish_bt"></a>
@@ -430,9 +424,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!-- /strip grid -->
-						<div class="col-md-6">
+						<!-- <div class="col-md-6">
 							<div class="strip grid">
 								<figure>
 									<a href="#0" class="wish_bt"></a>
@@ -454,7 +448,7 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 						<!-- /strip grid -->
 					</div>
 					<!-- /row -->
@@ -619,30 +613,272 @@
 	<!-- <script src="assets/validate.js"></script> -->
 	
 	<!-- Map -->
-	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXyCt5__tNxbPXqjPbUT5Ruy5KwroyWBA"></script>
 	<script src="assets/public/js/markerclusterer.js"></script>
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
 	<script>
+			var busqueda;
+			var lugar;
+			var categoria=[''];
+			var radio;
+			var puntos=[''];
+			var orden='all';
+
+			//Parametros Url
 			function getParameterByName(name) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 					results = regex.exec(location.search);
 				return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
+			getLocation();
+			//primera Vez
 			$.getJSON('busqueda/controller/busqueda.php',
 			{
 				buscar:getParameterByName('buscar'),
 				lugar:getParameterByName('lugar'),
-				categoria:getParameterByName('categoria'),
+				categoria:[getParameterByName('categoria')],
 				distaciaRad:'',
 				orden:'all',
-				puntaje:'05',
+				puntaje:['all']
 			},
-				function (data, textStatus, jqXHR) {
-					console.log(data)
+			function (data, textStatus, jqXHR) {
+						// numero de sitios
+						console.log(data)
+						$('#numHoteles').html(data.numSitios.hoteles);
+						$('#numRestaurantes').html(data.numSitios.restaurantes);
+						$('#numFarmacias').html(data.numSitios.farmacias);
+						// puntajes
+						$('#pts5').html(data.sitiosPuntaje.pts5);
+						$('#pts34').html(data.sitiosPuntaje.pts34);
+						$('#pts02').html(data.sitiosPuntaje.pts02);
+						//num Resultados
+						$('#numResBusqueda').html(data.sitios.length + ' ');
+						//card Sitios
+						var htmlsitios='';
+						data.sitios.forEach(sitio => {
+							htmlsitios += `<div class="col-md-6">
+												<div class="strip grid">
+												<figure>
+												<a href="#0" class="wish_bt"></a>
+												<a href="detail-restaurant.html"><img src="${sitio.logo}" class="img-fluid" alt=""/>
+												<div class="read_more"><span>Read more</span></div>
+												</a>
+												<small>${sitio.categoria}</small>
+												</figure>
+												<div class="wrapper">
+												<h3><a href="detail-restaurant.html">${sitio.nombre_lugar}</a></h3>
+												<small>${sitio.direccion}</small>
+												<p>${sitio.descripcion}</p>
+												<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
+												</div>
+												<ul>
+													<li></li>
+													<li>
+													<div class="score"><span>Calificaciones<em>${sitio.numCalificaciones}</em></span><strong>${sitio.promedio}</strong></div>
+													</li>
+												</ul>
+												</div>
+												</div>`
+						});
+
+						$('#cardLugares').html(htmlsitios);
 				}
 			);
+			// $.ajax({
+			// 	type: "GET",
+			// 	url: "busqueda/controller/busqueda.php",
+			// 	data: {
+			// 		buscar:getParameterByName('buscar'),
+			// 		lugar:getParameterByName('lugar'),
+			// 		categoria:[getParameterByName('categoria')],
+			// 		distaciaRad:'',
+			// 		orden:'all',
+			// 		puntaje:varPuntos()
+			// 	},
+			// 	success: function (response) {
+			// 		console.log(response);
+			// 	}
+			// });
+
+			// buscar
+			function varBuscar()
+			{
+				var data;
+				var buscDesk=document.getElementById('inpBuscarDesk').value;
+				var buscMob=document.getElementById('inpBuscarMob').value;
+				var width=window.innerWidth;
+				data=(width>991)?buscDesk:buscMob;
+				return data;
+			}
+			//categorias
+			function varCategorias()
+			{
+				var categorias=[];
+				//checkBox categorias
+				chkbHoteles=document.getElementById('catHotel');
+				chkbRestaurante=document.getElementById('catRestaurante');
+				chkbFarmacia=document.getElementById('catFarmacia');
+				var sCatDesk=document.getElementById('selectCategoriaDesk').value;//select Desktop
+				var sCatMob=document.getElementById('selectCategoriaMob').value;//select Mobile
+				if(chkbHoteles.checked==true ||(sCatDesk!=''&& sCatDesk=='hotel')||(sCatMob!=''&& sCatMob=='hotel'))
+				{
+					categorias.push('hotel')
+				}
+				if(chkbFarmacia.checked==true ||(sCatDesk!=''&& sCatDesk=='farmacia')||(sCatMob!=''&& sCatMob=='farmacia'))
+				{
+					categorias.push('farmacia')					
+				}
+				if(chkbRestaurante.checked==true ||(sCatDesk!=''&& sCatDesk=='restaurante')||(sCatMob!=''&& sCatMob=='restaurante'))
+				{
+					categorias.push('restaurante')					
+				}
+				return categorias;
+			}
+			// puntos
+			function varPuntos()
+			{
+				var puntos=[];
+				chkbPts5=document.getElementById('cPts5');
+				chkbPts34=document.getElementById('cPts34');
+				chkbPts02=document.getElementById('cPts02');
+				if(chkbPts5.checked==true)
+				{
+					puntos.push('5')
+				}
+				if(chkbPts34.checked==true)
+				{
+					puntos.push('34')					
+				}
+				if(chkbPts02.checked==true)
+				{
+					puntos.push('02')					
+				}
+				console.log(puntos)
+				return puntos;
+			}
+		
+			//Acciones para Get
+			//buscar
+			$('.inpBuscar').keyup(function (e) { 
+				getDatos();
+			});
+			//checkbox categorias
+			$('.chboxCat').click(function () { 
+				getDatos();
+			});
+			//select categorias
+			$('.selectCat').change(function () { 
+				getDatos();
+			});
+			//puntos
+			$('.chboxPts').click(function () { 
+				getDatos();
+			});
+
+			//modificador var Orden
+			$('.orden').click(function () { 
+				console.log($(this).val())
+				orden=this.value;
+				getDatos();
+			});
+			function getDatos()
+			{
+				$.getJSON('busqueda/controller/busqueda.php',
+					{
+						buscar: varBuscar(),
+						lugar: '',
+						categoria: varCategorias(),
+						distaciaRad: '',
+						orden: orden,
+						puntaje: varPuntos()
+					},
+					function (data, textStatus, jqXHR) {
+						// numero de sitios
+						console.log(data)
+						$('#numHoteles').html(data.numSitios.hoteles);
+						$('#numRestaurantes').html(data.numSitios.restaurantes);
+						$('#numFarmacias').html(data.numSitios.farmacias);
+						// puntajes
+						$('#pts5').html(data.sitiosPuntaje.pts5);
+						$('#pts34').html(data.sitiosPuntaje.pts34);
+						$('#pts02').html(data.sitiosPuntaje.pts02);
+						//num Resultados
+						$('#numResBusqueda').html(data.sitios.length + ' ');
+						//card Sitios
+						var htmlsitios='';
+						data.sitios.forEach(sitio => {
+							htmlsitios += `<div class="col-md-6">
+												<div class="strip grid">
+												<figure>
+												<a href="#0" class="wish_bt"></a>
+												<a href="detail-restaurant.html"><img src="${sitio.logo}" class="img-fluid" alt=""/>
+												<div class="read_more"><span>Read more</span></div>
+												</a>
+												<small>${sitio.categoria}</small>
+												</figure>
+												<div class="wrapper">
+												<h3><a href="detail-restaurant.html">${sitio.nombre_lugar}</a></h3>
+												<small>${sitio.direccion}</small>
+												<p>${sitio.descripcion}</p>
+												<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
+												</div>
+												<ul>
+													<li></li>
+													<li>
+													<div class="score"><span>Calificaciones<em>${sitio.numCalificaciones}</em></span><strong>${sitio.promedio}</strong></div>
+													</li>
+												</ul>
+												</div>
+												</div>`
+						});
+
+						$('#cardLugares').html(htmlsitios);
+					}
+				);
+			}
+			function getCoordSitio(sitio)
+			{
+				var coord={
+					lat: '',
+					lng: ''
+				}
+				var geocoder= new google.maps.Geocoder();
+				var address=sitio;
+				geocoder.geocode({
+					address: address,
+					},
+					function(results, status)
+					{
+						if(status== 'OK')
+						{
+							console.log(sitio)
+							console.log(`latitud: ${results[0].geometry.location.lat()}`)
+							console.log(`longitud: ${results[0].geometry.location.lng()}`)
+							coord.lat=results[0].geometry.location.lat();
+							coord.lat=results[0].geometry.location.lng();
+						}
+					}
+				);
+				return coord;
+			}
+			function getLocation() {
+
+					var coordenadas = {
+						lat: '',
+						lng: '',
+					}
+					if (navigator.geolocation) {
+						navigator.geolocation.getCurrentPosition(function (pos) {
+							coordenadas.latitud = pos.coords.latitude;
+							coordenadas.longitud = pos.coords.longitude;
+						});
+					} else {
+						console.log("No soportado.");
+					}
+					return coordenadas;
+				}
 	</script>		
   
 </body>

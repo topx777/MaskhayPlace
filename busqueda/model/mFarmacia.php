@@ -64,6 +64,7 @@ class mFarmacia
         $sql="SELECT COUNT(*) AS 'numFarmacias' FROM `Farmacia`";
         $this->db->query($sql);
         return $this->db->getRegistro()->numFarmacias;
+
     }
 }
 

@@ -1,9 +1,10 @@
 <?php
+session_start();
 if($_POST) {
 	if(!empty($_POST["puntaje"]) and !empty($_POST["lugar"])) {
 		$puntaje = $_POST["puntaje"];
 		$comentario = $_POST["comentario"];
-		$idUsuario = 3;
+		$idUsuario = $_SESSION["usuario"]["id"];
 		$idLugar = $_POST["lugar"];
 
 		$fecha = date("Y-m-d");
@@ -12,7 +13,7 @@ if($_POST) {
 		$db = new Conexion();
 
 		$verificarCalificacion = $db->query("SELECT * FROM calificacion WHERE usuario = $idUsuario AND lugar = $idLugar");
-		if($db->rows($verificarCalificacion) > 0) {
+		if($db->rows($verificarCalificacion) == 0) {
 			$agregarCalificacion = $db->query("INSERT INTO calificacion(lugar, usuario, calificacion, comentario, fecha) VALUES($idLugar, $idUsuario, $puntaje, '$comentario', '$fecha')");
 			if($agregarCalificacion) {
 				echo 1;
@@ -20,7 +21,7 @@ if($_POST) {
 				'No se pudo calificar el lugar, intentelo nuevamente';
 			}
 		} else {
-			echo 'Ya realizaste una calificacion y comentario';
+			echo 'Ya realizaste una calificacion y comentario' . $idUsuario . "l: " . $idLugar;
 		}
 	} else {
 		echo 'Datos Vacios, el puntaje es requerido';
