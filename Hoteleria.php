@@ -6,6 +6,7 @@
     'nombre' => "Carlos Rodrigo"
   );
 
+
   $db = new Conexion();
   $db->charset();
   //--------------------------OBTENER DATOS DE LA TABLA LUGAR-----------------------------------
@@ -17,42 +18,59 @@
   } else {
     header('Location: HoteleriaVacia.html');
   }
+
+  $idLugar = $resLugar["id_lugar"];
   //-------------OBTENER DIRECCION-----------------------------
-  $obtenerDireccion = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  $obtenerDireccion = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerDireccion) > 0) {
     $resDireccion = $db->recorrer($obtenerDireccion);
   } else {
     header('Location: HoteleriaVacia.html');
   }
   //-------------OBTENER DESCRIPCION-----------------------------
-  $obtenerDescripcion = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  $obtenerDescripcion = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerDescripcion) > 0) {
     $resDescripcion = $db->recorrer($obtenerDescripcion);
   } else {
     header('Location: HoteleriaVacia.html');
   }
   //-------------OBTENER LONGITUD-----------------------------
-  $obtenerLongitud = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  $obtenerLongitud = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerLongitud) > 0) {
     $resLongitud = $db->recorrer($obtenerLongitud);
   } else {
     header('Location: HoteleriaVacia.html');
   }
   //-------------OBTENER LATITUD-----------------------------
-  $obtenerLatitud = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  $obtenerLatitud = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerLatitud) > 0) {
     $resLatitud = $db->recorrer($obtenerLatitud);
   } else {
     header('Location: HoteleriaVacia.html');
   }
   //-------------OBTENER LOGO-----------------------------
-  $obtenerLogo = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+  $obtenerLogo = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerLogo) > 0) {
     $resLogo = $db->recorrer($obtenerLogo);
   } else {
     header('Location: HoteleriaVacia.html');
   }
-  
+  //--------------------OBTENER CHECKBOX-------------------------
+  $obtenerChBParqueo = $db->query("SELECT * FROM hotel WHERE id_lugar = $idLugar LIMIT 1");
+
+
+
+
+
+  //-------------MODIFICAR LOGO-----------------------------
+  if(isset($_POST['btnAceptar'])){
+    $archivo = $_FILES['fileImagen']['tmp_name'];
+    $destino = "assets/public/img/logos/". $_FILES['fileImagen']['name'];
+    move_uploaded_file($archivo, $destino);
+    
+    $modificarlogo = $db->query("UPDATE lugar SET logo = '$destino' WHERE id_lugar = $idLugar");
+    header('Location: Hoteleria.php');
+  }
 
 
  ?>
@@ -165,6 +183,24 @@
   <!-- /Navigation-->
   <div class="content-wrapper">
       <div class="container-fluid">
+        <?php
+            $obtenerActivo = $db->query("SELECT activo FROM lugar WHERE usuario = $idUsuario LIMIT 1" );
+            if($db->rows($obtenerActivo) > 0) {
+              $resActivo = $db->recorrer($obtenerActivo);
+              $obtenerActivo = $resActivo["activo"];
+              if ($obtenerActivo == 1) {
+                echo "<div class='alert alert-secondary' role='alert'>
+                        Su pagina se encuentra activa
+                      </div>" ;
+              }else{
+                echo "<div class='alert alert-secondary' role='alert'>
+                        Su pagina no encuentra activa
+                      </div>" ;
+              }
+            } else {
+              header('Location: HoteleriaVacia.html');
+            }
+         ?>
       <!-- -------------------------------------Lugar------------------------------------>
       <div class="box_general padding_bottom">
       <div class="header_box version_2">
@@ -261,7 +297,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" value="<?=$resChBParqueo["parqueo"]?>">
+                <input type="checkbox" name="ChBParqueo">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -686,14 +722,11 @@
                   <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
                     <br>
                     <img style="width: 400px;" src="<?=$resLogo["logo"]?>"><br><br>
-                    
-                    <input type="file" name="Imagen" required="">
-
-                    
+                    <input type="file" name="fileImagen" required="">
       
                     <div class="modal-footer" style="padding-left: 400px;">
-                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnAceptar" value="Cancelar">
-                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar">
+                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnCancelar" value="Cancelar">
+                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar" >
                     </div>
 
                   </form>
