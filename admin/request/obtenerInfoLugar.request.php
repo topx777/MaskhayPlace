@@ -12,11 +12,19 @@ if($_GET) {
     if($db->rows($obtenerInfo) > 0) {
 
         $resLugar = $db->fetchAll($obtenerInfo);
-
+        
         $lugar = array(
             'data' => $resLugar
         );
         
+        // if($resLugar["categoria"] == "Farmacia") {
+            // $obtenerFarmacia =
+        // } else if ($resLugar["categoria"] == "Hotel") {
+
+        // } else if ($resLugar["categoria"] == "Restaurante") {
+
+        // }
+    
         echo json_encode($lugar);
 
     } else {
