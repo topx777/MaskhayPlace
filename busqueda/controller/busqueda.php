@@ -24,9 +24,9 @@ $sitios=$mGeneral->Buscar($buscar,$categoria,$orden,$puntaje,$coordenada, $dista
 //Numero de Sitios Por Tipo
 $numeroSitios=['farmacias'=>$mFarmacia->numFarmacias(),'restaurantes'=>$mFarmacia->numFarmacias(),'hoteles'=>$mHotel->numHoteles()];
 //Numero de Stios por Puntaje
-$num02=$mGeneral->numeroSitiosPorPuntaje(0)+$mGeneral->numeroSitiosPorPuntaje(1)+$mGeneral->numeroSitiosPorPuntaje(2);
-$num34=$mGeneral->numeroSitiosPorPuntaje(3)+$mGeneral->numeroSitiosPorPuntaje(4);
-$num5=$mGeneral->numeroSitiosPorPuntaje(5);
+$num02=$mGeneral->numeroSitiosPorPuntaje(0,1);
+$num34=$mGeneral->numeroSitiosPorPuntaje(3,4);
+$num5=$mGeneral->numeroSitiosPorPuntaje(5,5);
 $sitiosPuntaje=['pts5'=>$num5, 'pts34'=>$num34, 'pts02'=>$num02];
 
 // foreach ($sitios as $sitio) {

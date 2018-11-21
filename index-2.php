@@ -73,7 +73,8 @@
 						<li>
 							<span><a href="#0">Grid Layout</a></span>
 							<ul>
-								<li><a href="grid-listings-filterscol-search-aside.php">Sidebar+Search mobile 1</a></li>
+								<li><a href=
+									.php">Sidebar+Search mobile 1</a></li>
 								<li><a href="grid-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
 								<li><a href="grid-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
 								<li><a href="grid-listings-filterstop.html">Full+Search mobile 2</a></li>

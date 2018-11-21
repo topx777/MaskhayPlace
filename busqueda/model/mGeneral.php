@@ -4,13 +4,13 @@ class mGeneral
     public function __construct() {
         $this->db=new Database;
     }
-    public function numeroSitiosPorPuntaje($pts)
+    public function numeroSitiosPorPuntaje($pts1, $pts2)
     {
-        $sql="SELECT AVG(C.calificacion) As promedio, L.nombre_lugar
-        FROM lugar L
-        INNER JOIN calificacion C ON C.lugar=L.id_lugar
-        GROUP BY L.id_lugar 
-        HAVING promedio = {$pts}";
+        $sql="SELECT AVG(calificacion.calificacion) AS promedio, lugar.nombre_lugar
+                FROM lugar 
+                INNER JOIN calificacion  ON calificacion.lugar=lugar.id_lugar
+                GROUP BY lugar.id_lugar 
+                HAVING promedio BETWEEN {$pts1} AND {$pts2}";
         $this->db->query($sql);
         $this->db->execute();
         return $this->db->numRows();
