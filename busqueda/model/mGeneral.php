@@ -44,7 +44,7 @@ class mGeneral
         $this->db->query($sql);
         return $this->db->getRegistros();
     }
-    public function Buscar($buscar, $categorias=[], $orden, $pts=[])
+    public function Buscar($buscar, $categorias=[], $orden, $pts=[], $coordenada=[], $distancia)
     {
         $sqlBuscar="";
         $sqlOrd="";
@@ -69,7 +69,23 @@ class mGeneral
         }
         $sqlCategoria= join(' OR ', $sqlCat);
         $sqlCategoria=($sqlCategoria=='')?' ':" AND {$sqlCategoria}";
+        //Distancia
+        $sqlLimitCoord=" ";
+        $const=$distancia*0.10;
+        if (isset($coordenada[0]) && isset($coordenada[1]) && $const>0) {
+            $limLat=[];
+            $limLng=[];
+            $limLng['max']=$coordenada[1]+$const;
+            $limLng['min']=$coordenada[1]-$const;
+            
+            $limLat['max']=$coordenada[0]+$const;
+            $limLat['min']=$coordenada[0]-$const;
+            
+            $sqlLimitCoord=" AND lugar.latitud_gps >= {$limLat['max']} OR lugar.latitud_gps <= {$limLat['min']}
+                            AND lugar.longitud_gps >= {$limLng['max']} OR lugar.longitud_gps <= {$limLng['min']}";
+        }
 
+        
         //Orden
         switch ($orden) {
         case 'all':
@@ -117,10 +133,11 @@ class mGeneral
             INNER JOIN calificacion ON lugar.id_lugar=calificacion.lugar
             WHERE {$sqlBuscar}
                 {$sqlCategoria}
+                {$sqlLimitCoord}
             GROUP BY lugar.id_lugar
             {$sqlPuntaje}
             ORDER BY {$sqlOrd} ";
-         //echo $sql.'<br><br>';
+        //echo $sql.'<br><br>';
         $this->db->query($sql);
         return $this->db->getRegistros();
     }
