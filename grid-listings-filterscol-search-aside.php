@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -45,14 +48,20 @@
 				</div>
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
-						<script>
-						if (datos.session!=null) {
-							$('.opcUser').css('display', 'none');
+							<?php
+							if(isset($_SESSION["usuario"])) {
+								if($_SESSION["usuario"]["negocio"] == 0) {
+									echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+								}
+							} else {
+								echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+							}
+						?>
+						<?php
+						if(!isset($_SESSION["usuario"])) {
+							echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
 						}
-						</script>
-						<li><a class="opcUser" href="#" class="btn_add">Publicar Lugar</a></li>
-						<li><a class="opcUser" href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>
-						<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>
+						?>
 					</ul>
 					<!-- /top_menu -->
 					<a href="#menu" class="btn_mobile">
@@ -72,6 +81,9 @@
                                     <li><a href="#">Farmacias</a></li>
                                 </ul>
 							</li>
+							<?php
+						if(isset($_SESSION["usuario"])){
+						?>
 							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
 								<ul>
 									<li><a href="#">
@@ -88,6 +100,9 @@
 									</li>
 								</ul>
 							</li>
+						<?php
+						}
+						?>
                         </ul>
                     </nav>
 				</div>
