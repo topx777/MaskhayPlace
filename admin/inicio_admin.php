@@ -56,7 +56,11 @@ if($db->rows($obtenerLugares) > 0) {
   <link href="../assets/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Your custom styles -->
   <link href="../assets/admin/css/custom.css" rel="stylesheet">
-	
+	<style>
+  #map {
+    height: 300px;
+  }
+  </style>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -135,7 +139,7 @@ if($db->rows($obtenerLugares) > 0) {
         ?>
           <li>
             <figure><img src="../<?=$lugar["logo"]?>" alt=""></figure>
-            <h4><?=$lugar["nombre"]?> <i class="pending"><?=$lugar["estado"] != null ? $lugar["estado"] : "Pendiente"?></i></h4>
+            <h4><?=$lugar["nombre"]?> <i class="pending <?php if($lugar["estado"] == 'Rechazado') { echo "bg-danger"; } else if ($lugar["estado"] == 'Aceptado') { echo "bg-success"; } ?>"><?=$lugar["estado"] != null ? $lugar["estado"] : "Pendiente"?></i></h4>
             <ul class="booking_list">
               <li><strong>Usuario</strong> <?=$lugar["usuario"]?></li>
               <li><strong>Categoria</strong> <?=$lugar["categoria"]?></li>
@@ -240,9 +244,21 @@ if($db->rows($obtenerLugares) > 0) {
             </button>
           </div>
           <div class="modal-body">
-            
-            <h5 id="nombre_lugar"></h5>
-            <p id="direccion_lugar"></p>
+            <div class="row">
+              <div class="col-md-4">
+                <img src="" id="logo_lugar" width="250">
+              </div>
+              <div class="col-md-6">
+                <h5 id="nombre_lugar"></h5>
+                <p id="direccion_lugar"></p>
+                <p id="descripcion_lugar"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="map"></div>
+              </div>
+            </div>
 
           </div>
           <div class="modal-footer">
@@ -296,7 +312,9 @@ if($db->rows($obtenerLugares) > 0) {
 	<script src="../assets/admin/vendor/jquery.magnific-popup.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="../assets/admin/js/admin.js"></script>
-  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE" async defer></script>
+      
+
     <script>
     
     $(document).on('show.bs.modal', '#infoNegocioModal', function(event) {
@@ -320,8 +338,33 @@ if($db->rows($obtenerLugares) > 0) {
             for (var i = 0; i < jsonData.data.length; i++) {
               var lugar = jsonData.data[i];
             }
+            console.log(lugar);
             $('#nombre_lugar').html(lugar.nombre_lugar);
             $('#direccion_lugar').html(lugar.direccion);
+            $('#descripcion_lugar').html(lugar.descripcion);
+            $('#logo_lugar').prop('src', '../'+lugar.logo);
+
+            var pos_original = new google.maps.LatLng( lugar.latitud_gps, lugar.longitud_gps);
+            var options = {
+                zoom: 15,
+                center: pos_original,
+                mapTypeId: google.maps.MapTypeId.Mapa,
+                panControl: false,
+                  zoomControl: false,
+                  mapTypeControl: true,
+                  scaleControl: false,
+                  streetViewControl: true,
+                  overviewMapControl: false
+            };
+            
+            var map = new google.maps.Map(document.getElementById('map'), options);
+            
+            var marcador = new google.maps.Marker({
+                position: pos_original,
+                map: map,
+                draggable:false,
+                animation: google.maps.Animation.DROP,
+            });
           }
         }
       });
