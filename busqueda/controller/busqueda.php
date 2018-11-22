@@ -37,10 +37,8 @@ session_start();
 
 $data=['numSitios'=>$numeroSitios,
         'sitiosPuntaje'=>$sitiosPuntaje,
-        'sitios'=>$sitios,
-        'get'=>$_GET,
-        'session'=>$_SESSION["usuario"]];
-
+        'sitios'=>$sitios
+];
 //print_r($_GET)
 echo json_encode($data)
 

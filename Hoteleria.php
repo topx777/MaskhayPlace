@@ -64,19 +64,10 @@
   <!-- Your custom styles -->
   <link href="assets/admin/css/custom.css" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="estilo.css">
-
-
-
+  <link rel="stylesheet" href="estilo.css">
 
   <!-- Agregar la librería de Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
-    <script src="mis js/google/google-api.js"></script>
-    <!--------------------ENLACE PARA EL CUADRO DE GOOGLE------------------------->
-    <script src="cuadroGoogle.js"></script>
-    
-
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
 	
 </head>
 
@@ -91,35 +82,35 @@
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="Hoteleria.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-edit"></i>
             <span class="nav-link-text">Datos Hotel</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="imagenes_lugar.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-image"></i>
             <span class="nav-link-text">Imagenes Hotel</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="contactos_lugar.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-phone"></i>
             <span class="nav-link-text">Contactos Hotel</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="calificaciones_lugar.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-star"></i>
             <span class="nav-link-text">Ver Calificaciones</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="hoteleria_piezas.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-bed"></i>
             <span class="nav-link-text">Piezas Hotel</span>
           </a>
@@ -255,7 +246,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" name="ChBParqueo">
+                <input type="checkbox" id="parqueo" name="ChBParqueo">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -271,7 +262,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="piscina">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -287,7 +278,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="recreativa">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -303,7 +294,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="bar">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -322,7 +313,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="gimnasio">
                 <div class="slider round"></div>
              </label>
               </td>
@@ -479,91 +470,6 @@
 
       </div>
     </div>
-
-
-		<!---------------------------------------------------Datos para las habitaciones------------------------------------->
-		
-		<div class="box_general padding_bottom">
-			<div class="header_box version_2">
-				<h2><i class="fa fa-dollar"></i>Habitaciones</h2>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<table id="pricing-list-container" style="width:100%;">
-						<tr class="pricing-list-item">
-							<td>
-								<div class="row">
-                  
-									<div class="col-md-2">
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Nombre" required="">
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Descripcion" required="">
-										</div>
-									</div>
-                  
-									<div class="col-md-2">
-										<div class="form-group">
-											<input type="number" class="form-control" placeholder="Precio"  min="0" required="">
-										</div>
-									</div>
-
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <table class="sw">
-                         <tr>
-                           <td>
-                             <label id="lb">Sanitario</label>
-                           </td>
-                           <td class="btnswich">
-                             <label class="switch">
-                             <input type="checkbox">
-                             <div class="slider round"></div>
-                          </label>
-                           </td>
-                         </tr>
-                       </table>
-                    </div>
-                  </div>
-
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <table class="sw">
-                         <tr>
-                           <td>
-                             <label id="lb">Frigobar</label>
-                           </td>
-                           <td class="btnswich">
-                             <label class="switch">
-                             <input type="checkbox">
-                             <div class="slider round"></div>
-                          </label>
-                           </td>
-                         </tr>
-                       </table>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <form action="/file-upload" title="Click" class="dropzone"></form>
-                      <center><label>Imagen de la Habitacion</label></center>
-                      </div>
-                  </div>
-
-								</div>
-							</td>
-						</tr>
-					</table>
-					<a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Añadir</a>
-          <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Editar</a>
-					</div>
-			</div>
-			<!-- /row-->
-		</div>
 		<!-- /box_general-->
 		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
 	  </div>
@@ -710,7 +616,7 @@
           <div class="modal-body">Seguro que quiere cerrar cesion?</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Aceptar</a>
+            <a class="btn btn-primary" href="app/requestAJAX/cerrarSesion.request.php">Aceptar</a>
           </div>
         </div>
       </div>

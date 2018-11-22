@@ -830,6 +830,8 @@
 				form.append("resto_internet", $('#resto_internet').prop('checked'));
 				form.append("resto_reserva", $('#resto_reserva').prop('checked'));
 			}
+
+			$('#EnviarInfo').attr("disabled", true);
 			
 			$.ajax({
 				type: "POST",

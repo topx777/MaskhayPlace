@@ -1,11 +1,11 @@
 <?php
 if($_POST) {
-
+	session_start();
 	include('../helpers/class.Conexion.php');
 
 	$db = new Conexion();
 
-	$idUsuario = 4;
+	$idUsuario = $_SESSION["usuario"]["id"];
 
 	$nombre_lugar = $_POST["nombre_lugar"];
 	$direccion_lugar = $_POST["direccion_lugar"];
