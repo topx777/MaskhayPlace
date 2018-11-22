@@ -242,23 +242,18 @@ $db->close();
 					</a>
 					<nav id="menu" class="main-menu">
                         <ul>
-                            <li><span><a href="index.php">Inicio</a></span></li>
-                            <li><span><a href="#">Categorias</a></span>
-                                <ul>
-                                    <li><a href="#">Hoteles</a></li>
-                                    <li><a href="#">Restaurantes</a></li>
-                                    <li><a href="#">Farmacias</a></li>
-                                </ul>
-							</li>
+                            <li><span><a href="index-2.php">Inicio</a></span></li>
 						<?php
 						if(isset($_SESSION["usuario"])){
 						?>
 							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
 								<ul>
-									<li><a href="#">
+						<?php 	if($_SESSION["usuario"]["negocio"] == 1): ?>
+									<li><a href="administrar_lugar.php">
 										<span class="ti-dashboard"> </span>
 										Administrar mi Negocio</a>
 									</li>
+						<?php 		endif; ?>
 									<li><a href="reservas_usuario.php">
 										<span class="ti-agenda"> </span>
 										Mis Reservas</a>
@@ -704,7 +699,7 @@ $db->close();
 				</div>
 				<div class="text-center"><button id="Logearse" class="btn_1 full-width">Iniciar Sesion</button></div>
 				<div class="text-center">
-					Nuevo en nuestro sitio? <a href="#">Registrate</a>
+					Nuevo en nuestro sitio? <a href="logearse_registrarse.php">Registrate</a>
 				</div>
 			</div>
 		</div>

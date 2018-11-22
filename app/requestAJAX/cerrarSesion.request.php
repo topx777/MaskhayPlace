@@ -8,5 +8,5 @@ if(isset($_SESSION["usuario"]))
 
 session_destroy();
 
-header('Location: ../../restaurante_detalle.php?id=1');
+header("Location: ../../index-2.php");
 ?>

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,14 +42,27 @@
 	<header class="header menu_fixed">
 		<div id="logo">
 			<a href="index.html" title="Sparker - Directory and listings template">
-				<img src="assets/public/img/logo.svg" width="165" height="35" alt="" class="logo_normal">
-				<img src="assets/public/img/logo_sticky.svg" width="165" height="35" alt="" class="logo_sticky">
+				<img src="assets/public/img/logo2.png" width="165" height="35" alt="" class="logo_normal">
+				<img src="assets/public/img/logo.png" width="165" height="35" alt="" class="logo_sticky">
 			</a>
 		</div>
 		<ul id="top_menu">
-			<li><a href="account.html" class="btn_add">Add Listing</a></li>
-			<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
-			<li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
+			<?php
+				if(isset($_SESSION["usuario"])) {
+					if($_SESSION["usuario"]["negocio"] == 0) {
+						echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+					}
+				} else {
+					echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+				}
+			?>
+				
+			<?php
+			if(!isset($_SESSION["usuario"])) {
+				echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+			}
+			?>
+				<!-- <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li> -->
 		</ul>
 		<!-- /top_menu -->
 		<a href="#menu" class="btn_mobile">
@@ -58,88 +74,31 @@
 		</a>
 		<nav id="menu" class="main-menu">
 			<ul>
-				<li><span><a href="#0">Home</a></span>
+				<li><span><a href="index-2.php">Inicio</a></span></li>
+			<?php
+			if(isset($_SESSION["usuario"])){
+			?>
+				<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
 					<ul>
-						<li><a href="index.html">Home version 1</a></li>
-						<li><a href="index-2.html">Home version 2</a></li>
-						<li><a href="index-3.html">Home version 3</a></li>
-						<li><a href="index-4.html">Home version 4</a></li>
-						<li><a href="index-5.html">Home version 5</a></li>
-						<li><a href="index-6.html">Home version 6 (GDPR)</a></li>
+			<?php 	if($_SESSION["usuario"]["negocio"] == 1): ?>
+						<li><a href="administrar_lugar.php">
+							<span class="ti-dashboard"> </span>
+							Administrar mi Negocio</a>
+						</li>
+			<?php 	endif; ?>
+						<li><a href="reservas_usuario.php">
+							<span class="ti-agenda"> </span>
+							Mis Reservas</a>
+						</li>
+						<li><a href="app/requestAJAX/cerrarSesion.request.php">
+							<span class="ti-shift-left"> </span>
+							Cerrar Sesion</a>
+						</li>
 					</ul>
 				</li>
-				<li><span><a href="#0">Listings</a></span>
-					<ul>
-						<li>
-							<span><a href="#0">Grid Layout</a></span>
-							<ul>
-								<li><a href=
-									.php">Sidebar+Search mobile 1</a></li>
-								<li><a href="grid-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-								<li><a href="grid-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-								<li><a href="grid-listings-filterstop.html">Full+Search mobile 2</a></li>
-								<li><a href="grid-listings-isotope.html">Full+Isotope filter</a></li>
-							</ul>
-						</li>
-						<li>
-							<span><a href="#0">Row Layout</a></span>
-							<ul>
-								<li><a href="row-listings-filterscol-search-aside.html">Sidebar+Search mobile 1</a></li>
-								<li><a href="row-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-								<li><a href="row-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-								<li><a href="row-listings-filterstop.html">Full+Search mobile 2</a></li>
-								<li><a href="row-listings-isotope.html">Full+Isotope filter</a></li>
-							</ul>
-						</li>
-						<li><a href="listing-map.html">Listing Map</a></li>
-						<li>
-							<span><a href="#0">Detail pages</a></span>
-							<ul>
-								<li><a href="detail-hotel.html">Detail page 1</a></li>
-								<li><a href="detail-restaurant.html">Detail page 2</a></li>
-								<li><a href="detail-shop.html">Detail page 3</a></li>
-							</ul>
-						</li>
-                        <li><a href="bookings.html">Bookings - Purchases</a></li>
-						<li><a href="checkout.html">Checkout</a></li>
-						<li><a href="confirm.html">Confirm</a></li>
-					</ul>
-				</li>
-				<li><span><a href="#0">Pages</a></span>
-					<ul>
-						<li><a href="admin_section/index.html">Admin section</a></li>
-						<li><a href="blog.html">Blog</a></li>
-						<li><a href="account.html">Account</a></li>
-						<li><a href="help.html">Help Section</a></li>
-						<li><a href="faq.html">Faq Section</a></li>
-						<li><a href="wishlist.html">Wishlist page</a></li>
-						<li><a href="contacts.html">Contacts</a></li>
-						<li>
-							<span><a href="#0">Icon Packs</a></span>
-							<ul>
-								<li><a href="icon-pack-1.html">Icon pack 1</a></li>
-								<li><a href="icon-pack-2.html">Icon pack 2</a></li>
-								<li><a href="icon-pack-3.html">Icon pack 3</a></li>
-								<li><a href="icon-pack-4.html">Icon pack 4</a></li>
-							</ul>
-						</li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="media-gallery.html">Media gallery</a></li>
-					</ul>
-				</li>
-				<li><span><a href="#0">Extra</a></span>
-					<ul>
-						<li><a href="404.html">404 page</a></li>
-						<li><a href="contacts-2.html">Contacts 2</a></li>
-						<li><a href="pricing-tables.html">Pricing tables</a></li>
-						<li><a href="login.html">Login</a></li>
-						<li><a href="register.html">Register</a></li>
-						<li><a href="menu-options.html">Menu Options</a></li>
-						<li><a href="invoice.html">Invoice</a></li>
-						<li><a href="coming_soon/index.html">Coming Soon</a></li>
-					</ul>
-				</li>
-				<li><span><a href="#0">Buy template</a></span></li>
+			<?php
+			}
+			?>
 			</ul>
 		</nav>
 	</header>
@@ -286,7 +245,7 @@
 						</div>
 					</div>
 					<!-- /row -->
-					<p class="text-center add_top_30 wow bounceIn" data-wow-delay="0.5"><a href="account.html" class="btn_1 rounded">Registrate ahora</a></p>
+					<p class="text-center add_top_30 wow bounceIn" data-wow-delay="0.5"><a href="logearse_registrarse.php" class="btn_1 rounded">Registrate ahora</a></p>
 				</div>
 			</div>
 			<!-- /wrapper -->
@@ -392,47 +351,27 @@
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 		<div class="small-dialog-header">
-			<h3>Sign In</h3>
+			<h3>Iniciar Sesion</h3>
 		</div>
-		<form>
+		<div class="login-box">
+			<div id="LOGINresponse"></div>
 			<div class="sign-in-wrapper">
-				<a href="#0" class="social_bt facebook">Login with Facebook</a>
-				<a href="#0" class="social_bt google">Login with Google</a>
-				<div class="divider"><span>Or</span></div>
 				<div class="form-group">
-					<label>Email</label>
-					<input type="email" class="form-control" name="email" id="email">
-					<i class="icon_mail_alt"></i>
+					<label>Usuario</label>
+					<input type="text" class="form-control" placeholder="Nombre de Usuario" name="usuario" id="usuario">
+					<i class="icon_profile"></i>
 				</div>
 				<div class="form-group">
 					<label>Password</label>
-					<input type="password" class="form-control" name="password" id="password" value="">
+					<input type="password" class="form-control" placeholder="Password" name="password" id="password">
 					<i class="icon_lock_alt"></i>
 				</div>
-				<div class="clearfix add_bottom_15">
-					<div class="checkboxes float-left">
-						<label class="container_check">Remember me
-						  <input type="checkbox">
-						  <span class="checkmark"></span>
-						</label>
-					</div>
-					<div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-				</div>
-				<div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+				<div class="text-center"><button id="Logearse" class="btn_1 full-width">Iniciar Sesion</button></div>
 				<div class="text-center">
-					Don’t have an account? <a href="register.html">Sign up</a>
-				</div>
-				<div id="forgot_pw">
-					<div class="form-group">
-						<label>Please confirm login email below</label>
-						<input type="email" class="form-control" name="email_forgot" id="email_forgot">
-						<i class="icon_mail_alt"></i>
-					</div>
-					<p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-					<div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+					Nuevo en nuestro sitio? <a href="logearse_registrarse.php">Registrate</a>
 				</div>
 			</div>
-		</form>
+		</div>
 		<!--form -->
 	</div>
 	<!-- /Sign In Popup -->
@@ -447,6 +386,19 @@
 	<!-- SPECIFIC SCRIPTS -->
 	<script src="assets/public/js/video_header.js"></script>
 	<script>
+		$('.logearsePOP').magnificPopup({
+			type: 'inline',
+			fixedContentPos: true,
+			fixedBgPos: true,
+			overflowY: 'auto',
+			closeBtnInside: true,
+			preloader: true,
+			midClick: true,
+			removalDelay: 300,
+			closeMarkup: '<button title="%title%" type="button" class="mfp-close"></button>',
+			mainClass: 'my-mfp-zoom-in'
+		});
+
 		HeaderVideo.init({
 			container: $('.header-video'),
 			header: $('.header-video--media'),
@@ -540,6 +492,31 @@
 				}
 				return url;
 			}
+
+		//Evento para Iniciar Sesion
+		$(document).on('click', '#Logearse', function() {
+			var usuario = $('#usuario').val();
+			var password = $('#password').val();
+			
+			$.ajax({
+				type: "POST",
+				url: "app/requestAJAX/logearseSesion.request.php",
+				data: {
+					usuario: usuario,
+					password: password
+				},
+				cache: false,
+				success: function (response) {
+					if(response == 1) {
+						$('#LOGINresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Usuario Logeado con exito!.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+						location.reload();
+					} else {
+						$('#LOGINresponse').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>ERROR:</strong> '+response+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					}
+				}
+			});
+
+		});
 	</script>
 
 </body>

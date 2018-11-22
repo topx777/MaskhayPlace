@@ -113,10 +113,19 @@ if($db->rows($obtenerReservas) > 0) {
 				</div>
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
-						<li><a href="#" class="btn_add">Publicar Lugar</a></li>
+					<?php
+						if(isset($_SESSION["usuario"])) {
+							if($_SESSION["usuario"]["negocio"] == 0) {
+								echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+							}
+						} else {
+							echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+						}
+					?>
+						
 					<?php
 					if(!isset($_SESSION["usuario"])) {
-						echo '<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+						echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
 					}
 					?>
 						<!-- <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li> -->
@@ -131,23 +140,18 @@ if($db->rows($obtenerReservas) > 0) {
 					</a>
 					<nav id="menu" class="main-menu">
                         <ul>
-                            <li><span><a href="index.php">Inicio</a></span></li>
-                            <li><span><a href="#">Categorias</a></span>
-                                <ul>
-                                    <li><a href="#">Hoteles</a></li>
-                                    <li><a href="#">Restaurantes</a></li>
-                                    <li><a href="#">Farmacias</a></li>
-                                </ul>
-							</li>
+                            <li><span><a href="index-2.php">Inicio</a></span></li>
 						<?php
 						if(isset($_SESSION["usuario"])){
 						?>
 							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
 								<ul>
-									<li><a href="#">
+						<?php 	if($_SESSION["usuario"]["negocio"] == 1): ?>
+									<li><a href="administrar_lugar.php">
 										<span class="ti-dashboard"> </span>
 										Administrar mi Negocio</a>
 									</li>
+						<?php 		endif; ?>
 									<li><a href="reservas_usuario.php">
 										<span class="ti-agenda"> </span>
 										Mis Reservas</a>
@@ -384,6 +388,32 @@ if($db->rows($obtenerReservas) > 0) {
 		<!--form -->
 	</div>
 
+	<!-- Sign In Popup -->
+	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+		<div class="small-dialog-header">
+			<h3>Iniciar Sesion</h3>
+		</div>
+		<div class="login-box">
+			<div id="LOGINresponse"></div>
+			<div class="sign-in-wrapper">
+				<div class="form-group">
+					<label>Usuario</label>
+					<input type="text" class="form-control" placeholder="Nombre de Usuario" name="usuario" id="usuario">
+					<i class="icon_profile"></i>
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" placeholder="Password" name="password" id="password">
+					<i class="icon_lock_alt"></i>
+				</div>
+				<div class="text-center"><button id="Logearse" class="btn_1 full-width">Iniciar Sesion</button></div>
+				<div class="text-center">
+					Nuevo en nuestro sitio? <a href="logearse_registrarse.php">Registrate</a>
+				</div>
+			</div>
+		</div>
+		<!--form -->
+	</div>
 	<!-- /Sign In Popup -->
 	
 	<div id="toTop"></div><!-- Back to top button -->
@@ -398,6 +428,19 @@ if($db->rows($obtenerReservas) > 0) {
 	
 	<script>
 	$('.updateReserva').magnificPopup({
+		type: 'inline',
+		fixedContentPos: true,
+		fixedBgPos: true,
+		overflowY: 'auto',
+		closeBtnInside: true,
+		preloader: true,
+		midClick: true,
+		removalDelay: 300,
+		closeMarkup: '<button title="%title%" type="button" class="mfp-close"></button>',
+		mainClass: 'my-mfp-zoom-in'
+	});
+
+	$('.logearsePOP').magnificPopup({
 		type: 'inline',
 		fixedContentPos: true,
 		fixedBgPos: true,
@@ -497,6 +540,31 @@ if($db->rows($obtenerReservas) > 0) {
 
 		}, 
 		function(){ alertify.error('Accion Cancelada')}).set('labels', {ok:'Si', cancel:'No'}); ;
+	});
+
+	//Evento para Iniciar Sesion
+	$(document).on('click', '#Logearse', function() {
+			var usuario = $('#usuario').val();
+		var password = $('#password').val();
+		
+		$.ajax({
+			type: "POST",
+			url: "app/requestAJAX/logearseSesion.request.php",
+			data: {
+				usuario: usuario,
+				password: password
+			},
+			cache: false,
+			success: function (response) {
+				if(response == 1) {
+					$('#LOGINresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Usuario Logeado con exito!.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					location.reload();
+				} else {
+					$('#LOGINresponse').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>ERROR:</strong> '+response+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				}
+			}
+		});
+
 	});
 
 	$(document).on('click', '#EnviarReserva', function() {

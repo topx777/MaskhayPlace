@@ -44,26 +44,28 @@ session_start();
 				<div class="col-lg-3 col-12">
 					<div id="logo">
 						<a href="index.html">
-							<img src="assets/public/img/logo_sticky.svg" width="165" height="35" alt="" class="logo_sticky">
+							<img src="assets/public/img/logo.png" width="165" height="35" alt="" class="logo_sticky">
 						</a>
 					</div>
 				</div>
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
-							<?php
-							if(isset($_SESSION["usuario"])) {
-								if($_SESSION["usuario"]["negocio"] == 0) {
-									echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
-								}
-							} else {
-								echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+					<?php
+						if(isset($_SESSION["usuario"])) {
+							if($_SESSION["usuario"]["negocio"] == 0) {
+								echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
 							}
-						?>
-						<?php
-						if(!isset($_SESSION["usuario"])) {
-							echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+						} else {
+							echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
 						}
-						?>
+					?>
+						
+					<?php
+					if(!isset($_SESSION["usuario"])) {
+						echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+					}
+					?>
+						<!-- <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li> -->
 					</ul>
 					<!-- /top_menu -->
 					<a href="#menu" class="btn_mobile">
@@ -75,23 +77,18 @@ session_start();
 					</a>
 					<nav id="menu" class="main-menu">
                         <ul>
-                            <li><span><a href="index.php">Inicio</a></span></li>
-                            <li><span><a href="#">Categorias</a></span>
-                                <ul>
-                                    <li><a href="#">Hoteles</a></li>
-                                    <li><a href="#">Restaurantes</a></li>
-                                    <li><a href="#">Farmacias</a></li>
-                                </ul>
-							</li>
-							<?php
+                            <li><span><a href="index-2.php">Inicio</a></span></li>
+						<?php
 						if(isset($_SESSION["usuario"])){
 						?>
 							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
 								<ul>
-									<li><a href="#">
+						<?php 	if($_SESSION["usuario"]["negocio"] == 1): ?>
+									<li><a href="administrar_lugar.php">
 										<span class="ti-dashboard"> </span>
 										Administrar mi Negocio</a>
 									</li>
+						<?php 		endif; ?>
 									<li><a href="reservas_usuario.php">
 										<span class="ti-agenda"> </span>
 										Mis Reservas</a>
@@ -382,47 +379,27 @@ session_start();
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 		<div class="small-dialog-header">
-			<h3>Sign In</h3>
+			<h3>Iniciar Sesion</h3>
 		</div>
-		<form>
+		<div class="login-box">
+			<div id="LOGINresponse"></div>
 			<div class="sign-in-wrapper">
-				<a href="#0" class="social_bt facebook">Login with Facebook</a>
-				<a href="#0" class="social_bt google">Login with Google</a>
-				<div class="divider"><span>Or</span></div>
 				<div class="form-group">
-					<label>Email</label>
-					<input type="email" class="form-control" name="email" id="email">
-					<i class="icon_mail_alt"></i>
+					<label>Usuario</label>
+					<input type="text" class="form-control" placeholder="Nombre de Usuario" name="usuario" id="usuario">
+					<i class="icon_profile"></i>
 				</div>
 				<div class="form-group">
 					<label>Password</label>
-					<input type="password" class="form-control" name="password" id="password" value="">
+					<input type="password" class="form-control" placeholder="Password" name="password" id="password">
 					<i class="icon_lock_alt"></i>
 				</div>
-				<div class="clearfix add_bottom_15">
-					<div class="checkboxes float-left">
-						<label class="container_check">Remember me
-						  <input type="checkbox">
-						  <span class="checkmark"></span>
-						</label>
-					</div>
-					<div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-				</div>
-				<div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+				<div class="text-center"><button id="Logearse" class="btn_1 full-width">Iniciar Sesion</button></div>
 				<div class="text-center">
-					Don’t have an account? <a href="register.html">Sign up</a>
-				</div>
-				<div id="forgot_pw">
-					<div class="form-group">
-						<label>Please confirm login email below</label>
-						<input type="email" class="form-control" name="email_forgot" id="email_forgot">
-						<i class="icon_mail_alt"></i>
-					</div>
-					<p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-					<div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+					Nuevo en nuestro sitio? <a href="logearse_registrarse.php">Registrate</a>
 				</div>
 			</div>
-		</form>
+		</div>
 		<!--form -->
 	</div>
 	<!-- /Sign In Popup -->
@@ -764,16 +741,54 @@ session_start();
 			}
 			function getLocation() {
 
-					if (navigator.geolocation) {
-						navigator.geolocation.getCurrentPosition(function (pos) {
-							coord.lat = pos.coords.latitude;
-							coord.lng = pos.coords.longitude;
-						});
-					} else {
-						console.log("No soportado.");
-					}
-					return coord;
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function (pos) {
+						coord.lat = pos.coords.latitude;
+						coord.lng = pos.coords.longitude;
+					});
+				} else {
+					console.log("No soportado.");
 				}
+				return coord;
+			}
+
+			$('.logearsePOP').magnificPopup({
+				type: 'inline',
+				fixedContentPos: true,
+				fixedBgPos: true,
+				overflowY: 'auto',
+				closeBtnInside: true,
+				preloader: true,
+				midClick: true,
+				removalDelay: 300,
+				closeMarkup: '<button title="%title%" type="button" class="mfp-close"></button>',
+				mainClass: 'my-mfp-zoom-in'
+			});
+
+			//Evento para Iniciar Sesion
+			$(document).on('click', '#Logearse', function() {
+				var usuario = $('#usuario').val();
+				var password = $('#password').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "app/requestAJAX/logearseSesion.request.php",
+					data: {
+						usuario: usuario,
+						password: password
+					},
+					cache: false,
+					success: function (response) {
+						if(response == 1) {
+							$('#LOGINresponse').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Correcto!</strong> Usuario Logeado con exito!.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+							location.reload();
+						} else {
+							$('#LOGINresponse').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>ERROR:</strong> '+response+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+						}
+					}
+				});
+
+			});
 			
 	
 	</script>		
