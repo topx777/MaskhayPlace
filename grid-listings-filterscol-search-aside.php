@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,12 +20,14 @@
     <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="assets/public/img/apple-touch-icon-144x144-precomposed.png">
 
     <!-- GOOGLE WEB FONT -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> -->
 
     <!-- BASE CSS -->
     <link href="assets/public/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/public/css/style.css" rel="stylesheet">
 	<link href="assets/public/css/vendors.css" rel="stylesheet">
+	<link rel="stylesheet" href="assets/public/css/animate.css-master/animate.min.css">
+
 
     <!-- YOUR CUSTOM CSS -->
     <link href="assets/public/css/custom.css" rel="stylesheet">
@@ -45,9 +50,20 @@
 				</div>
 				<div class="col-lg-9 col-12">
 					<ul id="top_menu">
-						<li><a href="account.html" class="btn_add">Add Listing</a></li>
-						<li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
-						<li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
+							<?php
+							if(isset($_SESSION["usuario"])) {
+								if($_SESSION["usuario"]["negocio"] == 0) {
+									echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+								}
+							} else {
+								echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';
+							}
+						?>
+						<?php
+						if(!isset($_SESSION["usuario"])) {
+							echo '<li><a href="#sign-in-dialog" class="login logearsePOP" title="Iniciar Sesión">Iniciar Sesión</a></li>';
+						}
+						?>
 					</ul>
 					<!-- /top_menu -->
 					<a href="#menu" class="btn_mobile">
@@ -59,87 +75,36 @@
 					</a>
 					<nav id="menu" class="main-menu">
                         <ul>
-                            <li><span><a href="#0">Home</a></span>
+                            <li><span><a href="index.php">Inicio</a></span></li>
+                            <li><span><a href="#">Categorias</a></span>
                                 <ul>
-                                    <li><a href="index.html">Home version 1</a></li>
-                                    <li><a href="index-2.html">Home version 2</a></li>
-                                    <li><a href="index-3.html">Home version 3</a></li>
-                                    <li><a href="index-4.html">Home version 4</a></li>
-                                    <li><a href="index-5.html">Home version 5</a></li>
-                                    <li><a href="index-6.html">Home version 6 (GDPR)</a></li>
+                                    <li><a href="#">Hoteles</a></li>
+                                    <li><a href="#">Restaurantes</a></li>
+                                    <li><a href="#">Farmacias</a></li>
                                 </ul>
-                            </li>
-                            <li><span><a href="#0">Listings</a></span>
-                                <ul>
-                                    <li>
-                                        <span><a href="#0">Grid Layout</a></span>
-                                        <ul>
-                                            <li><a href="grid-listings-filterscol-search-aside.html">Sidebar+Search mobile 1</a></li>
-                                            <li><a href="grid-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-                                            <li><a href="grid-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-                                            <li><a href="grid-listings-filterstop.html">Full+Search mobile 2</a></li>
-                                            <li><a href="grid-listings-isotope.html">Full+Isotope filter</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <span><a href="#0">Row Layout</a></span>
-                                        <ul>
-                                            <li><a href="row-listings-filterscol-search-aside.html">Sidebar+Search mobile 1</a></li>
-                                            <li><a href="row-listings-filterstop-search-aside.html">Full+Search mobile 1</a></li>
-                                            <li><a href="row-listings-filterscol.html">Sidebar+Search mobile 2</a></li>
-                                            <li><a href="row-listings-filterstop.html">Full+Search mobile 2</a></li>
-                                            <li><a href="row-listings-isotope.html">Full+Isotope filter</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="listing-map.html">Listing Map</a></li>
-                                    <li>
-                                        <span><a href="#0">Detail pages</a></span>
-                                        <ul>
-                                            <li><a href="detail-hotel.html">Detail page 1</a></li>
-                                            <li><a href="detail-restaurant.html">Detail page 2</a></li>
-                                            <li><a href="detail-shop.html">Detail page 3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="bookings.html">Bookings - Purchases</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="confirm.html">Confirm</a></li>
-                                </ul>
-                            </li>
-                            <li><span><a href="#0">Pages</a></span>
-                                <ul>
-                                    <li><a href="admin_section/index.html">Admin section</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="account.html">Account</a></li>
-                                    <li><a href="help.html">Help Section</a></li>
-                                    <li><a href="faq.html">Faq Section</a></li>
-                                    <li><a href="wishlist.html">Wishlist page</a></li>
-                                    <li><a href="contacts.html">Contacts</a></li>
-                                    <li>
-                                        <span><a href="#0">Icon Packs</a></span>
-                                        <ul>
-                                            <li><a href="icon-pack-1.html">Icon pack 1</a></li>
-                                            <li><a href="icon-pack-2.html">Icon pack 2</a></li>
-                                            <li><a href="icon-pack-3.html">Icon pack 3</a></li>
-                                            <li><a href="icon-pack-4.html">Icon pack 4</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="media-gallery.html">Media gallery</a></li>
-                                </ul>
-                            </li>
-                            <li><span><a href="#0">Extra</a></span>
-                                <ul>
-                                    <li><a href="404.html">404 page</a></li>
-                                    <li><a href="contacts-2.html">Contacts 2</a></li>
-                                    <li><a href="pricing-tables.html">Pricing tables</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="menu-options.html">Menu Options</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="coming_soon/index.html">Coming Soon</a></li>
-                                </ul>
-                            </li>
-                            <li><span><a href="#0">Buy template</a></span></li>
+							</li>
+							<?php
+						if(isset($_SESSION["usuario"])){
+						?>
+							<li><span><a href="#"><span class="ti-angle-down"> </span><?=$_SESSION["usuario"]["nombre"]?></a></span>
+								<ul>
+									<li><a href="#">
+										<span class="ti-dashboard"> </span>
+										Administrar mi Negocio</a>
+									</li>
+									<li><a href="reservas_usuario.php">
+										<span class="ti-agenda"> </span>
+										Mis Reservas</a>
+									</li>
+									<li><a href="app/requestAJAX/cerrarSesion.request.php">
+										<span class="ti-shift-left"> </span>
+										Cerrar Sesion</a>
+									</li>
+								</ul>
+							</li>
+						<?php
+						}
+						?>
                         </ul>
                     </nav>
 				</div>
@@ -157,8 +122,8 @@
 					<i class="icon_search"></i>
 				</div>
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="Where">
-					<i class="icon_pin_alt"></i>
+					<input id="inpDondeMob" class="form-control" type="text" placeholder="Donde">
+					<i class="icon_pin_alt miPosicion" ></i>
 				</div>
 				<select class="wide selectCat" id="selectCategoriaMob">
 					<option value="">Categoria</option>	
@@ -166,7 +131,7 @@
 					<option value="restaurante">Restaurante</option>
 					<option value="farmacia">Farmacia</option>
 				</select>
-				<input type="submit" value="Search">
+				<input type="btn" class="btnBuscarP" value="Search">
 			</div>
 		</div>
 		<!-- /search_mobile -->
@@ -191,8 +156,8 @@
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input class="form-control" type="text" placeholder="Donde">
-									<i class="icon_pin_alt"></i>
+									<input id="inpDondeDesk" class="form-control" type="text" placeholder="Donde">
+									<i class="icon_pin_alt miPosicion"></i>
 								</div>
 							</div>
 							<div class="col-lg-3">
@@ -204,7 +169,7 @@
 								</select>
 							</div>
 							<div class="col-lg-1">
-								<input type="submit" value="Search">
+								<input type="submit" class="btnBuscarP" value="Search">
 							</div>
 						</div>
 				   </div>
@@ -272,7 +237,7 @@
 							<div class="filter_type">
                                 <h6>Distance</h6>
                                 <div class="distance"> Radius around selected destination <span></span> km</div>
-								<input type="range" min="10" max="100" step="10" value="30" data-orientation="horizontal">
+								<input id="radioKm" type="range" min="0" max="5" step="1" value="0" data-orientation="horizontal">
                             </div>
 							<div class="filter_type">
 								<h6>Rating</h6>
@@ -306,154 +271,11 @@
 
 				<div class="col-lg-9">
 					<div class="row" id="cardLugares">
-						<div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-restaurant.html"><img src="assets/public/img/location_1.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Restaurant</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-restaurant.html">Da Alfredo</a></h3>
-									<small>27 Old Gloucester St</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_open">Now Open</span></li>
-									<li>
-										<div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<!-- /strip grid -->
-						<!-- <div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-restaurant.html"><img src="assets/public/img/location_2.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Bar</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-restaurant.html">Limon Bar</a></h3>
-									<small>438 Rush Green Road, Romford</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_open">Now Open</span></li>
-									<li>
-										<div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div> -->
-						<!-- /strip grid -->
-						<!-- <div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-shop.html"><img src="assets/public/img/location_3.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Shop</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-shop.html">Mary Boutique</a></h3>
-									<small>43 Stephen Road, Bexleyheath</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_closed">Now Closed</span></li>
-									<li>
-										<div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div> -->
-						<!-- /strip grid -->
-						<!-- <div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-restaurant.html"><img src="assets/public/img/location_4.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Bar</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-restaurant.html">Garden Bar</a></h3>
-									<small>40 Beechwood Road, Sanderstead</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_closed">Now Closed</span></li>
-									<li>
-										<div class="score"><span>Superb<em>350 Reviews</em></span><strong>9.0</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div> -->
-						<!-- /strip grid -->
-						<!-- <div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-hotel.html"><img src="assets/public/img/location_5.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Hotel</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-hotel.html">Mariott Hotel</a></h3>
-									<small>213 Malden Road, New Malden</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_open">Now Open</span></li>
-									<li>
-										<div class="score"><span>Good<em>350 Reviews</em></span><strong>7.5</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div> -->
-						<!-- /strip grid -->
-						<!-- <div class="col-md-6">
-							<div class="strip grid">
-								<figure>
-									<a href="#0" class="wish_bt"></a>
-									<a href="detail-restaurant.html"><img src="assets/public/img/location_6.jpg" class="img-fluid" alt="">
-										<div class="read_more"><span>Read more</span></div>
-									</a>
-									<small>Event</small>
-								</figure>
-								<div class="wrapper">
-									<h3><a href="detail-restaurant.html">Six Pistols</a></h3>
-									<small>Coverdale Road, Willesden</small>
-									<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-									<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
-								</div>
-								<ul>
-									<li><span class="loc_open">Now Open</span></li>
-									<li>
-										<div class="score"><span>Good<em>350 Reviews</em></span><strong>7.8</strong></div>
-									</li>
-								</ul>
-							</div>
-						</div> -->
-						<!-- /strip grid -->
+
 					</div>
 					<!-- /row -->
 
-					<p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+					<p class="text-center" id="btnVermas"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
 				</div>
 				<!-- /col -->
 			</div>		
@@ -613,11 +435,12 @@
 	<!-- <script src="assets/validate.js"></script> -->
 	
 	<!-- Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXyCt5__tNxbPXqjPbUT5Ruy5KwroyWBA"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"></script>
 	<script src="assets/public/js/markerclusterer.js"></script>
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
 	<script>
+			var datos;
 			var busqueda;
 			var lugar;
 			var categoria=[''];
@@ -646,6 +469,7 @@
 			function (data, textStatus, jqXHR) {
 						// numero de sitios
 						console.log(data)
+						datos=data;
 						$('#numHoteles').html(data.numSitios.hoteles);
 						$('#numRestaurantes').html(data.numSitios.restaurantes);
 						$('#numFarmacias').html(data.numSitios.farmacias);
@@ -657,21 +481,22 @@
 						$('#numResBusqueda').html(data.sitios.length + ' ');
 						//card Sitios
 						var htmlsitios='';
-						data.sitios.forEach(sitio => {
+						for (let i = 0; i < data.sitios.length && i<limit; i++) {
+							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
-												<div class="strip grid">
+												<div class="strip grid animated pulse">
 												<figure>
 												<a href="#0" class="wish_bt"></a>
-												<a href="detail-restaurant.html"><img src="${sitio.logo}" class="img-fluid" alt=""/>
+												<a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}"><img src="${sitio.logo}" class="img-fluid" alt=""/>
 												<div class="read_more"><span>Read more</span></div>
 												</a>
 												<small>${sitio.categoria}</small>
 												</figure>
 												<div class="wrapper">
-												<h3><a href="detail-restaurant.html">${sitio.nombre_lugar}</a></h3>
+												<h3><a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}">${sitio.nombre_lugar}</a></h3>
 												<small>${sitio.direccion}</small>
 												<p>${sitio.descripcion}</p>
-												<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
+												<a class="address" href="https://www.google.com/maps/dir/${coord.lat},${coord.lng}/${sitio.latitud_gps},${sitio.longitud_gps}">Get directions</a>
 												</div>
 												<ul>
 													<li></li>
@@ -681,9 +506,14 @@
 												</ul>
 												</div>
 												</div>`
-						});
+						
+						}
 
 						$('#cardLugares').html(htmlsitios);
+						if(limit>= data.sitios.length)
+						{
+							document.getElementById('btnVermas').style.display='none'
+						}
 				}
 			);
 			// $.ajax({
@@ -758,7 +588,30 @@
 				console.log(puntos)
 				return puntos;
 			}
-		
+
+			function varPosicion()
+			{
+				var width=window.innerWidth;
+				var donde='';
+				donde=(width>991)?$('#inpDondeDesk').val():$('#inpDondeMob').val();
+				var resp={lat:'',lng:''}
+				if (donde.includes(',')) {
+					var donde=donde.split(',')
+					resp.lat=donde[0]
+					resp.lng=donde[1]
+					console.log(resp)
+				}
+				else if(donde!='')
+				{
+					donde=getCoordSitio(donde);
+				}
+				return donde;
+			}
+			$('.miPosicion').click(function () { 
+				var coord=getLocation();
+				$('#inpDondeDesk').val(`${coord.lat},${coord.lng}`);
+				$('#inpDondeMob').val(`${coord.lat},${coord.lng}`);
+			});
 			//Acciones para Get
 			//buscar
 			$('.inpBuscar').keyup(function (e) { 
@@ -776,13 +629,29 @@
 			$('.chboxPts').click(function () { 
 				getDatos();
 			});
-
+			//scroll
+			$('#radioKm').change(function () { 
+				getDatos();
+			});
+			$('#btnBuscar').click(function () { 
+				getDatos();
+			});
 			//modificador var Orden
 			$('.orden').click(function () { 
 				console.log($(this).val())
 				orden=this.value;
 				getDatos();
 			});
+			$('#btnVermas').click(function () { 
+				limit+=limit;
+				getDatos();
+				
+			});
+			$('.btnBuscarP').click(function () { 
+				getDatos();
+			});
+			
+			var limit=6;
 			function getDatos()
 			{
 				$.getJSON('busqueda/controller/busqueda.php',
@@ -790,12 +659,14 @@
 						buscar: varBuscar(),
 						lugar: '',
 						categoria: varCategorias(),
-						distaciaRad: '',
+						distaciaRad: $('#radioKm').val(),
+						coordenada: varPosicion(),
 						orden: orden,
 						puntaje: varPuntos()
 					},
 					function (data, textStatus, jqXHR) {
 						// numero de sitios
+						datos=data;
 						console.log(data)
 						$('#numHoteles').html(data.numSitios.hoteles);
 						$('#numRestaurantes').html(data.numSitios.restaurantes);
@@ -808,21 +679,23 @@
 						$('#numResBusqueda').html(data.sitios.length + ' ');
 						//card Sitios
 						var htmlsitios='';
-						data.sitios.forEach(sitio => {
+						var coord=getLocation();
+						for (let i = 0; i < data.sitios.length && i<limit; i++) {
+							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
-												<div class="strip grid">
+												<div class="strip grid animated pulse">
 												<figure>
 												<a href="#0" class="wish_bt"></a>
-												<a href="detail-restaurant.html"><img src="${sitio.logo}" class="img-fluid" alt=""/>
+												<a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}"><img src="${sitio.logo}" class="img-fluid" alt=""/>
 												<div class="read_more"><span>Read more</span></div>
 												</a>
 												<small>${sitio.categoria}</small>
 												</figure>
 												<div class="wrapper">
-												<h3><a href="detail-restaurant.html">${sitio.nombre_lugar}</a></h3>
+												<h3><a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}">${sitio.nombre_lugar}</a></h3>
 												<small>${sitio.direccion}</small>
 												<p>${sitio.descripcion}</p>
-												<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">Get directions</a>
+												<a class="address" href="https://www.google.com/maps/dir/${coord.lat},${coord.lng}/${sitio.latitud_gps},${sitio.longitud_gps}">Get directions</a>
 												</div>
 												<ul>
 													<li></li>
@@ -832,18 +705,44 @@
 												</ul>
 												</div>
 												</div>`
-						});
-
+						
+						}
+						if(limit>= data.sitios.length)
+						{
+							document.getElementById('btnVermas').style.display='none'
+						}
 						$('#cardLugares').html(htmlsitios);
 					}
 				);
 			}
-			function getCoordSitio(sitio)
+			function urlDetalles(categoria)
 			{
+				var url="";
+				switch (categoria) {
+					case 'Hotel':
+					{
+						url='hotel_detalle.php'
+					}
+						break;
+					case 'Farmacia':
+					{
+						url='farmacia_detalle.php';
+					}
+					break;
+					case 'Restaurante':
+					{
+						url='restaurante_detalle.php';
+					}
+						break;
+				}
+				return url;
+			}
 				var coord={
 					lat: '',
 					lng: ''
 				}
+			function getCoordSitio(sitio)
+			{
 				var geocoder= new google.maps.Geocoder();
 				var address=sitio;
 				geocoder.geocode({
@@ -865,20 +764,18 @@
 			}
 			function getLocation() {
 
-					var coordenadas = {
-						lat: '',
-						lng: '',
-					}
 					if (navigator.geolocation) {
 						navigator.geolocation.getCurrentPosition(function (pos) {
-							coordenadas.latitud = pos.coords.latitude;
-							coordenadas.longitud = pos.coords.longitude;
+							coord.lat = pos.coords.latitude;
+							coord.lng = pos.coords.longitude;
 						});
 					} else {
 						console.log("No soportado.");
 					}
-					return coordenadas;
+					return coord;
 				}
+			
+	
 	</script>		
   
 </body>

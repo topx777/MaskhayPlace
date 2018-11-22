@@ -1,58 +1,19 @@
 <?php
-class Conexion extends MySqli
-{
-    public function __construct() {
-		parent::__construct('localhost','root','','maskhayplacedb');
-		$this->connect_errno ? die('ERROR: Conexion a la base de datos fallida') : null; 
-	}
-
-	public function charset() {
-		return $this->set_charset("utf8");
-	}
-
-	public function ultimaId() {
-		return $this->insert_id;
-	}
-
-	public function rows($x) {
-		return mysqli_num_rows($x);
-	}
-
-	public function afectado($x) {
-		return mysqli_affected_rows($x);
-	}
-
-	public function recorrer($x) {
-		return mysqli_fetch_array($x);
-	}
-
-	public function fetchAll($x) {
-		return mysqli_fetch_all($x,MYSQLI_ASSOC);
-	}
-
-	public function liberar($x) {
-		return mysqli_free_result($x);
-	}
-
-	public function preparada() {
-		return mysqli_stmt_init();
-	}
-}
-
+session_start();
+include('helpers/class.Conexion.php');
 
 
 $database=new Conexion;
 
-$consulta=$database->query("SELECT reserva.estado AS estado_reserva, restaurante.*, reserva.*, lugar.*  
-FROM restaurante
-INNER JOIN reserva ON restaurante.id_restaurante=reserva.restaurante
-INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
-
-
-
-
-
-
+if(isset($_SESSION["filtro"])) {
+  $filtro = $_SESSION["filtro"];
+  $consulta=$database->query($filtro);
+} else {
+  $consulta=$database->query("SELECT reserva.estado AS estado_reserva, restaurante.*, reserva.*, lugar.*  
+  FROM restaurante
+  INNER JOIN reserva ON restaurante.id_restaurante=reserva.restaurante
+  INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
+}
 ?>
 
 
@@ -298,21 +259,51 @@ INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
 			<div class="header_box">
 				<h2 class="d-inline-block">Bookings list</h2>
 				<div class="filter">
-					<select name="orderby" class="selectbox">
+					<select name="orderby" class="selectbox" id="reservefilters" onchange="getvalue(this)">
 						<option value="Any status">Cualquier Estado</option>
-						<option value="Approved">Approved</option>
-						<option value="Pending">Pending</option>
-						<option value="Cancelled">Cancelled</option>
+						<option value="Aceptado">Aceptado</option>
+						<option value="Pendiente">Pendiente</option>
+						<option value="Rechazado">Rechazado</option>
 					</select>
 				</div>
 			</div>
-			<div class="list_general">
+      <?php
+      
+      // $consulta=$database->query("SELECT reserva.estado AS estado_reserva, restaurante.*, reserva.*, lugar.*  
+      // FROM restaurante
+      // INNER JOIN reserva ON restaurante.id_restaurante=reserva.restaurante
+      // INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
+      
+      
+      ?>
+      <script type="text/javascript">
+      function getvalue(filtro){
+        var seleccionado = $(filtro).val();
+        console.log(seleccionado);
+        $.ajax({
+          type: "GET",
+          url: "app/requestAJAX/filtroreservas.request.php",
+          data: { filtro : seleccionado },
+          success: function(response) {
+            console.log(response);
+            if(response == 1) {
+              $("#lista_reservas").load(location.href + " #lista_reservas"); 
+              // location.reload();    
+            } else {
+              alertify.error("ERROR: " + response);
+            }
+          }
+        });
+      };
+
+      </script>
+			<div class="list_general" id="lista_reservas">
 				<ul>
 <!--Informacion de la Base de Datos-->
 <?php while($resDatos = $database->recorrer($consulta)):?>
 					<li>
 						<figure><img src="<?= $resDatos["logo"]?>" alt=""></figure>
-						<h4><?= $resDatos["nombre_lugar"];?><i class="approved"><?= $resDatos["estado_reserva"];?></i></h4>
+						<h4><?= $resDatos["nombre_lugar"];?><i class="pending"><?= $resDatos["estado_reserva"];?></i></h4>
 						<ul class="booking_list">
 							<li><strong>Fecha de Reserva</strong> <?= $resDatos["fecha"];?></li>
 							<li><strong>Cantidad de Personas</strong> <?= $resDatos["cantidad_personas"];?></li>
@@ -324,6 +315,7 @@ INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
 						<ul class="buttons">
 							<li><button onclick="aceptarReserva(<?=$resDatos["id_reserva"]?>);" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Aprobar</button></li>
 							<li><button onclick="rechazarReserva(<?=$resDatos["id_reserva"]?>);" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancelar</button></li>
+              <li><button onclick="reservapendiente(<?=$resDatos["id_reserva"]?>);" class="btn_1 gray medium"><i class="fa fa-fw fa-times-circle-o"></i> Pendiente</button></li>
 						</ul>
           </li>
 <?php endwhile;?>
@@ -414,6 +406,21 @@ INNER JOIN lugar on lugar.id_lugar=restaurante.id_restaurante");
     $.ajax({
       type: "GET",
       url: "app/requestAJAX/rechazasReserva.request.php",
+      data: { id: id },
+      success: function(response) {
+        if(response == 1) {
+          alertify.success("Reserva Rechazada");
+          location.reload();    
+        } else {
+          alertify.error("ERROR: " + response);
+        }
+      }
+    });
+  }
+  function reservapendiente(id){
+    $.ajax({
+      type: "GET",
+      url: "app/requestAJAX/reservapendiente.request.php",
       data: { id: id },
       success: function(response) {
         if(response == 1) {

@@ -8,7 +8,7 @@ if($_GET) {
     $db = new Conexion();
     $db->charset();
 
-    $obtenerInfo = $db->query("SELECT observaciones FROM lugar WHERE id_lugar = $idLugar");
+    $obtenerInfo = $db->query("SELECT id_lugar, observaciones FROM lugar WHERE id_lugar = $idLugar");
     if($db->rows($obtenerInfo) > 0) {
 
         $resLugar = $db->fetchAll($obtenerInfo);
