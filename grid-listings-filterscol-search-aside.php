@@ -53,7 +53,7 @@ session_start();
 					<?php
 						if(isset($_SESSION["usuario"])) {
 							if($_SESSION["usuario"]["negocio"] == 0) {
-								echo '<li><a href="#" class="btn_add">Publicar Lugar</a></li>';
+								echo '<li><a href="agregar_lugar.php" class="btn_add">Publicar Lugar</a></li>';;
 							}
 						} else {
 							echo '<li><a href="#sign-in-dialog" class="btn_add logearsePOP">Publicar Lugar</a></li>';

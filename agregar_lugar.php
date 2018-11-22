@@ -844,7 +844,7 @@
 						alertify
 						.alert("Correcto", "Lugar Publicado con exito, su publicacion sera revisada en las siguientes 24 horas para ser revisada.", function(){
 							alertify.success('Redirigiendo...');
-							location.reload();
+							location.href = "administrar_lugar.php";
 						});
 					} else {
 						$('#AJAXresponse').html('<div class="alert alert-error" role="alert">ERROR: '+response+'</div>');

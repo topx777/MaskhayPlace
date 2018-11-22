@@ -1,7 +1,7 @@
 <?php
 if($_POST) {
 
-	include('../../helpers/class.Conexion.php');
+	include('../helpers/class.Conexion.php');
 
 	$db = new Conexion();
 
@@ -37,14 +37,14 @@ if($_POST) {
 	$extLogo = explode(".", $logo["name"]);
 	$destinoLogo = "assets/public/img/logos/".rand(1,9999).$fecha_actual->getTimestamp().rand(1,9999).".".$extLogo[1];
 
-	move_uploaded_file($origenLogo, "../../".$destinoLogo);
+	move_uploaded_file($origenLogo, "../".$destinoLogo);
 
 	foreach($imagenes as $key => $value) {
 
 		$origenImagen = $value["img"]["tmp_name"];
 		$extImagen = explode(".", $value["img"]["name"]);
 		$destinoImagen = "assets/public/img/imagenes/".rand(1,9999).$fecha_actual->getTimestamp().rand(1,9999).".".$extImagen[1];
-		move_uploaded_file($origenImagen, "../../".$destinoImagen);
+		move_uploaded_file($origenImagen, "../".$destinoImagen);
 		$imagenes[$key]["destino"] = $destinoImagen;
 	}
 	// var_dump($imagenes);
@@ -83,9 +83,9 @@ if($_POST) {
 			}
 
 		} else {
-			unlink('../../'.$destinoLogo);
+			unlink('../'.$destinoLogo);
 			foreach($imagenes as $key => $value) {
-				unlink('../../'.$value["destino"]);
+				unlink('../'.$value["destino"]);
 			}
 			echo 'no se pudo agregar el Lugar, intetelo mas tarde';
 		}
@@ -136,9 +136,9 @@ if($_POST) {
 			}
 
 		} else {
-			unlink('../../'.$destinoLogo);
+			unlink('../'.$destinoLogo);
 			foreach($imagenes as $key => $value) {
-				unlink('../../'.$value["destino"]);
+				unlink('../'.$value["destino"]);
 			}
 			echo 'no se pudo agregar el Lugar, intetelo mas tarde';
 		}
@@ -180,9 +180,9 @@ if($_POST) {
 			}
 
 		} else {
-			unlink('../../'.$destinoLogo);
+			unlink('../'.$destinoLogo);
 			foreach($imagenes as $key => $value) {
-				unlink('../../'.$value["destino"]);
+				unlink('../'.$value["destino"]);
 			}
 			echo 'no se pudo agregar el Lugar, intetelo mas tarde';
 		}
