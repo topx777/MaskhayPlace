@@ -148,7 +148,7 @@
         // 
         var newPos = {
             lat: resultado.latLng.lat(),
-            lng: resultado.latLng.lng()
+            lng: resultado.latLng.lng(),
         };
 
         marcador.setPosition(newPos);
