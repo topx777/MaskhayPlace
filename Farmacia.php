@@ -5,7 +5,7 @@
     //     'id' => 3, 'nombre' => "Carlos Rodrigo"
     // );
     $_SESSION["lugar"] =array(
-        'id_lugar' => 2, 'nombre_lugar' => "Hotel Diplomat"
+        'id_lugar' => 1, 'nombre_lugar' => "Pollos Lopez"
     );
     $db = new Conexion();
     $db ->charset();
@@ -29,20 +29,25 @@
     //     header('Location: FarmaciaVacia.html');
     // }
     // OBTENER HORARIO
-    $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia ");
+    $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenerhoraini) > 0){
         $reshoraini = $db->recorrer($obtenerhoraini);
     }
-    $obtenerhorafinal = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',-1) as horafinal FROM farmacia ");
+    $obtenerhorafinal = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',-1) as horafinal FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenerhorafinal) > 0){
         $reshorafinal = $db->recorrer($obtenerhorafinal);
     }
 
     // OBTENER SERVICIOS OFRECIDOS
-    $obtenervacunacion = $db->query("SELECT vacunas FROM farmacia ");
+    $obtenervacunacion = $db->query("SELECT vacunas FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenervacunacion)>0){
         echo ("entro");
         $resvacunacion = $db->recorrer($obtenervacunacion);
+    }
+    $obtenerturno = $db->query("SELECT turno FROM farmacia WHERE lugar = $idlugar");
+    if($db->rows($obtenerturno)>0){
+        echo ("entro");
+        $resturno = $db->recorrer($obtenerturno);
     }
 ?>
 <!DOCTYPE html>
