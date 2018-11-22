@@ -11,7 +11,7 @@
   //-------------OBTENER DATOS DEL LUGAR-----------------------------
   $idUsuario = $_SESSION["usuario"]["id"];
 
-  $obtenerLugar = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
+  $obtenerLugar = $db->query("SELECT m.* FROM medicamento m, farmacia f WHERE lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerLugar) > 0) {
     $resLugar = $db->recorrer($obtenerLugar);
   }
@@ -93,21 +93,21 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-edit"></i>
-            <span class="nav-link-text">Datos Hotel</span>
+            <span class="nav-link-text">Datos Producto</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-image"></i>
-            <span class="nav-link-text">Imagenes Hotel</span>
+            <span class="nav-link-text">Imagenes Producto</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-phone"></i>
-            <span class="nav-link-text">Contactos Hotel</span>
+            <span class="nav-link-text">Contactos Producto</span>
           </a>
         </li>
 
@@ -121,7 +121,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-bed"></i>
-            <span class="nav-link-text">Piezas Hotel</span>
+            <span class="nav-link-text">Unidades Produto</span>
           </a>
         </li>
 		
@@ -186,17 +186,17 @@
                   
 									<div class="col-md-2">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Nombre" required="">
+											<input type="text" class="form-control" placeholder="Nombre" required="" value="<?=$resLugar["nombre_medicamento"]?>">
 										</div>
 									</div>
                   <div class="col-md-2">
 										<div class="form-group">
-											<input type="number" class="form-control" placeholder="Precio"  min="0" required="">
+											<input type="number" class="form-control" placeholder="Precio"  min="0" required="" value="<?=$resLugar["precio_medicamento"]?>">
 										</div>
 									</div>
                   <div class="col-md-2">
 										<div class="form-group">
-											<input type="number" class="form-control" placeholder="Descuento"  min="0" required="">
+											<input type="number" class="form-control" placeholder="Descuento"  min="0" required="" value="<?=$resLugar["precio_descuento"]?>">
 										</div>
 									</div>
                   <div class="col-md-9">
@@ -208,7 +208,12 @@
                            </td>
                            <td class="btnswich">
                              <label class="switch">
-                             <input type="checkbox">
+                             <?php if($resLugar["descuento"]==0){?>
+                                <input type="checkbox">
+                            <?php }
+                            else {?>
+                                <input type="checkbox" checked>
+                            <?php } ?>
                              <div class="slider round"></div>
                           </label>
                            </td>
@@ -218,14 +223,14 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <form action="/file-upload" title="Click" class="dropzone"></form>
-                      <center><label>Imagen de la Habitacion</label></center>
+                    <img src="<?=$resLugar["imagen_medicamento"]?>" style="width: 100%;">
+                      <center><label>Imagen del Producto</label></center>
                       </div>
                   </div>
 									<div class="col-md-8">
                     <div class="form-group">
                     <label>Descripcion</label>
-                    <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resdescripcion["descripcion"]?></textarea>
+                    <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resLugar["descripcion"]?></textarea>
                     </div>
                   </div>
                   
