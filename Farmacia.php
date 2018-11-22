@@ -9,7 +9,7 @@
     );
     $db = new Conexion();
     $db ->charset();
-    // OBTENER EL NOMBRE DEL LUGAR
+    // OBTENER datos LUGAR
     $idlugar = $_SESSION["lugar"]["id_lugar"];
     $obtenerlugar = $db->query("SELECT nombre_lugar FROM lugar  WHERE id_lugar = $idlugar");
     if($db->rows($obtenerlugar)>0){
@@ -19,7 +19,6 @@
     // else{
     //     header('Location: FarmaciaVacia.html');
     // }
-    // OBTENER DIRECCION
     // $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar LIMIT 1");
     $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar");
     if($db->rows($obtenerdireccion) > 0) {
@@ -28,6 +27,12 @@
     // else {
     //     header('Location: FarmaciaVacia.html');
     // }
+    $obtenerdescripcion = $db->query("SELECT descripcion FROM lugar WHERE id_lugar = $idlugar");
+    if($db->rows($obtenerdescripcion) > 0) {
+        $resdescripcion = $db->recorrer($obtenerdescripcion);
+    }
+    // OBTENER LA LATITUD Y LONGITUD
+     
     // OBTENER HORARIO
     $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenerhoraini) > 0){
@@ -41,13 +46,15 @@
     // OBTENER SERVICIOS OFRECIDOS
     $obtenervacunacion = $db->query("SELECT vacunas FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenervacunacion)>0){
-        echo ("entro");
         $resvacunacion = $db->recorrer($obtenervacunacion);
     }
     $obtenerturno = $db->query("SELECT turno FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenerturno)>0){
-        echo ("entro");
         $resturno = $db->recorrer($obtenerturno);
+    }
+    $obtenerenfermera = $db->query("SELECT servicio_enfermeria FROM farmacia WHERE lugar = $idlugar");
+    if($db->rows($obtenerenfermera)>0){
+        $resenfermera = $db->recorrer($obtenerenfermera);
     }
 ?>
 <!DOCTYPE html>
@@ -266,6 +273,74 @@
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Area para personalizacion -->
+            <!-- -------------------------------------Lugar------------------------------------->
+            <div class="box_general padding_bottom">
+                <div class="header_box version_2">
+                   <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="padding-top: 30px;">
+                        <div class="form-group">
+                            <center><label>Logo</label></center>
+                            <form action="/file-upload" class="dropzone"></form>
+                        </div>
+                    </div>
+                    <div class="col-md-8 add_top_30">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" style="width:200%" value="<?=$reslugar["nombre_lugar"]?>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label>Direccion</label>
+                            <input type="text" class="form-control" style="width:200%" value="<?=$resdireccion["direccion"]?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Longitud</label>
+                        <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Latitud</label>
+                        <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label>Descripcion</label>
+                        <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resdescripcion["descripcion"]?></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- final de lugar -->
+            <!-- panel mapa de google -->
+            <div class="box_general padding_bottom">
+                <div class="header_box version_2" style="width:300px;">
+                    <h2>
+                        <label>Geolocalizacion:</label><br>
+                    </h2>                
+                </div>
+                <div class="row">
+                    <!-- Mapa de GOOGLE -->
+                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
+                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
+                </div>
+                <div class="modal-footer modal-lg">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+            <!-- fin panel mapa de google  -->
+            <!-- antes panel inicia; -->
             <div class="box_general padding_bottom">
                 <div class="header_box version_2">
                         <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
@@ -340,7 +415,12 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <?php if($resturno["turno"]==0){?>
+                                                    <input type="checkbox">
+                                                <?php }
+                                                else {?>
+                                                    <input type="checkbox" checked>
+                                                <?php } ?>    
                                                 <div class="slider round"></div>
                                             </label>
                                         </td>
@@ -355,7 +435,12 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <?php if($resturno["0"]==0){?>
+                                                    <input type="checkbox">
+                                                <?php }
+                                                else {?>
+                                                    <input type="checkbox" checked>
+                                                <?php } ?>
                                                 <div class="slider round"></div>
                                             </label>
                                         </td>
@@ -383,71 +468,7 @@
                 
             <!-- /pading buton     -->
             </div>
-    <!-- -------------------------------------Lugar------------------------------------->
-            <div class="box_general padding_bottom">
-                <div class="header_box version_2">
-                    <h2><i class="fa fa-user"></i>Lugar</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-4" style="padding-top: 30px;">
-                        <div class="form-group">
-                            <center><label>Logo</label></center>
-                            <form action="/file-upload" class="dropzone"></form>
-                        </div>
-                    </div>
-                    <div class="col-md-8 add_top_30">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                            <label>Direccion</label>
-                            <input type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                        <label>Longitud</label>
-                        <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                        <label>Latitud</label>
-                        <input type="text" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                        <label>Descripcion</label>
-                        <textarea style="height:100px;" class="form-control" placeholder="Personal info"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <!-- /row -->
-            <div class="box_general padding_bottom">
-                <div class="header_box version_2" style="width:300px;">
-                    <h2>
-                        <label>Geolocalizacion:</label><br>
-                    </h2>                
-                </div>
-                <div class="row">
-                    <!-- Mapa de GOOGLE -->
-                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
-                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
-                </div>
-                <div class="modal-footer modal-lg">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
-                </div>
-            </div>
-        
+                                         -->
         <!-- /container-fluid -->
         </div>
     <!-- container-wrapper -->
