@@ -1,66 +1,24 @@
-<?php 
+<?php
+  session_start();
+
   include('helpers/class.Conexion.php');
   
-  $_SESSION["usuario"] = array(
-    'id' => 3,
-    'nombre' => "Carlos Rodrigo"
-  );
-
+  $idLugar = $_GET["id"];
 
   $db = new Conexion();
   $db->charset();
   //--------------------------OBTENER DATOS DE LA TABLA LUGAR-----------------------------------
-  //-------------OBTENER NOMBRE DEL LUGAR-----------------------------
+  //-------------OBTENER DATOS DEL LUGAR-----------------------------
   $idUsuario = $_SESSION["usuario"]["id"];
-  $obtenerLugar = $db->query("SELECT * FROM lugar WHERE usuario = $idUsuario LIMIT 1");
+
+  $obtenerLugar = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
   if($db->rows($obtenerLugar) > 0) {
     $resLugar = $db->recorrer($obtenerLugar);
-  } else {
-    header('Location: HoteleriaVacia.html');
   }
-
+  
   $idLugar = $resLugar["id_lugar"];
-  //-------------OBTENER DIRECCION-----------------------------
-  $obtenerDireccion = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
-  if($db->rows($obtenerDireccion) > 0) {
-    $resDireccion = $db->recorrer($obtenerDireccion);
-  } else {
-    header('Location: HoteleriaVacia.html');
-  }
-  //-------------OBTENER DESCRIPCION-----------------------------
-  $obtenerDescripcion = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
-  if($db->rows($obtenerDescripcion) > 0) {
-    $resDescripcion = $db->recorrer($obtenerDescripcion);
-  } else {
-    header('Location: HoteleriaVacia.html');
-  }
-  //-------------OBTENER LONGITUD-----------------------------
-  $obtenerLongitud = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
-  if($db->rows($obtenerLongitud) > 0) {
-    $resLongitud = $db->recorrer($obtenerLongitud);
-  } else {
-    header('Location: HoteleriaVacia.html');
-  }
-  //-------------OBTENER LATITUD-----------------------------
-  $obtenerLatitud = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
-  if($db->rows($obtenerLatitud) > 0) {
-    $resLatitud = $db->recorrer($obtenerLatitud);
-  } else {
-    header('Location: HoteleriaVacia.html');
-  }
-  //-------------OBTENER LOGO-----------------------------
-  $obtenerLogo = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
-  if($db->rows($obtenerLogo) > 0) {
-    $resLogo = $db->recorrer($obtenerLogo);
-  } else {
-    header('Location: HoteleriaVacia.html');
-  }
-  //--------------------OBTENER CHECKBOX-------------------------
-  $obtenerChBParqueo = $db->query("SELECT * FROM hotel WHERE id_lugar = $idLugar LIMIT 1");
-
-
-
-
+  
+  // var_dump($idLugar);
 
   //-------------MODIFICAR LOGO-----------------------------
   if(isset($_POST['btnAceptar'])){
@@ -135,29 +93,39 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         
-    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="user-profile.html">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text">Mi Perfil</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-edit"></i>
+            <span class="nav-link-text">Datos Hotel</span>
           </a>
         </li>
-		
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings" data-parent="#mylistings">
-            <i class="fa fa-fw fa-list"></i>
-            <span class="nav-link-text">Categorias</span>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-image"></i>
+            <span class="nav-link-text">Imagenes Hotel</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMylistings">
-            <li>
-              <a href="Hoteleria.php">Hoteleria <span class="badge badge-pill badge-primary"></span></a>
-            </li>
-			<li>
-              <a href="Restaurante.html">Restaurante<span class="badge badge-pill badge-success"></span></a>
-            </li>
-			<li>
-              <a href="listings.html">Farmacia<span class="badge badge-pill badge-danger"></span></a>
-            </li>
-          </ul>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-phone"></i>
+            <span class="nav-link-text">Contactos Hotel</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-star"></i>
+            <span class="nav-link-text">Ver Calificaciones</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-bed"></i>
+            <span class="nav-link-text">Piezas Hotel</span>
+          </a>
         </li>
 		
 		
@@ -184,21 +152,14 @@
   <div class="content-wrapper">
       <div class="container-fluid">
         <?php
-            $obtenerActivo = $db->query("SELECT activo FROM lugar WHERE usuario = $idUsuario LIMIT 1" );
-            if($db->rows($obtenerActivo) > 0) {
-              $resActivo = $db->recorrer($obtenerActivo);
-              $obtenerActivo = $resActivo["activo"];
-              if ($obtenerActivo == 1) {
-                echo "<div class='alert alert-secondary' role='alert'>
-                        Su pagina se encuentra activa
-                      </div>" ;
-              }else{
-                echo "<div class='alert alert-secondary' role='alert'>
-                        Su pagina no encuentra activa
-                      </div>" ;
-              }
-            } else {
-              header('Location: HoteleriaVacia.html');
+            if ($resLugar["activo"] == 1) {
+              echo "<div class='alert alert-success' role='alert'>
+                      Su pagina se encuentra activa
+                    </div>" ;
+            }else{
+              echo "<div class='alert alert-danger' role='alert'>
+                      Su pagina no encuentra activa
+                    </div>" ;
             }
          ?>
       <!-- -------------------------------------Lugar------------------------------------>
@@ -211,7 +172,7 @@
         <div class="col-md-4" style="padding-top: 30px;">
           <div class="form-group">
             <form>
-              <img src="<?=$resLogo["logo"]?>" style="width: 100%;">
+              <img src="<?=$resLugar["logo"]?>" style="width: 100%;">
               <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
             </form>
 
@@ -232,7 +193,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Direccion</label>
-                <input type="text" class="form-control" value="<?=$resDireccion["direccion"]?>" id="direccion" required="">
+                <input type="text" class="form-control" value="<?=$resLugar["direccion"]?>" id="direccion" required="">
               </div>
             </div>
           </div>
@@ -241,7 +202,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Descripcion</label>
-                <textarea id="descripcion" style="height:100px;"  class="form-control" placeholder="Personal info"><?=$resDescripcion["descripcion"]?></textarea>
+                <textarea id="descripcion" style="height:100px;"  class="form-control" placeholder="Personal info"><?=$resLugar["descripcion"]?></textarea>
               </div>
             </div>
           </div>
@@ -251,13 +212,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Longitud</label>
-                <input type="text" class="form-control" value="<?=$resLongitud["longitud_gps"]?>" id="longitud" required="">
+                <input type="text" class="form-control" value="<?=$resLugar["longitud_gps"]?>" id="longitud" required="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Latitud</label>
-                <input type="text" class="form-control" value="<?=$resLatitud["latitud_gps"]?>" id="latitud" required="">
+                <input type="text" class="form-control" value="<?=$resLugar["latitud_gps"]?>" id="latitud" required="">
               </div>
             </div>
           </div>
@@ -721,7 +682,7 @@
                 <div class="form-group" style="padding-left: 50px;">
                   <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
                     <br>
-                    <img style="width: 400px;" src="<?=$resLogo["logo"]?>"><br><br>
+                    <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
                     <input type="file" name="fileImagen" required="">
       
                     <div class="modal-footer" style="padding-left: 400px;">
