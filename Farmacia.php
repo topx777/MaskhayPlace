@@ -117,9 +117,9 @@
     <!-- google maps script -->
     <script type="text/javascript">
         window.onload = function(){
-        var pos_original = new google.maps.LatLng( -17.3895000, -66.1568000);
+        var pos_original = new google.maps.LatLng(<?=$reslatitud["latitud_gps"]?>, <?=$reslongitud["longitud_gps"]?>);
         var options = {
-            zoom: 13,
+            zoom: 16,
             center: pos_original,
             mapTypeId: google.maps.MapTypeId.Mapa,
             panControl: false,
@@ -220,7 +220,8 @@
     
     };
     
-    
+    // evento click para cambiode de datos latlng
+    // document.getElementById("longitud").value="<?=$reslongitud["longitud_gps"]?>"
     </script>
     <!-- google maps script final-->
     <!-- <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"
@@ -231,9 +232,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
         <a class="navbar-brand" href="index.html"><img src="../assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
@@ -438,8 +439,7 @@
                         <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="longitud" required="">
                         </div>
                     </div>
-                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
-                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
+                    <div  id="map" style="width:8000px; height:500px; float: left"></div> 
                 </div>
                 <div class="modal-footer modal-lg">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
