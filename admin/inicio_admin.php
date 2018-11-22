@@ -144,6 +144,7 @@ if($db->rows($obtenerLugares) > 0) {
 			<div class="list_general">
 				<ul>
         <?php
+      if(isset($lugares)) {
         foreach ($lugares as $key => $lugar) {
         ?>
           <li>
@@ -161,6 +162,9 @@ if($db->rows($obtenerLugares) > 0) {
           </li>
         <?php
         }
+      } else {
+        echo '<h2>No hay lugares</h2>';
+      }
         ?>
 					<!-- <li>
 						<figure><img src="../assets/admin/img/item_2.jpg" alt=""></figure>

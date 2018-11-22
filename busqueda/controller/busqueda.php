@@ -33,7 +33,6 @@ $sitiosPuntaje=['pts5'=>$num5, 'pts34'=>$num34, 'pts02'=>$num02];
 //     print_r($sitio);
 //     echo '<br> <br>';
 // }
-session_start();
 
 $data=['numSitios'=>$numeroSitios,
         'sitiosPuntaje'=>$sitiosPuntaje,

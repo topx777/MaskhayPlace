@@ -3,7 +3,7 @@ class Database
 {
     private $host = 'localhost';
     private $user = 'root';
-    private $password = '';
+    private $password = 'root';
     private $name_db = 'maskhayplacedb';
 
     private $dbh;
