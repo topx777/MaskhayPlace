@@ -5,7 +5,7 @@
     //     'id' => 3, 'nombre' => "Carlos Rodrigo"
     // );
     $_SESSION["lugar"] =array(
-        'id_lugar' => 1, 'nombre_lugar' => "Pollos Lopez"
+        'id_lugar' => 3
     );
     $db = new Conexion();
     $db ->charset();
@@ -152,6 +152,8 @@
         };
 
         marcador.setPosition(newPos);
+        $('#latitud').val(resultado.latLng.lat());
+        $('#longitud').val(resultado.latLng.lng());
         // map.setCenter(newPos);
         // gernera_marcador(resultado.latLng.lat(),resultado.latLng.lng(),contador);
         // contador++;
@@ -231,52 +233,66 @@
 <body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html"><img src="../assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
-        <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-                    <a  class="nav-link" href="user-profile.html">
-                        <i class="fa fa-fw fa-user"></i>
-                        <span class="nav-link-text">Mi Perfil</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
-                    <a  class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings" data-parent="#mylistings">
-                        <i class="fa fa-fw fa-list"></i>
-                        <span class="nav-link-text">Categorias</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseMylistings">
-                        <li>
-                            <a href="Hoteleria.html">Hoteleria <span class="badge badge-pill badge-primary"></span></a>
-                        </li>
-                        <li>
-                            <a href="Restaurante.html">Restaurante<span class="badge badge-pill badge-success"></span></a>
-                        </li>
-                        <li>
-                            <a href="Farmacia.html">Farmacia<span class="badge badge-pill badge-danger"></span></a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul  class="navbar-nav sidenav-toggler">
-                <li class="nav-item">
-                    <a class="nav-link text-center" id="sidenavToggler">
-                        <i class="fa fa-fw fa-angle-left"></i>
-                    </a>
-                </li>
-            </ul>
-            <!-- CERRAR SEcION -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-fw fa-sign-out"></i>Cerrar Secion</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="index.html"><img src="assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-edit"></i>
+            <span class="nav-link-text">Datos Farmacia</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-image"></i>
+            <span class="nav-link-text">Imagenes Farmacia</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-phone"></i>
+            <span class="nav-link-text">Contactos Farmacia</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-star"></i>
+            <span class="nav-link-text">Ver Calificaciones</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+          <a class="nav-link" href="#">
+            <i class="fa fa-fw fa-bed"></i>
+            <span class="nav-link-text">Productos Farmacia</span>
+          </a>
+        </li>
+		
+		
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+       <!--------------------CERRAR CESION--------------------------------->
+     <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Cerrar Cesion</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <!-- Navegacion -->
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -418,6 +434,7 @@
             <!-- /pading buton     -->
             </div>
             <!-- sevicios panel fin -->
+            
             <!-- panel mapa de google -->
             <div class="box_general padding_bottom">
                 <div class="header_box version_2" style="width:300px;">
@@ -436,7 +453,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                         <label>Latitud</label>
-                        <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="longitud" required="">
+                        <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="latitud" required="">
                         </div>
                     </div>
                     <div  id="map" style="width:8000px; height:500px; float: left"></div> 
