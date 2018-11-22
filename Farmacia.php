@@ -63,6 +63,11 @@
     if($db->rows($obtenerenfermera)>0){
         $resenfermera = $db->recorrer($obtenerenfermera);
     }
+    //CARGAR IMAGEN
+    $obtenerLugar = $db->query("SELECT * FROM lugar WHERE id_lugar = $idlugar LIMIT 1");
+    if($db->rows($obtenerLugar)>0){
+        $resLugar = $db->recorrer($obtenerLugar);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,8 +102,8 @@
     <link rel="stylesheet" href="assets/admin/js/editor/summernote-bs4.css">
     <!-- Estilos propios -->
     <link rel="stylesheet" href="assets/admin/vendor/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="mis css/mis estilos/estilo.css">
-    <link rel="stylesheet" href="mis js/timepicki/timepicki.css">
+    <link rel="stylesheet" href="assets/admin/css/estilo.css">
+    <link rel="stylesheet" href="assets/admin/css/timepicki.css">
     <style> 
   	  #map {
         height: 100%;
@@ -113,7 +118,7 @@
     <!-- scripts previos -->
     <!-- Agregar la librería de Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
-    <script src="mis js/google/google-api.js"></script>
+    <!-- <script src="mis js/google/google-api.js"></script> -->
     <!-- google maps script -->
     <script type="text/javascript">
         window.onload = function(){
@@ -303,12 +308,18 @@
                    <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
                 </div>
                 <div class="row">
+                <!-- LOGO -->
+                <center>
+                <div class="row">
                     <div class="col-md-4" style="padding-top: 30px;">
-                        <div class="form-group">
-                            <center><label>Logo</label></center>
-                            <form action="/file-upload" class="dropzone"></form>
-                        </div>
+                    <div class="form-group">
+                        <form>
+                        <img src="<?=$resLugar["logo"]?>" style="width: 100%;">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
+                        </form>
                     </div>
+                </div>
+                </center>
                     <div class="col-md-8 add_top_30">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -532,7 +543,7 @@
       });
     </script>
     <!-- Mis propios scripts -->
-    <script src="mis js/timepicki/timepicki.js"></script>
+    <script src="assets/admin/js/timepicki.js"></script>
     <script>
 	    $('#timepicker1').timepicki();
         $('#timepicker2').timepicki();
