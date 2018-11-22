@@ -272,7 +272,7 @@ session_start();
 					</div>
 					<!-- /row -->
 
-					<p class="text-center" id="btnVermas"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+					<p class="text-center" id="btnVermas" style="display: none"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
 				</div>
 				<!-- /col -->
 			</div>		
@@ -417,7 +417,6 @@ session_start();
 	<script src="assets/public/js/map.js"></script>
 	<script src="assets/public/js/infobox.js"></script>
 	<script>
-			var datos;
 			var busqueda;
 			var lugar;
 			var categoria=[''];
@@ -446,7 +445,6 @@ session_start();
 			function (data, textStatus, jqXHR) {
 						// numero de sitios
 						console.log(data)
-						datos=data;
 						$('#numHoteles').html(data.numSitios.hoteles);
 						$('#numRestaurantes').html(data.numSitios.restaurantes);
 						$('#numFarmacias').html(data.numSitios.farmacias);
@@ -458,7 +456,7 @@ session_start();
 						$('#numResBusqueda').html(data.sitios.length + ' ');
 						//card Sitios
 						var htmlsitios='';
-						for (let i = 0; i < data.sitios.length && i<limit; i++) {
+						for (let i = 0; i < data.sitios.length; i++) {
 							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
 												<div class="strip grid animated pulse">
@@ -485,30 +483,9 @@ session_start();
 												</div>`
 						
 						}
-
 						$('#cardLugares').html(htmlsitios);
-						if(limit>= data.sitios.length)
-						{
-							document.getElementById('btnVermas').style.display='none'
-						}
 				}
 			);
-			// $.ajax({
-			// 	type: "GET",
-			// 	url: "busqueda/controller/busqueda.php",
-			// 	data: {
-			// 		buscar:getParameterByName('buscar'),
-			// 		lugar:getParameterByName('lugar'),
-			// 		categoria:[getParameterByName('categoria')],
-			// 		distaciaRad:'',
-			// 		orden:'all',
-			// 		puntaje:varPuntos()
-			// 	},
-			// 	success: function (response) {
-			// 		console.log(response);
-			// 	}
-			// });
-
 			// buscar
 			function varBuscar()
 			{
@@ -619,16 +596,16 @@ session_start();
 				orden=this.value;
 				getDatos();
 			});
+			$('.btnBuscarP').click(function () { 
+				getDatos();
+			});
+
 			$('#btnVermas').click(function () { 
 				limit+=limit;
 				getDatos();
 				
 			});
-			$('.btnBuscarP').click(function () { 
-				getDatos();
-			});
 			
-			var limit=6;
 			function getDatos()
 			{
 				$.getJSON('busqueda/controller/busqueda.php',
@@ -643,7 +620,6 @@ session_start();
 					},
 					function (data, textStatus, jqXHR) {
 						// numero de sitios
-						datos=data;
 						console.log(data)
 						$('#numHoteles').html(data.numSitios.hoteles);
 						$('#numRestaurantes').html(data.numSitios.restaurantes);
@@ -657,7 +633,7 @@ session_start();
 						//card Sitios
 						var htmlsitios='';
 						var coord=getLocation();
-						for (let i = 0; i < data.sitios.length && i<limit; i++) {
+						for (let i = 0; i < data.sitios.length; i++) {
 							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
 												<div class="strip grid animated pulse">
@@ -683,10 +659,6 @@ session_start();
 												</div>
 												</div>`
 						
-						}
-						if(limit>= data.sitios.length)
-						{
-							document.getElementById('btnVermas').style.display='none'
 						}
 						$('#cardLugares').html(htmlsitios);
 					}

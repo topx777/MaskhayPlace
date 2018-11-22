@@ -16,13 +16,13 @@ $categoria=(isset($_GET['categoria']))?$_GET['categoria']:[''];
 $distaciaRad=(isset($_GET['distaciaRad']))?$_GET['distaciaRad']:0;
 $coordenada=(isset($_GET['coordenada']))?$_GET['coordenada']:[''];
 $orden=(isset($_GET['orden']))?$_GET['orden']:'all';
-$puntaje=(isset($_GET['puntaje']))?$_GET['puntaje']:['34'];
+$puntaje=(isset($_GET['puntaje']))?$_GET['puntaje']:[''];
 
 //Buscar
 $sitios=$mGeneral->Buscar($buscar,$categoria,$orden,$puntaje,$coordenada, $distaciaRad);
 
 //Numero de Sitios Por Tipo
-$numeroSitios=['farmacias'=>$mFarmacia->numFarmacias(),'restaurantes'=>$mFarmacia->numFarmacias(),'hoteles'=>$mHotel->numHoteles()];
+$numeroSitios=['farmacias'=>$mFarmacia->numFarmacias(),'restaurantes'=>$mRestaurante->numRestaurantes(),'hoteles'=>$mHotel->numHoteles()];
 //Numero de Stios por Puntaje
 $num02=$mGeneral->numeroSitiosPorPuntaje(0,1);
 $num34=$mGeneral->numeroSitiosPorPuntaje(3,4);

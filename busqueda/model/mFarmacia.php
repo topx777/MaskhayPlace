@@ -46,10 +46,11 @@ class mFarmacia
     }
     public function masPuntuados($limit=null)
     {
-        $sql="SELECT AVG(C.calificacion) AS promedio, F.*, L.*,C.*
+        $sql="SELECT IFNULL(AVG(C.calificacion),0) AS promedio, F.*, L.*,C.*
                 FROM farmacia F 
                 INNER JOIN lugar L ON F.lugar=L.id_lugar
-                INNER JOIN calificacion C ON C.lugar=L.id_lugar
+                LEFT JOIN calificacion C ON C.lugar=L.id_lugar
+                WHERE L.activo=1
                 GROUP BY L.id_lugar
                 ORDER BY promedio DESC";
         if($limit!=null)
@@ -61,7 +62,9 @@ class mFarmacia
     }
     public function numFarmacias()
     {
-        $sql="SELECT COUNT(*) AS 'numFarmacias' FROM `Farmacia`";
+        $sql="SELECT COUNT(*) AS 'numFarmacias' FROM `Farmacia`
+        INNER JOIN lugar ON lugar.id_lugar=farmacia.lugar
+        WHERE lugar.activo=1";
         $this->db->query($sql);
         return $this->db->getRegistro()->numFarmacias;
 

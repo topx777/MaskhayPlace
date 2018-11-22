@@ -9,6 +9,7 @@ class mGeneral
         $sql="SELECT AVG(calificacion.calificacion) AS promedio, lugar.nombre_lugar
                 FROM lugar 
                 INNER JOIN calificacion  ON calificacion.lugar=lugar.id_lugar
+                WHERE lugar.activo=1
                 GROUP BY lugar.id_lugar 
                 HAVING promedio BETWEEN {$pts1} AND {$pts2}";
         $this->db->query($sql);
@@ -50,21 +51,21 @@ class mGeneral
         $sqlOrd="";
         $sqlPts;
         //coincidencias
-        $sqlBuscar=" lugar.nombre_lugar LIKE '%{$buscar}%' ";
+        $sqlBuscar= ($buscar!='')?" AND lugar.nombre_lugar LIKE '%{$buscar}%' ":' ';
         //Categorias
         $sqlCat=[];
         foreach ($categorias as $categoria) {
             if($categoria=='hotel')
             {
-                array_push($sqlCat, " lugar.categoria = 'Hotel' " );
+                array_push($sqlCat, " lugar.categoria = 'Hotel' AND lugar.activo='1' " );
             }
             if($categoria=='restaurante')
             {
-                array_push($sqlCat, " lugar.categoria = 'Restaurante' ");                
+                array_push($sqlCat, " lugar.categoria = 'Restaurante' AND lugar.activo='1' ");                
             }
             if($categoria=='farmacia')
             {
-                array_push($sqlCat, " lugar.categoria = 'Farmacia' ");                
+                array_push($sqlCat, " lugar.categoria = 'Farmacia' AND lugar.activo='1' ");                
             }
         }
         $sqlCategoria= join(' OR ', $sqlCat);
@@ -128,10 +129,11 @@ class mGeneral
         $sqlPuntaje=join(' OR ', $sqlPts);
         $sqlPuntaje=($sqlPuntaje == '')?' ':"HAVING {$sqlPuntaje}";
 
-        $sql="SELECT AVG(calificacion.calificacion) as promedio, COUNT(calificacion.calificacion) as numCalificaciones, lugar.*, calificacion.*
+        $sql="SELECT IFNULL(AVG(calificacion.calificacion),0) as promedio, COUNT(calificacion.calificacion) as numCalificaciones, lugar.*, calificacion.*
             FROM lugar
-            INNER JOIN calificacion ON lugar.id_lugar=calificacion.lugar
-            WHERE {$sqlBuscar}
+            LEFT JOIN calificacion ON lugar.id_lugar=calificacion.lugar
+            WHERE lugar.activo = 1 
+                {$sqlBuscar}
                 {$sqlCategoria}
                 {$sqlLimitCoord}
             GROUP BY lugar.id_lugar

@@ -45,10 +45,11 @@ class mRestaurante
     }
     public function masPuntuados($limit=null)
     {
-        $sql="SELECT AVG(C.calificacion) AS promedio, R.*, L.*,C.*
+        $sql="SELECT IFNULL(AVG(C.calificacion),0) AS promedio, R.*, L.*,C.*
                 FROM Restaurante R 
                 INNER JOIN lugar L ON R.lugar=L.id_lugar
-                INNER JOIN calificacion C ON C.lugar=L.id_lugar
+                LEFT JOIN calificacion C ON C.lugar=L.id_lugar
+                WHERE L.activo=1
                 GROUP BY L.id_lugar
                 ORDER BY promedio DESC";
         if($limit!=null)
@@ -60,7 +61,9 @@ class mRestaurante
     }
     public function numRestaurantes()
     {
-        $sql="SELECT COUNT(*) AS 'numRestaurantes' FROM `Restaurante`";
+        $sql="SELECT COUNT(*) AS 'numRestaurantes' FROM `Restaurante`
+        INNER JOIN lugar ON lugar.id_lugar=restaurante.lugar
+        WHERE lugar.activo=1";
         $this->db->query($sql);
         return $this->db->getRegistro()->numRestaurantes;
     }
