@@ -1,14 +1,17 @@
 <?php
     include('helpers/class.Conexion.php');
 
-    $_SESSION["usuario"] =array(
-        'id' => 3, 'nombre' => "Carlos Rodrigo"
+    // $_SESSION["usuario"] =array(
+    //     'id' => 3, 'nombre' => "Carlos Rodrigo"
+    // );
+    $_SESSION["lugar"] =array(
+        'id_lugar' => 2, 'nombre_lugar' => "Hotel Diplomat"
     );
     $db = new Conexion();
     $db ->charset();
     // OBTENER EL NOMBRE DEL LUGAR
-    $idususario = $_SESSION["usuario"]["id"];
-    $obtenerlugar = $db->query("SELECT * FROM lugar WHERE usuario = $idususario LIMIT 1");
+    $idlugar = $_SESSION["lugar"]["id_lugar"];
+    $obtenerlugar = $db->query("SELECT nombre_lugar FROM lugar  WHERE id_lugar = $idlugar");
     if($db->rows($obtenerlugar)>0){
         $reslugar = $db->recorrer($obtenerlugar);
     }
@@ -17,13 +20,30 @@
     //     header('Location: FarmaciaVacia.html');
     // }
     // OBTENER DIRECCION
-    $obtenerdireccion = $db->query("SELECT * FROM lugar WHERE usuario = $idususario LIMIT 1");
+    // $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar LIMIT 1");
+    $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar");
     if($db->rows($obtenerdireccion) > 0) {
-        $resDireccion = $db->recorrer($obtenerdireccion);
+        $resdireccion = $db->recorrer($obtenerdireccion);
     } 
     // else {
     //     header('Location: FarmaciaVacia.html');
     // }
+    // OBTENER HORARIO
+    $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia ");
+    if($db->rows($obtenerhoraini) > 0){
+        $reshoraini = $db->recorrer($obtenerhoraini);
+    }
+    $obtenerhorafinal = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',-1) as horafinal FROM farmacia ");
+    if($db->rows($obtenerhorafinal) > 0){
+        $reshorafinal = $db->recorrer($obtenerhorafinal);
+    }
+
+    // OBTENER SERVICIOS OFRECIDOS
+    $obtenervacunacion = $db->query("SELECT vacunas FROM farmacia ");
+    if($db->rows($obtenervacunacion)>0){
+        echo ("entro");
+        $resvacunacion = $db->recorrer($obtenervacunacion);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -251,7 +271,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control" style="width:90%">
+                                    <input type="text" class="form-control" style="width:90%" value="<?=$reslugar["nombre_lugar"]?>">
                                 </div>
                             </div>
                             <!-- <div class="col-md-6">
@@ -265,7 +285,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Direccion</label>
-                                    <input type="text" class="form-control" style="width:90%">
+                                    <input type="text" class="form-control" style="width:90%" value="<?=$resdireccion["direccion"]?>">
                                 </div>
                             </div>
                         </div>
@@ -276,8 +296,8 @@
                                     <label>Horario</label><br>
                                     <label style="margin-right: 300px">De las</label><label>A las</label>
                                     <div class="input-group" style="width:800px">
-                                        <input id="timepicker1" type="text" name="timepicker1" style="margin-right: 180px"/>
-                                        <input id="timepicker2" type="text" name="timepicker2" style="margin-right: 180px"/>
+                                        <input id="timepicker1" type="text" name="timepicker1" style="margin-right: 180px" value="<?=$reshoraini["horaini"]?>"/>
+                                        <input id="timepicker2" type="text" name="timepicker2" style="margin-right: 180px" value="<?=$reshorafinal["horafinal"]?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +314,13 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <?php if($resvacunacion["vacunas"]==0){?>
+                                                    <input type="checkbox">
+                                                <?php }
+                                                else {?>
+                                                    <input type="checkbox" checked>
+                                                <?php } ?>                        
+                                                <!-- <input type="checkbox" checked> -->
                                                 <div class="slider round"></div>
                                             </label>
                                         </td>
