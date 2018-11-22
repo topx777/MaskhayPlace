@@ -417,7 +417,7 @@ $db->close();
 							<div class="detail_title_1">
 								<h1><?=$resLugar["nombre_lugar"]?></h1>
 								<h5><?=$resResto["categoria"]?></h5>
-								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361"><?=$resLugar["direccion"]?></a>
+								<a class="address" id="obtenerDireccion" href="#"><?=$resLugar["direccion"]?></a>
 							</div>
 							<p><?=$resLugar["descripcion"]?></p>
 
@@ -709,7 +709,7 @@ $db->close();
 
 							<div class="price">
 								<h5 class="d-inline">Reservar</h5>
-								<div class="score"><span><?=$cate_calif?><em><?=$cantCalificaciones?> Calificaciones</em></span><strong><?=$promedio_calif?></strong></div>
+								<div class="score"><span><?=isset($cate_calif) ? $cate_calif : "Sin calificacion"?><em><?=$cantCalificaciones?> Calificaciones</em></span><strong><?=isset($promedio_calif) ? $promedio_calif : 0?></strong></div>
 							</div>
 
 							<div class="form-group">
@@ -919,6 +919,32 @@ $db->close();
 	
 	<!-- DATEPICKER  -->
 	<script>
+	var coordenada;
+	var coord = {
+		lat: '',
+		lng: ''
+	}
+		
+	window.onload = function() {
+		coordenada = getLocation();
+		setTimeout(() => {
+			$('#obtenerDireccion').prop('href', 'https://www.google.com/maps/dir/'+coordenada.lat+','+coordenada.lng+'/<?=$resLugar["latitud_gps"]?>,<?=$resLugar["longitud_gps"]?>');
+		}, 2000);
+	}
+	
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (pos) {
+				coord.lat = pos.coords.latitude;
+				coord.lng = pos.coords.longitude;
+			});
+		} else {
+			console.log("No soportado.");
+		}
+		return coord;
+	}
+
 	$('.logearsePOP').magnificPopup({
 		type: 'inline',
 		fixedContentPos: true,
@@ -981,7 +1007,7 @@ $db->close();
 			map_image_url: '<?= $resLugar["logo"] != null && $resLugar["logo"] != '' ? $resLugar["logo"] : "assets/public/img/thumb_map_single_restaurant.jpg"?>',
 			rate: '<?=isset($cate_calif) ? $cate_calif : "Sin Calificacion"?> | <?=isset($promedio_calif) ? $promedio_calif : 0?>',
 			name_point: '<?=$resLugar["nombre_lugar"]?>',
-			description_point: '<?=$resLugar["descripcion"]?>'
+			description_point: '<?=str_replace(array("\r\n", "\n", "\r"), ' ', $resLugar["descripcion"])?>'
 		}
 		]
 	};

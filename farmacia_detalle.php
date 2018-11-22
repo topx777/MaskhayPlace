@@ -351,7 +351,7 @@ $db->close();
 							<?=$resFarma["turno"] == 1 ? '<span class="loc_open">TURNO</span>' : ''?>
 							<div class="detail_title_1">
 								<h1><?=$resLugar["nombre_lugar"]?></h1>
-								<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/@48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361"><?=$resLugar["direccion"]?></a>
+								<a class="address" id="obtenerDireccion" href="#"><?=$resLugar["direccion"]?></a>
 							</div>
 							<p><?=$resLugar["descripcion"]?></p>
 							
@@ -415,7 +415,7 @@ $db->close();
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul>
-											<li>Lunes <span><?=$resFarma["horario"]?></span></li>
+											<li>Todos los dias <span><?=$resFarma["horario"]?></span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -765,11 +765,36 @@ $db->close();
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"></script>
 	<!-- <script src="assets/public/js/map_single_shop.js"></script> -->
 	
-	<!-- INPUT QUANTITY  -->
-	<script src="assets/public/js/input_qty.js"></script>
 	
 	<!-- DATEPICKER  -->
 	<script>
+
+	var coordenada;
+	var coord = {
+		lat: '',
+		lng: ''
+	}
+		
+	window.onload = function() {
+		coordenada = getLocation();
+		setTimeout(() => {
+			$('#obtenerDireccion').prop('href', 'https://www.google.com/maps/dir/'+coordenada.lat+','+coordenada.lng+'/<?=$resLugar["latitud_gps"]?>,<?=$resLugar["longitud_gps"]?>');
+		}, 2000);
+	}
+	
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (pos) {
+				coord.lat = pos.coords.latitude;
+				coord.lng = pos.coords.longitude;
+			});
+		} else {
+			console.log("No soportado.");
+		}
+		return coord;
+	}
+
 	$('.logearsePOP').magnificPopup({
 		type: 'inline',
 		fixedContentPos: true,
@@ -798,7 +823,7 @@ $db->close();
 			map_image_url: '<?= $resLugar["logo"] != null && $resLugar["logo"] != '' ? $resLugar["logo"] : "assets/public/img/thumb_map_single_restaurant.jpg"?>',
 			rate: '<?=isset($cate_calif) ? $cate_calif : "Sin Calificacion"?> | <?=isset($promedio_calif) ? $promedio_calif : 0?>',
 			name_point: '<?=$resLugar["nombre_lugar"]?>',
-			description_point: '<?=$resLugar["descripcion"]?>'
+			description_point: '<?=str_replace(array("\r\n", "\n", "\r"), ' ', $resLugar["descripcion"])?>'
 		}
 		]
 	};

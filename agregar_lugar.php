@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -584,7 +584,7 @@
           <div class="modal-body">Estas seguro de cerrar sesion?.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="#">Cerrar</a>
+            <a class="btn btn-primary" href="app/requestAJAX/cerrarSesion.request.php">Cerrar</a>
           </div>
         </div>
       </div>
@@ -844,7 +844,7 @@
 					if(response == 1) {
 						$('#AJAXresponse').html('<div class="alert alert-success" role="alert">Lugar Agregado con exito!</div>');
 						alertify
-						.alert("Correcto", "Lugar Publicado con exito, su publicacion sera revisada en las siguientes 24 horas para ser revisada.", function(){
+						.alert("Correcto", "Lugar Publicado con exito, su publicacion sera revisada en las siguientes 24 horas para ser publicada.", function(){
 							alertify.success('Redirigiendo...');
 							location.href = "administrar_lugar.php";
 						});

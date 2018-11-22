@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2018 a las 23:22:25
+-- Tiempo de generación: 22-11-2018 a las 12:36:26
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `maskhayplacedb`
 --
-CREATE DATABASE IF NOT EXISTS `maskhayplacedb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `maskhayplacedb`;
 
 -- --------------------------------------------------------
 
@@ -48,7 +46,9 @@ INSERT INTO `calificacion` (`id_calificacion`, `lugar`, `usuario`, `calificacion
 (3, 1, 3, 2, 'No me parecio mucho el lugar', '2018-11-13', ''),
 (5, 2, 3, 5, 'Me encanto el hotel, atencion de primera, ambientes limpios y confortantes', '2018-11-16', ''),
 (8, 2, 2, 2, 'No me gusto el lugar, falta mejorar atencion', '2018-11-16', ''),
-(11, 3, 2, 3, 'Este es mi comentario', '2018-11-17', '');
+(11, 3, 2, 3, 'Este es mi comentario', '2018-11-17', ''),
+(12, 2, 1, 5, 'Me encanto el hotel, atencion de maravilla', '2018-11-18', ''),
+(13, 3, 1, 2, 'Mas o menos la atencion no es muy buena', '2018-11-18', '');
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,21 @@ INSERT INTO `contacto` (`id_contacto`, `tipo`, `numero`, `lugar`) VALUES
 (4, 'Telefono', '4221556', 2),
 (5, 'Telefono', '4567781', 2),
 (6, 'Celular', '70763369', 3),
-(7, 'Whatsapp', '67899121', 3);
+(7, 'Whatsapp', '67899121', 3),
+(26, 'Fijo', '4244954', 22),
+(27, 'Celular', '65194792', 24),
+(28, 'Fijo', '4568265', 25),
+(29, 'Celular', '65321589', 26),
+(30, 'Celular', '72282312', 27),
+(31, 'Fijo', '4938015', 28),
+(32, 'Whatsapp', '763467347', 29),
+(33, 'Fijo', '4462365', 29),
+(34, 'Celular', '97626554', 30),
+(35, 'Fijo', '4244956', 31),
+(36, 'Fijo', '44223623', 32),
+(37, 'Celular', '65548848', 33),
+(38, 'Fijo', '4244896', 34),
+(39, 'Fijo', '44623784', 35);
 
 -- --------------------------------------------------------
 
@@ -97,7 +111,11 @@ CREATE TABLE `farmacia` (
 --
 
 INSERT INTO `farmacia` (`id_farmacia`, `horario`, `turno`, `vacunas`, `servicio_enfermeria`, `entrega_domicilio`, `lugar`) VALUES
-(1, '7:00 - 23:00', 0, 0, 1, 1, 3);
+(1, '7:00 - 23:00', 0, 0, 1, 1, 3),
+(4, '8:00 - 8:00', 1, 0, 0, 1, 26),
+(5, '24:00 - 24:00', 1, 0, 0, 1, 31),
+(6, '7:00 - 22:00', 1, 1, 1, 1, 34),
+(7, '10:00 - 20:00', 0, 1, 1, 1, 35);
 
 -- --------------------------------------------------------
 
@@ -157,7 +175,10 @@ CREATE TABLE `hotel` (
 --
 
 INSERT INTO `hotel` (`id_hotel`, `categoria`, `nivel`, `parqueo`, `piscina`, `area_recreativa`, `bar`, `cable`, `internet`, `aire_acondicionado`, `desayuno`, `gimnasio`, `mascota`, `spa`, `comedor`, `servicio_habitacion`, `lugar`) VALUES
-(1, 'Hotel', 3, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 2);
+(1, 'Hotel', 3, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 2),
+(10, 'Hotel', 4, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 22),
+(11, 'Hotel', 4, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 25),
+(12, 'Hotel', 4, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 33);
 
 -- --------------------------------------------------------
 
@@ -168,7 +189,7 @@ INSERT INTO `hotel` (`id_hotel`, `categoria`, `nivel`, `parqueo`, `piscina`, `ar
 CREATE TABLE `imagen` (
   `id_imagen` int(11) NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `url` varchar(75) COLLATE utf8_spanish_ci NOT NULL,
+  `url` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
   `lugar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -185,7 +206,41 @@ INSERT INTO `imagen` (`id_imagen`, `descripcion`, `url`, `lugar`) VALUES
 (10, 'Hotel3', 'assets/public/img/imagenes/2_3.jpeg', 2),
 (11, 'Farma1', 'assets/public/img/imagenes/3_1.jpeg', 3),
 (12, 'Farma2', 'assets/public/img/imagenes/3_2.jpeg', 3),
-(13, 'Farma3', 'assets/public/img/imagenes/3_3.jpeg', 3);
+(13, 'Farma3', 'assets/public/img/imagenes/3_3.jpeg', 3),
+(58, 'Amplia piscina disponible las 24hrs', 'assets/public/img/imagenes/350315429011836312.jpg', 22),
+(59, 'Amplias dormitorios y camas familiares', 'assets/public/img/imagenes/650415429011837393.jpg', 22),
+(60, 'SalÃ³n de eventos ambientes cÃ³modos para reuniones', 'assets/public/img/imagenes/674115429011838578.jpg', 22),
+(61, 'los mejores platos tipicos \"SILPANCHO\"', 'assets/public/img/imagenes/57391542901404506.jpg', 24),
+(62, 'los mejores platos de \" PIQUE\"', 'assets/public/img/imagenes/853415429014045810.jpg', 24),
+(63, 'Amplias y cÃ³modas habitaciones', 'assets/public/img/imagenes/659215429016474775.jpg', 25),
+(64, 'Camas Amplias para numerosas familias ', 'assets/public/img/imagenes/71115429016477896.jpg', 25),
+(65, 'La mejor piscina de la ciudad atemperada', 'assets/public/img/imagenes/159015429016479900.jpg', 25),
+(66, 'Nuestro equipo de trabajo', 'assets/public/img/imagenes/916515429022983670.jpg', 26),
+(67, 'nuestra tienda', 'assets/public/img/imagenes/21881542902298112.jpg', 26),
+(68, 'nuestra tienda con variedad de productos', 'assets/public/img/imagenes/5431542902298327.jpg', 26),
+(69, 'nuestra sucursal', 'assets/public/img/imagenes/453515429022987783.jpeg', 26),
+(70, '', 'assets/public/img/imagenes/909215429022981696.', 26),
+(71, 'Mesas con atenciÃ³n preferencial', 'assets/public/img/imagenes/405015429023154783.jpg', 27),
+(72, 'La mejor atenciÃ³n de la ciudad en comidas', 'assets/public/img/imagenes/82015429031192188.jpg', 28),
+(73, 'Mesas y sillas cÃ³modas para todos nuestros clientes ', 'assets/public/img/imagenes/903115429031192842.jpg', 28),
+(74, 'La mejor Comida tÃ­pica Oriental de Bolivia ', 'assets/public/img/imagenes/246215429031194276.jpg', 28),
+(75, 'img combo', 'assets/public/img/imagenes/764815429036356917.png', 29),
+(76, 'Img interior', 'assets/public/img/imagenes/4301542903635419.png', 29),
+(77, 'Img combo 2', 'assets/public/img/imagenes/728215429036359281.png', 29),
+(78, 'pollos la mejor opcion', 'assets/public/img/imagenes/935515429036966495.jpg', 30),
+(79, 'AtenciÃ³n rÃ¡pida y amable', 'assets/public/img/imagenes/364415429036973657.jpg', 31),
+(80, 'Consulte nuestros precios y productos', 'assets/public/img/imagenes/360315429036977654.jpg', 31),
+(81, 'atenciÃ³n las 24 hrs.', 'assets/public/img/imagenes/724715429036971278.jpg', 31),
+(82, 'Interior', 'assets/public/img/imagenes/939515429040713166.png', 32),
+(83, 'Especial de la Casa', 'assets/public/img/imagenes/964815429040718134.png', 32),
+(84, 'Pizza estilo ClÃ¡sico', 'assets/public/img/imagenes/861315429040714457.png', 32),
+(85, 'nuestros habitaciones', 'assets/public/img/imagenes/819615429043143951.jpg', 33),
+(86, 'Productos garantizados', 'assets/public/img/imagenes/20515429043458851.jpg', 34),
+(87, 'Amabilidad y paciencia es lo que nos caracteriza', 'assets/public/img/imagenes/899015429043455465.jpg', 34),
+(88, 'Consulte todos nuestros productos al mejor precio', 'assets/public/img/imagenes/1281154290434584.jpg', 34),
+(89, 'Imagen Stock', 'assets/public/img/imagenes/42401542904497611.png', 35),
+(90, 'Imagen Equipamiento', 'assets/public/img/imagenes/954515429044976328.png', 35),
+(91, 'Imagen Fachada', 'assets/public/img/imagenes/357115429044978703.png', 35);
 
 -- --------------------------------------------------------
 
@@ -201,7 +256,7 @@ CREATE TABLE `lugar` (
   `latitud_gps` double NOT NULL,
   `usuario` int(11) NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
-  `logo` varchar(55) COLLATE utf8_spanish_ci NOT NULL,
+  `logo` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
   `categoria` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `revisado` tinyint(1) NOT NULL DEFAULT '0',
@@ -215,9 +270,22 @@ CREATE TABLE `lugar` (
 --
 
 INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`, `direccion`, `longitud_gps`, `latitud_gps`, `usuario`, `descripcion`, `logo`, `activo`, `categoria`, `revisado`, `encargado_rev`, `observaciones`, `estado`) VALUES
-(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', 'assets/public/img/logos/1.jpeg', 1, 'Restaurante', 0, NULL, NULL, NULL),
-(2, 'Hotel Diplomat', 'Av. Peru entre Visconte Almanza 2445', -66.180914, -17.377673, 3, 'Hotel Diplomat el lugar que usted necesita para descansar, confie en nuestros servicios contamos con ambientes completos y diversos para toda nuestra poblacion.', 'assets/public/img/logos/2.jpeg', 1, 'Hotel', 0, NULL, NULL, NULL),
-(3, 'Farmacia \"Los Angeles\"', 'Av. Villa de Galindo 256', -66.165169, -17.378824, 2, 'Le ofrecemos los mejores medicamentos, a su alcance al mejor precio, damos la mejor atencion posible, por que usted es primero para nosotros', 'assets/public/img/logos/3.jpeg', 1, 'Farmacia', 0, NULL, NULL, NULL);
+(1, 'Pollos Lopez', 'Av. Dorvigni 1827 entre Vasco de Gama y VIlla de Oropeza', -66.183877, -17.376269, 1, 'Nuevo restaurante de Pollos, muy deliciosos que se encuentran ubicados en la zona del hipodromo venga a probarlos son muy delciosos.', 'assets/public/img/logos/1.jpeg', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(2, 'Hotel Diplomat', 'Av. Peru entre Visconte Almanza 2445', -66.180914, -17.377673, 3, 'Hotel Diplomat el lugar que usted necesita para descansar, confie en nuestros servicios contamos con ambientes completos y diversos para toda nuestra poblacion.', 'assets/public/img/logos/2.jpeg', 1, 'Hotel', 1, 1, NULL, 'Aceptado'),
+(3, 'Farmacia \"Los Angeles\"', 'Av. Villa de Galindo 256', -66.165169, -17.378824, 2, 'Le ofrecemos los mejores medicamentos, a su alcance al mejor precio, damos la mejor atencion posible, por que usted es primero para nosotros', 'assets/public/img/logos/3.jpeg', 1, 'Farmacia', 1, 1, NULL, 'Aceptado'),
+(22, 'Hotel Magna', 'Boulevard Susmozas No. 752', -66.17834201068115, -17.382109473917083, 7, '\r\n\r\nLOS HUÃ‰SPEDES QUE BUSCAN EXCLUSIVIDAD PUEDEN SUMERGIRSE EN EL AMBIENTE DISCRETO Y DISTINGUIDO DEL MEJOR BOUTIQUE HOTEL DE LUJO, QUE CUENTA CON 12 ESPECTACULARES HABITACIONES Y SUITES DE ENSUEÃ‘O.\r\n', 'assets/public/img/logos/624615429011834663.jpg', 1, 'Hotel', 1, 1, NULL, 'Aceptado'),
+(24, 'RESTAURANTE BIGOTON', 'esquina calama y ayacucho', -66.15782847613525, -17.39677097605786, 9, 'la mejor opcion de degustar los mejores platos tipicos de cochabamba', 'assets/public/img/logos/383015429014047816.jpg', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(25, 'Hotel Ostella', 'Avenida Onega No. 158', -66.1492454072876, -17.373017114379092, 10, 'El hotel, inmejorablemente situado y que ocupa un antiguo palacete del siglo XIX ampliado y rehabilitado, presenta una oferta de alojamiento', 'assets/public/img/logos/776815429016479991.jpg', 1, 'Hotel', 1, 1, NULL, 'Aceptado'),
+(26, 'Farma Elias', 'calle 16 de julio entre calle bolivar', -66.14954581469726, -17.39226617028582, 12, 'Nuestra farmacia  brinda servicio a todo tipo de clientes con variedad de medicamentos,', 'assets/public/img/logos/728115429022985346.png', 1, 'Farmacia', 1, 1, NULL, 'Aceptado'),
+(27, 'Chifa & thai', 'Todoran No. 808', -66.15448107928466, -17.38501729539346, 11, 'Restaurante con el sabor caracterÃ­stico chino encuentranos en Cochabamba', 'assets/public/img/logos/506715429023151008.jpg', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(28, 'Casa del camba', 'Real del Santo Domingo No. 539', -66.16267791003418, -17.37240274947721, 15, 'La mejor comida camba de Bolivia Ãºnica con su sabor Oriental.', 'assets/public/img/logos/897915429031196575.jpg', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(29, 'Chicken Kingdom', 'Av. Juan de la Rosa y Jaime Mendoza', -66.16928687304687, -17.37686708750097, 18, 'Los mejores Pollos con nuestra famosa Salsa', 'assets/public/img/logos/239815429036354162.png', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(30, 'POLLOS FELIPE', 'AVENIDA AYACUCHO ENTRE HEROINAS', -66.15868678302002, -17.392593796265043, 17, 'nustros pollos son los mejores de todo cochabamba', 'assets/public/img/logos/92721542903696563.jpg', 1, 'Restaurante', 1, 1, NULL, 'Aceptado'),
+(31, 'Farmacia Creis', 'Cerrada Romana No. 485', -66.16829982012939, -17.37834152385432, 20, 'En nuestras farmacia le ofrecemos los mejores productos farmacÃ©uticos de calidad. Gracias por elegirnos', 'assets/public/img/logos/181215429036977021.jpg', 1, 'Farmacia', 1, 1, NULL, 'Aceptado'),
+(32, 'Ellis Pizzas', 'Av. Santa Cruz y Beni', -66.15666976184082, -17.377399524220532, 21, 'La mejor Pizza al estilo italiano', 'assets/public/img/logos/180915429040712880.png', 0, 'Restaurante', 0, NULL, NULL, NULL),
+(33, 'HOTEL PARK', 'avenida America y   Santa Cruz', -66.15688433856201, -17.373017114379092, 8, 'la mejor atenciÃ³n en hoteles y servicios', 'assets/public/img/logos/574215429043144816.jpg', 0, 'Hotel', 0, NULL, NULL, NULL),
+(34, 'Farmacia PFARMA', 'Cerrada Romana No. 485', -66.16636862963867, -17.378628218432986, 22, 'La farmacia mas grade de la ciudad con productos de calidad y los mejores precios.', 'assets/public/img/logos/915429043457509.jpg', 0, 'Farmacia', 0, NULL, NULL, NULL),
+(35, 'Farmacia San Elias', 'Pedro Blanco y Trinidad', -66.15752806872558, -17.376088907971763, 23, 'Satisfaciendo las necesidades medicas del cliente con un servicio amigable y confiable', 'assets/public/img/logos/411815429044978834.png', 0, 'Farmacia', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -336,7 +404,9 @@ CREATE TABLE `reserva` (
 
 INSERT INTO `reserva` (`id_reserva`, `restaurante`, `usuario`, `nombre_reserva`, `fecha`, `hora`, `cantidad_personas`, `estado`) VALUES
 (9, 1, 3, 'Carlos Velasquez', '2018-11-30', '20:00:00', 4, 'Pendiente'),
-(10, 1, 3, 'Marcelo', '2018-11-27', '10:00:00', 2, 'Pendiente');
+(10, 1, 3, 'Marcelo Quiroga', '2018-11-30', '10:00:00', 6, 'Pendiente'),
+(11, 1, 3, 'Abelito Lopez', '2018-11-27', '11:00:00', 5, 'Pendiente'),
+(12, 1, 1, 'Abelito Lopez', '2018-11-25', '12:00:00', 5, 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -361,7 +431,13 @@ CREATE TABLE `restaurante` (
 --
 
 INSERT INTO `restaurante` (`id_restaurante`, `categoria`, `parqueo`, `recreativo`, `area_fumadores`, `auto_servicio`, `internet`, `lugar`, `reserva_mesa`) VALUES
-(1, 'Polleria', 1, 0, 0, 0, 1, 1, 1);
+(1, 'Polleria', 1, 0, 0, 0, 1, 1, 1),
+(5, 'COMIDA TÃPICA', 1, 1, 0, 0, 0, 24, 1),
+(6, 'Comida china', 1, 0, 1, 0, 1, 27, 1),
+(7, 'Comida Tipica ', 1, 0, 0, 0, 1, 28, 1),
+(8, 'Polleria', 0, 0, 0, 1, 1, 29, 0),
+(9, 'Pollos', 1, 1, 0, 0, 0, 30, 1),
+(10, 'Pizzeria', 1, 1, 1, 0, 0, 32, 0);
 
 -- --------------------------------------------------------
 
@@ -376,6 +452,13 @@ CREATE TABLE `superusuario` (
   `nombre` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(35) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `superusuario`
+--
+
+INSERT INTO `superusuario` (`id_superusuario`, `usuario`, `password`, `nombre`, `apellidos`) VALUES
+(1, 'Administrador', 'admin', 'Abel', 'Lopez');
 
 -- --------------------------------------------------------
 
@@ -401,8 +484,27 @@ CREATE TABLE `usuarioregistrado` (
 INSERT INTO `usuarioregistrado` (`id_usuarioregistrado`, `usuario`, `password`, `nombre`, `apellidos`, `correo`, `negocio`, `celular`) VALUES
 (1, 'topx777', 'slr8830213', 'Abel', 'Lopez Paniagua', 'topx777@gmail.com', 1, '65706492'),
 (2, 'groverm', '1234', 'Grover', 'Mamani Veizan', 'groverf@gmail.com', 0, '66889832'),
-(3, 'carlangas', '12345', 'Carlos Rodrigo', 'Velasquez Castellon', 'carlas@gmail.com', 0, '68992212'),
-(4, 'shakir', '123', 'Marcelo', 'Vargas', 'marce@gmail.com', 0, '67892222');
+(3, 'carlangas', '12345', 'Carlos Rodrigo', 'Velasquez Castellon', 'carlas@gmail.com', 1, '68992212'),
+(4, 'shakir', '123', 'Marcelo', 'Vargas', 'marce@gmail.com', 0, '67892222'),
+(6, 'Jona123', '1234', 'Jona', 'Sevilla', 'sevilla@gmail.com', 0, '65422112'),
+(7, 'Mauricio Gamarra', 'q1w2e3r4t5', 'Mauricio', 'Gamarra Vargas', 'mauriciogamarravargas@gmail.com', 0, '72282312'),
+(8, 'fernandito', '123456789', 'fernandito', 'vargas rios', 'ferdynan@gmail.com', 0, '65194792'),
+(9, 'pedrito', '123456789', 'pedro', 'rios vargas', 'pedro@gmail,com', 0, '65194792'),
+(10, 'pabloh', 'q1w2e3r4t5', 'Pablo', 'Hilaquita yujra', 'pablohy@gmail.com', 0, '75963214'),
+(11, 'MarioTorres', 'q1w2e3r4t5', 'Mario', 'torrez', 'mariotorres@gmail.com', 0, '6038825'),
+(12, 'kevin', '123456', 'kevin', 'cardenas', 'jayrokevin1@gmail.com', 0, '78945612'),
+(13, 'Adrian', 'admin1', 'Adrian', 'Reyes', 'adrian11@gmail', 0, '79854652'),
+(14, 'kriz', '123456', 'kriz', 'gutierrez', 'krizg49@gmail.com', 0, '68508768'),
+(15, 'ChapoGuzman', 'q1w2e3r4t5', 'Joaquin', 'Guzman Loera', 'chapoguzman@gmail.com', 0, '75698212'),
+(16, 'AMADO CARRILLO', '123456789', 'AMADO', ' CARRILLO', 'AMADOLEAL@GMAIL', 0, '65254878'),
+(17, 'AMADO LEAL', '123456789', 'Amado', 'Leal', 'AMADO@gmail.com', 0, '66519474'),
+(18, 'Red', '1234', 'hello', 'pichu', 'red@gmail.com', 0, '7777777888'),
+(19, 'lita', 'lala', 'Alejandra', 'Gomez', 'lita@yahoo.com', 0, 'Mendoza'),
+(20, 'ArmandoEscalera', 'q1w2e3r4t5', 'Armando', 'Escalera', 'ArmandoEscalera@gmail.com', 0, '60325869'),
+(21, 'Redding', '1111', 'Rodolfo', 'Sanchez', 'red523@hotmail.com', 0, '77346236'),
+(22, 'Ventura X', 'q1w2e3r4t5', ' Ventura ', 'Tenelema Cabanilla', 'fmcabanilla12@yopmail.com', 0, '70798632'),
+(23, 'Ghost123', '2222', 'Rodrigo', 'Rodriguez', 'Red5235@hotmail.com', 0, '77534263'),
+(24, 'Jorge', '123456789', 'jorge', 'arturo', 'jorge@gmail.com', 0, '6567844');
 
 --
 -- Índices para tablas volcadas
@@ -521,17 +623,17 @@ ALTER TABLE `usuarioregistrado`
 -- AUTO_INCREMENT de la tabla `calificacion`
 --
 ALTER TABLE `calificacion`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT de la tabla `farmacia`
 --
 ALTER TABLE `farmacia`
-  MODIFY `id_farmacia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_farmacia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `horario`
 --
@@ -541,17 +643,17 @@ ALTER TABLE `horario`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `imagen`
 --
 ALTER TABLE `imagen`
-  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT de la tabla `lugar`
 --
 ALTER TABLE `lugar`
-  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_lugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT de la tabla `medicamento`
 --
@@ -576,22 +678,22 @@ ALTER TABLE `pieza`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `restaurante`
 --
 ALTER TABLE `restaurante`
-  MODIFY `id_restaurante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_restaurante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `superusuario`
 --
 ALTER TABLE `superusuario`
-  MODIFY `id_superusuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_superusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `usuarioregistrado`
 --
 ALTER TABLE `usuarioregistrado`
-  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuarioregistrado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Restricciones para tablas volcadas
 --

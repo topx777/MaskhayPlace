@@ -4,6 +4,7 @@ if($_POST) {
 	include('../helpers/class.Conexion.php');
 
 	$db = new Conexion();
+	$db->charset();
 
 	$idUsuario = $_SESSION["usuario"]["id"];
 

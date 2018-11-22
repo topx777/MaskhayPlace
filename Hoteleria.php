@@ -159,11 +159,8 @@
       <div class="row">
         <div class="col-md-4" style="padding-top: 30px;">
           <div class="form-group">
-            <form>
               <img src="<?=$resLugar["logo"]?>" style="width: 100%;">
               <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
-            </form>
-
             </div>
         </div>
         </center>
@@ -174,7 +171,7 @@
               <div class="form-group">
                 <label>Nombre del Negocio</label>
                 <form method="POST">
-                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="nombreLugar" required="">
+                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="lugar_nombre" required="">
                 </form>
               </div>
             </div>
@@ -227,8 +224,6 @@
         </div>
           <!-- /row-->
         </div>
-        <input class="btn_1 medium" type="submit" name="btnGuardarLugar" value="Guardar">
-
       
     </div>
    <!-- -------------------------------------AREAS DISPONIBLES------------------------------------->
@@ -680,12 +675,12 @@
           }
       }
 
-      google.maps.event.addListener( map, "click", function(ele) {
-          // codigo que crea el marcador
-          new google.maps.Marker({
-              map: map
-          })
-      });
+      // google.maps.event.addListener( map, "click", function(ele) {
+      //     // codigo que crea el marcador
+      //     new google.maps.Marker({
+      //         map: map
+      //     })
+      // });
 
     </script>
 	
