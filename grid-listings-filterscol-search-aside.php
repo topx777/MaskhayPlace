@@ -26,6 +26,8 @@ session_start();
     <link href="assets/public/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/public/css/style.css" rel="stylesheet">
 	<link href="assets/public/css/vendors.css" rel="stylesheet">
+	<link rel="stylesheet" href="assets/public/css/animate.css-master/animate.min.css">
+
 
     <!-- YOUR CUSTOM CSS -->
     <link href="assets/public/css/custom.css" rel="stylesheet">
@@ -482,7 +484,7 @@ session_start();
 						for (let i = 0; i < data.sitios.length && i<limit; i++) {
 							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
-												<div class="strip grid">
+												<div class="strip grid animated pulse">
 												<figure>
 												<a href="#0" class="wish_bt"></a>
 												<a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}"><img src="${sitio.logo}" class="img-fluid" alt=""/>
@@ -681,7 +683,7 @@ session_start();
 						for (let i = 0; i < data.sitios.length && i<limit; i++) {
 							var sitio=data.sitios[i];
 							htmlsitios += `<div class="col-md-6">
-												<div class="strip grid">
+												<div class="strip grid animated pulse">
 												<figure>
 												<a href="#0" class="wish_bt"></a>
 												<a href="${urlDetalles(sitio.categoria)}?id=${sitio.id_lugar}"><img src="${sitio.logo}" class="img-fluid" alt=""/>

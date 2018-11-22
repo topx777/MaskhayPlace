@@ -9,6 +9,15 @@ include('../helpers/class.Conexion.php');
 $db = new Conexion();
 $db->charset();
 
+$contarTodos = $db->query("SELECT COUNT(*) FROM lugar");
+$cantTodos = $db->recorrer($contarTodos)[0];
+$contarPendientes = $db->query("SELECT COUNT(*) FROM lugar WHERE estado IS NULL");
+$cantPendientes = $db->recorrer($contarPendientes)[0];
+$contarActivos = $db->query("SELECT COUNT(*) FROM lugar WHERE estado = 'Aceptado'");
+$cantActivos = $db->recorrer($contarActivos)[0];
+$contarRechazados = $db->query("SELECT COUNT(*) FROM lugar WHERE estado = 'Rechazado'");
+$cantRechazados = $db->recorrer($contarRechazados)[0];
+
 $obtenerLugares = $db->query("SELECT * FROM lugar");
 if($db->rows($obtenerLugares) > 0) {
   while($resLugar = $db->recorrer($obtenerLugares)) {
@@ -56,6 +65,13 @@ if($db->rows($obtenerLugares) > 0) {
   <link href="../assets/admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Your custom styles -->
   <link href="../assets/admin/css/custom.css" rel="stylesheet">
+  <!-- JavaScript -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css"/>
 	<style>
   #map {
     height: 300px;
@@ -74,32 +90,25 @@ if($db->rows($obtenerLugares) > 0) {
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings" data-parent="#mylistings">
+          <a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseMylistings" data-parent="#mylistings" aria-expanded="true">
             <i class="fa fa-fw fa-list"></i>
             <span class="nav-link-text">Publicaciones Lugar</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMylistings">
+          <ul class="sidenav-second-level" id="collapseMylistings">
             <li>
-              <a href="listings.html">Todos <span class="badge badge-pill badge-primary">6</span></a>
+              <a href="inicio_admin.php">Todos <span class="badge badge-pill badge-primary"><?=$cantTodos?></span></a>
             </li>
             <li>
-              <a href="listings.html">Pendientes <span class="badge badge-pill badge-warning">6</span></a>
+              <a href="pendientes_lugares.php">Pendientes <span class="badge badge-pill badge-warning"><?=$cantPendientes?></span></a>
             </li>
             <li>
-              <a href="listings.html">Activos <span class="badge badge-pill badge-success">6</span></a>
+              <a href="activos_lugares.php">Activos <span class="badge badge-pill badge-success"><?=$cantActivos?></span></a>
             </li>
 			      <li>
-              <a href="listings.html">Rechazados <span class="badge badge-pill badge-danger">6</span></a>
+              <a href="rechazados_lugares.php">Rechazados <span class="badge badge-pill badge-danger"><?=$cantRechazados?></span></a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-calendar-check-o"></i>
-            <span class="nav-link-text">Mis revisiones <span class="badge badge-pill badge-primary">6 New</span></span>
-          </a>
-        </li>
-
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -255,6 +264,14 @@ if($db->rows($obtenerLugares) > 0) {
               </div>
             </div>
             <div class="row">
+              <div class="col-md-7">
+                <h6>Nombre: <span id="usuario_nombre"></span></h6>
+              </div>
+              <div class="col-md-5">
+                <h6>Telefono: <span id="usuario_telefono"></span></h6>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <div id="map"></div>
               </div>
@@ -284,10 +301,11 @@ if($db->rows($obtenerLugares) > 0) {
                 <div class="form-group">
                   <label for="">Observaciones</label>
                   <textarea class="form-control" id="observacionesLugar" cols="30" rows="10"></textarea>
+                  <input type="hidden" id="idLugar">
                 </div>
               </div>
               <div class="col-md-12">
-                <button class="btn btn-primary btn-block">Guardar Observaciones</button>
+                <button id="guardarObs" class="btn btn-primary btn-block">Guardar Observaciones</button>
               </div>
             </div>
           </div>
@@ -338,7 +356,19 @@ if($db->rows($obtenerLugares) > 0) {
             for (var i = 0; i < jsonData.data.length; i++) {
               var lugar = jsonData.data[i];
             }
-            console.log(lugar);
+
+            for (var j = 0; j < jsonData.usuario.length; j++) {
+              var usuario = jsonData.usuario[j];
+            }
+            
+            for (var k = 0; k < jsonData.contacto.length; k++) {
+              var contacto = jsonData.contacto[k];
+            }
+            
+            // console.log(lugar, usuario, contacto);
+
+            $('#usuario_nombre').html(usuario.nombre + ' ' + usuario.apellidos);
+            $('#usuario_telefono').html(contacto.numero);
             $('#nombre_lugar').html(lugar.nombre_lugar);
             $('#direccion_lugar').html(lugar.direccion);
             $('#descripcion_lugar').html(lugar.descripcion);
@@ -392,9 +422,34 @@ if($db->rows($obtenerLugares) > 0) {
                 var observacion = jsonData.data[i];
               }
               $('#observacionesLugar').html(observacion.observaciones);
+              $('#idLugar').val(observacion.id_lugar);
             }
           }
         });
+    });
+
+    $(document).on('click', '#guardarObs', function() {
+      var idLugar = $('#idLugar').val();
+      var obs = $('#observacionesLugar').val();
+      
+      $.ajax({
+        type: "POST",
+        url: "request/guardarObservaciones.request.php",
+        data: {id: idLugar, observaciones: obs},
+        success: function(response) {
+          if(response == 1) {
+            alertify
+            .alert("Correcto", "Observacion guardada.", function(){
+              alertify.success('Observacion guardada con exito');
+              location.reload();
+            });
+          } else {
+            alertify
+            .error("ERROR: " + response);
+          }
+        }
+      });
+    
     });
 
     function aprobarLugar(id) {
@@ -404,16 +459,37 @@ if($db->rows($obtenerLugares) > 0) {
         data: {id:id},
         success: function(response) {
           if(response == 1) {
-            alert('Lugar Aprobado');
+            alertify
+            .alert("Correcto", "Lugar Aprobado.", function(){
+              alertify.success('Lugar Aprobado con exito');
+              location.reload();
+            });
           }else {
-            alert('Error: ' + response);
+            alertify
+            .error("ERROR: " + response);
           }
         }
       });
     }
 
     function rechazarLugar(id) {
-      alert('Lugar Rechazado');
+      $.ajax({
+        type: "GET",
+        url: "request/rechazarLugar.request.php",
+        data: {id:id},
+        success: function(response) {
+          if(response == 1) {
+            alertify
+            .alert("Correcto", "Lugar Rechazado.", function(){
+              alertify.success('Lugar Rechazado con exito');
+              location.reload();
+            });
+          }else {
+            alertify
+            .error("ERROR: " + response);
+          }
+        }
+      });
     }
 
     

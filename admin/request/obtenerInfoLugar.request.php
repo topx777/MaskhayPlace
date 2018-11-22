@@ -13,18 +13,21 @@ if($_GET) {
 
         $resLugar = $db->fetchAll($obtenerInfo);
         
+        $idUsuario = $resLugar[0]["usuario"];
+        
+        // var_dump($idUsuario);
+        $usuario = $db->query("SELECT usuario, nombre, apellidos, correo FROM usuarioregistrado WHERE id_usuarioregistrado = $idUsuario");
+        $resUsuario = $db->fetchAll($usuario);
+        
+        $contactos = $db->query("SELECT numero FROM contacto WHERE lugar = $idLugar");
+        $resContacto = $db->fetchAll($contactos);
+
         $lugar = array(
-            'data' => $resLugar
+            'data' => $resLugar,
+            'usuario' => $resUsuario,
+            'contacto' => $resContacto
         );
         
-        // if($resLugar["categoria"] == "Farmacia") {
-            // $obtenerFarmacia =
-        // } else if ($resLugar["categoria"] == "Hotel") {
-
-        // } else if ($resLugar["categoria"] == "Restaurante") {
-
-        // }
-    
         echo json_encode($lugar);
 
     } else {
