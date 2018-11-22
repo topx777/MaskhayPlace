@@ -18,7 +18,7 @@ $cantActivos = $db->recorrer($contarActivos)[0];
 $contarRechazados = $db->query("SELECT COUNT(*) FROM lugar WHERE estado = 'Rechazado'");
 $cantRechazados = $db->recorrer($contarRechazados)[0];
 
-$obtenerLugares = $db->query("SELECT * FROM lugar");
+$obtenerLugares = $db->query("SELECT * FROM lugar WHERE estado IS NULL");
 if($db->rows($obtenerLugares) > 0) {
   while($resLugar = $db->recorrer($obtenerLugares)) {
     $idUsuario = $resLugar["usuario"];
