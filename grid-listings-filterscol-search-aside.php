@@ -439,7 +439,7 @@ session_start();
 				buscar:getParameterByName('buscar'),
 				lugar:getParameterByName('lugar'),
 				categoria:[getParameterByName('categoria')],
-				distaciaRad:'',
+				distaciaRad:0,
 				orden:'all',
 				puntaje:['all']
 			},

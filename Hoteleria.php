@@ -63,9 +63,6 @@
   <link href="assets/admin/css/date_picker.css" rel="stylesheet">
   <!-- Your custom styles -->
   <link href="assets/admin/css/custom.css" rel="stylesheet">
-  <!-- WYSIWYG Editor -->
-  <link rel="stylesheet" href="assets/admin/js/editor/summernote-bs4.css">
-
 
   <link rel="stylesheet" type="text/css" href="estilo.css">
 
@@ -737,21 +734,7 @@
 	<script src="assets/admin/vendor/bootstrap-datepicker.js"></script>
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
-	<script src="assets/admin/js/editor/summernote-bs4.min.js"></script>
 	<script>
-      $('.editor').summernote({
-		fontSizes: ['10', '14'],
-		toolbar: [
-			// [groupName, [list of button]]
-			['style', ['bold', 'italic', 'underline', 'clear']],
-			['font', ['strikethrough']],
-			['fontsize', ['fontsize']],
-			['para', ['ul', 'ol', 'paragraph']]
-		  ],
-        placeholder: 'Write here ....',
-        tabsize: 2,
-        height: 200
-      });
 
       var marker;
       function initMap() {
@@ -790,7 +773,7 @@
           marker.setAnimation(google.maps.Animation.BOUNCE);
           }
       }
-      
+
       google.maps.event.addListener( map, "click", function(ele) {
           // codigo que crea el marcador
           new google.maps.Marker({
