@@ -32,7 +32,14 @@
         $resdescripcion = $db->recorrer($obtenerdescripcion);
     }
     // OBTENER LA LATITUD Y LONGITUD
-     
+    $obtenerlongitud = $db->query("SELECT longitud_gps FROM lugar WHERE id_lugar = $idlugar ");
+    if($db->rows($obtenerlongitud) > 0) {
+        $reslongitud = $db->recorrer($obtenerlongitud);
+    }
+    $obtenerlatitud = $db->query("SELECT latitud_gps FROM lugar  WHERE id_lugar = $idlugar ");
+    if($db->rows($obtenerlatitud) > 0) {
+        $reslatitud = $db->recorrer($obtenerlatitud);
+    }
     // OBTENER HORARIO
     $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia WHERE lugar = $idlugar");
     if($db->rows($obtenerhoraini) > 0){
@@ -299,89 +306,31 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                        <label>Longitud</label>
-                        <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                        <label>Latitud</label>
-                        <input type="text" class="form-control">
-                        </div>
-                    </div>
-
                     <div class="col-md-12">
                         <div class="form-group">
                         <label>Descripcion</label>
                         <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resdescripcion["descripcion"]?></textarea>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">          
+                            <label>Horario</label><br>
+                            <label style="margin-right: 300px">De las</label><label>A las</label>
+                            <div class="input-group" style="width:800px">
+                                <input id="timepicker1" type="text" name="timepicker1" style="margin-right: 180px" value="<?=$reshoraini["horaini"]?>"/>
+                                <input id="timepicker2" type="text" name="timepicker2" style="margin-right: 180px" value="<?=$reshorafinal["horafinal"]?>"/>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /row -->
             </div>
             <!-- final de lugar -->
-            <!-- panel mapa de google -->
-            <div class="box_general padding_bottom">
-                <div class="header_box version_2" style="width:300px;">
-                    <h2>
-                        <label>Geolocalizacion:</label><br>
-                    </h2>                
-                </div>
-                <div class="row">
-                    <!-- Mapa de GOOGLE -->
-                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
-                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
-                </div>
-                <div class="modal-footer modal-lg">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
-                </div>
-            </div>
-            <!-- fin panel mapa de google  -->
-            <!-- antes panel inicia; -->
-            <div class="box_general padding_bottom">
-                <div class="header_box version_2">
-                        <h2><i class="fa fa-ambulance"></i>Farmacia</h2>
-                </div>
+            <!-- servicios panel -->
+             <div class="box_general padding_bottom">
                 <div class="row">                            
                     <div class="col-md-12 add_top_30">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nombre</label>
-                                    <input type="text" class="form-control" style="width:90%" value="<?=$reslugar["nombre_lugar"]?>">
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Direccion</label>
-                                    <input type="text" class="form-control" disabled="">
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Direccion</label>
-                                    <input type="text" class="form-control" style="width:90%" value="<?=$resdireccion["direccion"]?>">
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">          
-                                    <label>Horario</label><br>
-                                    <label style="margin-right: 300px">De las</label><label>A las</label>
-                                    <div class="input-group" style="width:800px">
-                                        <input id="timepicker1" type="text" name="timepicker1" style="margin-right: 180px" value="<?=$reshoraini["horaini"]?>"/>
-                                        <input id="timepicker2" type="text" name="timepicker2" style="margin-right: 180px" value="<?=$reshorafinal["horafinal"]?>"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="header_box version_2">
                             <h2><i class="fa fa-file"></i>Sevicios Ofrecidos</h2>
                         </div>
@@ -464,11 +413,40 @@
                             </li>
                         </div>
                     </div>  
-                </div>
-                
+                </div>  
             <!-- /pading buton     -->
             </div>
-                                         -->
+            <!-- sevicios panel fin -->
+            <!-- panel mapa de google -->
+            <div class="box_general padding_bottom">
+                <div class="header_box version_2" style="width:300px;">
+                    <h2>
+                        <label>Geolocalizacion:</label><br>
+                    </h2>                
+                </div>
+                <div class="row">
+                    <!-- Mapa de GOOGLE -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Longitud</label>
+                        <input type="text" class="form-control" value="<?=$reslongitud["longitud_gps"]?>" id="longitud" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Latitud</label>
+                        <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="longitud" required="">
+                        </div>
+                    </div>
+                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
+                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
+                </div>
+                <div class="modal-footer modal-lg">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+            <!-- fin panel mapa de google  -->
+            
         <!-- /container-fluid -->
         </div>
     <!-- container-wrapper -->
