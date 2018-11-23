@@ -27,7 +27,7 @@ if(isset($_SESSION["filtro"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Ansonika">
-  <title>SPARKER - Admin dashboard</title>
+  <title>Revision de Reservas</title>
 	
   <!-- Favicons-->
   <link rel="shortcut icon" href="assets/admin/img/favicon.ico" type="image/x-icon">
