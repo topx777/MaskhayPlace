@@ -55,6 +55,14 @@
   <link href="assets/admin/css/date_picker.css" rel="stylesheet">
   <!-- Your custom styles -->
   <link href="assets/admin/css/custom.css" rel="stylesheet">
+  
+	<!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css"/>
 
   <link rel="stylesheet" href="estilo.css">
 
@@ -147,7 +155,9 @@
       <div class="header_box version_2">
         <h2><i class="fa fa-user"></i>Lugar</h2>
       </div>
-      
+            
+      <div class="AJAXresponse"></div>
+
       <div class="row">
         <div class="col-md-4" style="padding-top: 30px;">
           <div class="form-group">
@@ -492,6 +502,7 @@
       </div>
     </div>
 		<!-- /box_general-->
+    <input type="text" id="idLugar" value="<?=$idLugar?>">
 		<p><button id="updateLugar" class="btn_1 medium">Guardar</button></p>
 	  </div>
 	  <!-- /.container-fluid-->
@@ -630,31 +641,31 @@
       $(document).on('click', '#updateLugar', function() {
         form = new FormData();
         
-        console.log($('#logo').prop('files')[0]);
-        form.append('lugar_nombre', $('#lugar_nombre').val());
-        form.append('lugar_direccion', $('#lugar_direccion').val());
-        form.append('lugar_descripcion', $('#lugar_descripcion').val());
-        form.append('lugar_nombre', $('#lugar_nombre').val());
-        form.append('latitud', $('#latitud').val());
-        form.append('longitud', $('#longitud').val());
+        // console.log($('#logo').prop('files')[0]);
+        form.append('id_lugar', $('#idLugar').val());
+        form.append('nombre_lugar', $('#lugar_nombre').val());
+        form.append('direccion_lugar', $('#lugar_direccion').val());
+        form.append('descripcion_lugar', $('#lugar_descripcion').val());
+        form.append('latitud_gps', $('#latitud').val());
+        form.append('longitud_gps', $('#longitud').val());
         if($('#logo').prop('files')[0] != undefined) {
           form.append('logo', $('#logo').prop('files')[0]);
         }
         form.append('hotel_categoria', $('#hotel_categoria').val());
         form.append('hotel_nivel', $('#hotel_nivel').val());
-        form.append('parqueo', $('#parqueo').val());
-        form.append('piscina', $('#piscina').val());
-        form.append('recreativa', $('#recreativa').val());
-        form.append('bar', $('#bar').val());
-        form.append('gimnasio', $('#gimnasio').val());
-        form.append('spa', $('#spa').val());
-        form.append('comedor', $('#comedor').val());
-        form.append('cable', $('#cable').val());
-        form.append('internet', $('#piscina').val());
-        form.append('desayuno', $('#desayuno').val());
-        form.append('servicio', $('#servicio').val());
-        form.append('acondicionado', $('#acondicionado').val());
-        form.append('mascota', $('#mascota').val());
+        form.append('hotel_parqueo', $('#parqueo').val());
+        form.append('hotel_piscina', $('#piscina').val());
+        form.append('hotel_recreativa', $('#recreativa').val());
+        form.append('hotel_bar', $('#bar').val());
+        form.append('hotel_gimnasio', $('#gimnasio').val());
+        form.append('hotel_spa', $('#spa').val());
+        form.append('hotel_comedor', $('#comedor').val());
+        form.append('hotel_cable', $('#cable').val());
+        form.append('hotel_internet', $('#piscina').val());
+        form.append('hotel_desayuno', $('#desayuno').val());
+        form.append('hotel_servicio', $('#servicio').val());
+        form.append('hotel_acondicionado', $('#acondicionado').val());
+        form.append('hotel_mascota', $('#mascota').val());
 
         $.ajax({
           type: "POST",
@@ -664,7 +675,19 @@
           contentType: false,
           processData: false,
           success: function (response) {
-            console.log(response);
+
+            if(response == 1) {
+              $('#AJAXresponse').html('<div class="alert alert-success" role="alert">Lugar Modificado con exito!</div>');
+              alertify
+              .alert("Correcto", "Lugar Modificado con exito.", function(){
+                alertify.success('Redirigiendo...');
+                location.href = "administrar_lugar.php";
+              });
+            } else {
+					  	$('#AJAXresponse').html('<div class="alert alert-error" role="alert">ERROR: '+response+'</div>');
+            }
+
+            // console.log(response);
           }
         });
 
