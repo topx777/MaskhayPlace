@@ -23,14 +23,24 @@
   // var_dump($idLugar);
 
   //-------------MODIFICAR LOGO-----------------------------
-  if(isset($_POST['btnAceptar'])){
+  if(isset($_POST['btnAgregar'])){
+    $nombreProducto = $_POST["nombreProduc"];
+    $precioProducto = $_POST["precioProduc"];
+    $checkboxProducto = $_POST["Chbox"];
+    $descuentoProducto = $_POST["descuentoProduc"];
+    $descripcionProducto = $_POST["descripcionProduc"];
+
     $archivo = $_FILES['fileImagen']['tmp_name'];
     $destino = "assets/public/img/logos/". $_FILES['fileImagen']['name'];
     move_uploaded_file($archivo, $destino);
+
+    $agregarProducto = $db->query("INSERT INTO medicamento(nombre_medicamento, precio_medicamento, descuento, precio_descuento, descripcion, farmacia, imagen_medicamento) VALUES('$nombreProducto','$precioProducto','$checkboxProducto','$descuentoProducto','$descripcionProducto',1,'$destino')");
+
     
-    $modificarlogo = $db->query("UPDATE lugar SET logo = '$destino' WHERE id_lugar = $idLugar");
-    header('Location: Hoteleria.php');
+    header('Location: Productos.php');
   }
+
+
 
 
  ?>
@@ -151,29 +161,26 @@
   <div class="content-wrapper">
       <div class="container-fluid">
         <?php
-            if ($resLugar["activo"] == 1) {
-              echo "<div class='alert alert-success' role='alert'>
-                      Su pagina se encuentra activa
-                    </div>" ;
-            }else{
-              echo "<div class='alert alert-danger' role='alert'>
-                      Su pagina no encuentra activa
-                    </div>" ;
+            $obtenerActivo = $db->query("SELECT activo FROM lugar WHERE usuario = $idUsuario LIMIT 1" );
+            if($db->rows($obtenerActivo) > 0) {
+              $resActivo = $db->recorrer($obtenerActivo);
+              $obtenerActivo = $resActivo["activo"];
+              if ($obtenerActivo == 1) {
+                echo "<div class='alert alert-secondary' role='alert'>
+                        Su pagina se encuentra activa
+                      </div>" ;
+              }else{
+                echo "<div class='alert alert-secondary' role='alert'>
+                        Su pagina no se encuentra activa
+                      </div>" ;
+              }
+            } else {
+              header('Location: HoteleriaVacia.html');
             }
          ?>
-      <!-- -------------------------------------Lugar------------------------------------>
-      
-   <!-- -------------------------------------AREAS DISPONIBLES------------------------------------->
-		
-
-<!-- ---------------------SERVICIOS------------------------->
-   
-
-    <!-- ---------------------Permisos------------------------->
-    
 
 
-		<!---------------------------------------------------Datos para las habitaciones------------------------------------->
+		<!---------------------------------------------------DATOS PARA LOS PRODUCTOS------------------------------------->
 		
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
@@ -186,22 +193,25 @@
 							<td>
 								<div class="row">
                   
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<div class="form-group">
+                      <label>Nombre del Producto</label>
 											<input type="text" class="form-control" placeholder="Nombre" required="" value="<?=$resLugar["nombre_medicamento"]?>">
 										</div>
 									</div>
                   <div class="col-md-2">
 										<div class="form-group">
+                      <label>Precio del Producto</label>
 											<input type="number" class="form-control" placeholder="Precio"  min="0" required="" value="<?=$resLugar["precio_medicamento"]?>">
 										</div>
 									</div>
                   <div class="col-md-2">
 										<div class="form-group">
+                      <label>Descuento Total</label>
 											<input type="number" class="form-control" placeholder="Descuento"  min="0" required="" value="<?=$resLugar["precio_descuento"]?>">
 										</div>
 									</div>
-                  <div class="col-md-9">
+                  <div class="col-md-3" style="padding-top: 30px;">
                     <div class="form-group">
                       <table class="sw">
                          <tr>
@@ -210,11 +220,11 @@
                            </td>
                            <td class="btnswich">
                              <label class="switch">
-                             <?php if($resLugar["descuento"]==0){?>
+                             <?php if($resLugar["descuento"]==1){?>
                                 <input type="checkbox">
                             <?php }
                             else {?>
-                                <input type="checkbox" checked>
+                                <input type="checkbox">
                             <?php } ?>
                              <div class="slider round"></div>
                           </label>
@@ -244,13 +254,12 @@
 						</tr>
 					</table>
 					<a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Añadir</a>
-          <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Editar</a>
 					</div>
 			</div>
 			<!-- /row-->
 		</div>
 		<!-- /box_general-->
-		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
+		
 	  </div>
 	  <!-- /.container-fluid-->
    	</div>
@@ -267,7 +276,7 @@
       <i class="fa fa-angle-up"></i>
     </a>
 
-    <!------------------------------MODAL PARA crear habitacion------------------------------>
+    <!------------------------------MODAL PARA CREAR PRODUCTOS------------------------------>
     <div class="modal fade" id="ModalHabitacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -277,78 +286,74 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="Productos.php" method="POST" enctype="multipart/form-data">
       <div class="modal-body">
-
         <table>
           <tr>
             <td>
               <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Nombre">
-                    </div>
-                  </div>
+                <input type="text" name="nombreProduc" class="form-control" placeholder="Nombre" required="">
+              </div>
+                  
             </td>
             <td class="Habtd">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Descripcion">
+                <input type="number" name="precioProduc" class="form-control" placeholder="Precio" required="">
               </div>
             </td>
           </tr>
         </table>
         <table>
           <tr>
-            <td>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Precio">
-              </div>
-            </td>
-            <td class="Habtd">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Descuento">
-              </div>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            
             <td class="Habtd">
                <label id="lb">Descuento</label>
             </td>
             <td class="btnswich" style="padding-left: 20px;">
               <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" name="Chbox">
                 <div class="slider round"></div>
               </label>
             </td>
-            
+            <td class="Habtd">
+              <div class="form-group" style="padding-left: 20px;">
+                <input type="number" name="descuentoProduc" class="form-control" placeholder="Descuento">
+              </div>
+            </td>
           </tr>
         </table>
-        <center>
           <table>
             <tr>
               <td>
                 <div style="width: 300px;">
-                    <div class="form-group">
-                      <form action="/file-upload" class="dropzone"></form>
-                      <center><label>Imagen del Producto</label></center>
-                      </div>
+                    <div class="form-group" style="padding-top: 20px;">
+                      <center><label>Seleccione una imagen para su producto</label></center>
+                      <form action="" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="fileImagen" required="">
+                      </form>
+                    </div>
                   </div>
               </td>
             </tr>
           </table>
-        </center>
-                    
+        <table style="width: 100%;">
+          <th>
+              <div class="form-group">
+                <textarea style="height:100px;" name="descripcionProduc" class="form-control" placeholder="Descripcion" required=""></textarea>
+              </div>
+          </th>
+        </table>   
+
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary add-pricing-list-item" data-dismiss="modal">Guardar</button>
+        <input type="submit" class="btn btn-secondary" name="btnCancelar" data-dismiss="modal" value="Cancelar">
+        <input type="submit" class="btn btn-primary" name="btnAgregar" value="Aceptar">
       </div>
+      </form>  
     </div>
   </div>
 </div>
 
 
-    <!------------------------------fin modal habitacion------------------------------>
     <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
     <div class="modal fade" id="ModificarImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
