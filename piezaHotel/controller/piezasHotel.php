@@ -11,7 +11,8 @@ $id_Hotel=(isset($_POST['id_hotel']))?$_POST['id_hotel']:'';?>
             <tr class="pricing-list-item">
                 <td>
                     <div class="row">
-            
+                        
+
                         <div class="col-md-2">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Nombre" required="" value="<?= $pieza->nombre_pieza;?>">
@@ -67,7 +68,7 @@ $id_Hotel=(isset($_POST['id_hotel']))?$_POST['id_hotel']:'';?>
             
                         <div class="col-md-4">
                             <div class="form-group">
-                                <img src="<?= $sitio->imagen_pieza;?>" alt="">
+                                <img width="200" src="<?= $pieza->imagen_pieza != NULL || $pieza->imagen_pieza != '' ? $pieza->imagen_pieza : "assets/public/img/piezas/default_image.jpg" ?>" alt="">
                                 <center><label>Imagen de la Habitacion</label></center>
                             </div>
                         </div>

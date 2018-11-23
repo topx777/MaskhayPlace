@@ -17,20 +17,22 @@
   }
   
   $idLugar = $resLugar["id_lugar"];
-  
-  // var_dump($idLugar);
 
-  //-------------MODIFICAR LOGO-----------------------------
-  if(isset($_POST['btnAceptar'])){
-    $archivo = $_FILES['fileImagen']['tmp_name'];
-    $destino = "assets/public/img/logos/". $_FILES['fileImagen']['name'];
-    move_uploaded_file($archivo, $destino);
-    
-    $modificarlogo = $db->query("UPDATE lugar SET logo = '$destino' WHERE id_lugar = $idLugar");
-    header('Location: Hoteleria.php');
+  //Obtener Imagenes Lugar
+
+  $obtenerImagenes = $db->query("SELECT * FROM imagen WHERE lugar = $idLugar");
+  if($db->rows($obtenerImagenes) > 0) {
+    while($resImg = $db->recorrer($obtenerImagenes)) {
+      $imagenes[] = array(
+        'id' => $resImg["id_imagen"],
+        'desc' => $resImg["descripcion"],
+        'url' => $resImg["url"]
+      );
+    }
   }
-
-
+   
+   // var_dump($idLugar);
+  $db->close();
  ?>
 
 <!DOCTYPE html>
@@ -151,341 +153,18 @@
         <?php
             if ($resLugar["activo"] == 1) {
               echo "<div class='alert alert-success' role='alert'>
-                      Su pagina se encuentra activa
+                      Su Lugar se encuentra activo
                     </div>" ;
             }else{
               echo "<div class='alert alert-danger' role='alert'>
-                      Su pagina no encuentra activa
+                      Su Lugar no encuentra activo
                     </div>" ;
             }
          ?>
-      <!-- -------------------------------------Lugar------------------------------------>
-      <div class="box_general padding_bottom">
-      <div class="header_box version_2">
-        <h2><i class="fa fa-user"></i>Lugar</h2>
-      </div>
-      <center>
-      <div class="row">
-        <div class="col-md-4" style="padding-top: 30px;">
-          <div class="form-group">
-            <form>
-              <img src="<?=$resLugar["logo"]?>" style="width: 100%;">
-              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
-            </form>
-
-            </div>
-        </div>
-        </center>
-        
-        <div class="col-md-12 add_top_30">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Nombre del Negocio</label>
-                <form method="POST">
-                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="nombreLugar" required="">
-                </form>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Direccion</label>
-                <input type="text" class="form-control" value="<?=$resLugar["direccion"]?>" id="direccion" required="">
-              </div>
-            </div>
-          </div>
-          <!-- /row-->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Descripcion</label>
-                <textarea id="descripcion" style="height:100px;"  class="form-control" placeholder="Personal info"><?=$resLugar["descripcion"]?></textarea>
-              </div>
-            </div>
-          </div>
-          <!-- /row-->
-          <center>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Longitud</label>
-                <input type="text" class="form-control" value="<?=$resLugar["longitud_gps"]?>" id="longitud" required="">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Latitud</label>
-                <input type="text" class="form-control" value="<?=$resLugar["latitud_gps"]?>" id="latitud" required="">
-              </div>
-            </div>
-          </div>
-          </center>
-          <!-- -------------------------------------GOOGLE------------------------------------->
-          <div>
-            <div class="header_box version_2" style="width:300px;">
-                <h2>
-                    <label>Geolocalizacion:</label><br>
-                </h2>                
-            </div>
-            <div class="row">
-                <!-- Mapa de GOOGLE -->
-                <div  id="map" style="width:8000px; height:500px; float: left"></div>
-            </div>
-            <div class="modal-footer modal-lg">
-            </div>
-        </div>
-          <!-- /row-->
-        </div>
-        <input class="btn_1 medium" type="submit" name="btnGuardarLugar" value="Guardar">
-
-      
-    </div>
-   <!-- -------------------------------------AREAS DISPONIBLES------------------------------------->
-		<div class="box_general padding_bottom" style="overflow: hidden;">
-			<div class="header_box version_2">
-				<h2><i class="fa fa-file"></i>Areas Disponibles</h2>
-			</div>
-			
-      <div class="tablaSwich" style="width: 50%; float: left;">
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb"> Parqueo</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox" name="ChBParqueo">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-    
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb"> Piscina</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Areas Recreativas</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Bar</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-      </div>
-
-    <div class="tablaSwich" style="width: 50%; float: right;">
-      <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Gimnasio</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Spa</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Comedor</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-      </div>
-		</div>
-
-<!-- ---------------------SERVICIOS------------------------->
-    <div class="box_general padding_bottom">
-      <div class="header_box version_2">
-        <h2><i class="fa fa-file"></i>Servicios</h2>
-      </div>
-      
-      <div class="tablaSwich" style="width: 60%">
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">TV por Cable</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-    
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Internet</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Desayuno</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Servicio de Habitacion</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Aire Acondicionado</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-      </div>
-    </div>
-
-    <!-- ---------------------Permisos------------------------->
-    <div class="box_general padding_bottom">
-      <div class="header_box version_2">
-        <h2><i class="fa fa-file"></i>Permisos</h2>
-      </div>
-      
-      <div class="tablaSwich" style="width: 60%">
-         <li class="list-group-item">
-          <table class="sw">
-            <tr>
-              <td>
-                <label id="lb">Mascotas</label>
-              </td>
-              <td class="btnswich">
-                <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-             </label>
-              </td>
-            </tr>
-          </table>
-         </li>
-
-      </div>
-    </div>
-
-
-		<!---------------------------------------------------Datos para las habitaciones------------------------------------->
-		
+  	
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
-				<h2><i class="fa fa-dollar"></i>Habitaciones</h2>
+				<h2><i class="fa fa-image"></i>Imagenes</h2>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -494,72 +173,28 @@
 							<td>
 								<div class="row">
                   
-									<div class="col-md-2">
-										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Nombre" required="">
-										</div>
-									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Descripcion" required="">
+											<input type="file" class="form-control" id="">
 										</div>
+									</div>
+									<div class="col-md-5">
+                      <textarea class="form-control" rows="1"></textarea>
 									</div>
                   
-									<div class="col-md-2">
-										<div class="form-group">
-											<input type="number" class="form-control" placeholder="Precio"  min="0" required="">
-										</div>
+									<div class="col-md-3">
+                    <div style="margin-top: 10px;">
+                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-image"></i>Ver</a>
+                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-edit"></i>Editar</a>
+                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-times"></i>Eliminar</a>
+                    </div>
 									</div>
-
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <table class="sw">
-                         <tr>
-                           <td>
-                             <label id="lb">Sanitario</label>
-                           </td>
-                           <td class="btnswich">
-                             <label class="switch">
-                             <input type="checkbox">
-                             <div class="slider round"></div>
-                          </label>
-                           </td>
-                         </tr>
-                       </table>
-                    </div>
-                  </div>
-
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <table class="sw">
-                         <tr>
-                           <td>
-                             <label id="lb">Frigobar</label>
-                           </td>
-                           <td class="btnswich">
-                             <label class="switch">
-                             <input type="checkbox">
-                             <div class="slider round"></div>
-                          </label>
-                           </td>
-                         </tr>
-                       </table>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <form action="/file-upload" title="Click" class="dropzone"></form>
-                      <center><label>Imagen de la Habitacion</label></center>
-                      </div>
-                  </div>
 
 								</div>
 							</td>
 						</tr>
 					</table>
-					<a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Añadir</a>
-          <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-plus-circle"></i>Editar</a>
+					
 					</div>
 			</div>
 			<!-- /row-->
@@ -676,20 +311,17 @@
           
             <div class="row">
               <div class="col-md-6">
+            
                 <div class="form-group" style="padding-left: 50px;">
-                  <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
-                    <br>
-                    <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
-                    <input type="file" name="fileImagen" required="">
-      
-                    <div class="modal-footer" style="padding-left: 400px;">
-                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnCancelar" value="Cancelar">
-                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar" >
-                    </div>
-
-                  </form>
-      
+                  <br>
+                  <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
+                  <input type="file" name="fileImagen" required="">
+    
+                  <div class="modal-footer" style="padding-left: 400px;">
+                    <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnCancelar" value="Cancelar">
+                    <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar" >
                   </div>
+                </div>
               </div>
             </div>
         </div>
@@ -710,7 +342,7 @@
           <div class="modal-body">Seguro que quiere cerrar cesion?</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Aceptar</a>
+            <a class="btn btn-primary" href="app/requestAJAX/cerrarSesion.request.php">Aceptar</a>
           </div>
         </div>
       </div>

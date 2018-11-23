@@ -22,7 +22,7 @@
   $resHotel = $db->recorrer($obtenerHotel);
   
   // var_dump($idLugar);
-
+  $db->close();
  ?>
 
 <!DOCTYPE html>
@@ -142,11 +142,11 @@
         <?php
             if ($resLugar["activo"] == 1) {
               echo "<div class='alert alert-success' role='alert'>
-                      Su pagina se encuentra activa
+                      Su Lugar se encuentra activo
                     </div>" ;
             }else{
               echo "<div class='alert alert-danger' role='alert'>
-                      Su pagina no encuentra activa
+                      Su Lugar no encuentra activo
                     </div>" ;
             }
          ?>

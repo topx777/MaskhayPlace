@@ -170,7 +170,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<table id="pricing-list-container" id="piezasHotel" style="width:100%;">
+					<table id="pricing-list-container" style="width:100%;">
 
 
 						<!-- <tr class="pricing-list-item">
@@ -332,7 +332,7 @@
                             <td>
                                 <div style="width: 300px;">
                                     <div class="form-group">
-                                        <input type="file" name="imagen_pieza" id="">
+                                        <input type="file" name="imagen_pieza">
                                         <center><label>Imagen de la Habitacion</label></center>
                                     </div>
                                 </div>
@@ -353,38 +353,7 @@
     </div>
 
     <!------------------------------fin modal habitacion------------------------------>
-    <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
-    <div class="modal fade" id="ModificarImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modificar Imagen</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group" style="padding-left: 50px;">
-                  <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
-                    <br>
-                    <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
-                    <input type="file" name="fileImagen" required="">
-      
-                    <div class="modal-footer" style="padding-left: 400px;">
-                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnCancelar" value="Cancelar">
-                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar" >
-                    </div>
-
-                  </form>
-      
-                  </div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
+    
 
 
     <!------------------------------MODAL PARA CERRAR CESION------------------------------>
@@ -444,6 +413,10 @@
    $(document).ready(function () {
     listarSitios();
    });
+    var lista;
+    lista = document.getElementById('pricing-list-container');
+    console.log(lista);
+
    function listarSitios() 
    {
      $.post("piezaHotel/controller/piezasHotel.php", 
@@ -452,56 +425,12 @@
      },
        function (data, textStatus, jqXHR) {
           console.log(data)
-          $('#piezasHotel').html(data);
+          lista.innerHTML = data;
+          // $('#piezasHotel').html(data);
        }
      );
   
     }
-      var marker;
-      function initMap() {
-          var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: {lat: <?=$resLugar["latitud_gps"]?>, lng: <?=$resLugar["longitud_gps"]?>}
-          });
-          marker = new google.maps.Marker({
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          position: {lat: <?=$resLugar["latitud_gps"]?>, lng: <?=$resLugar["longitud_gps"]?>}
-          });
-          marker.addListener('click', toggleBounce);
-          marker.addListener( 'dragend', function (event)
-          {
-              //escribimos las coordenadas de la posicion actual del marcador dentro del input #coords
-              // document.getElementById("coordenadasEquipo").value = this.getPosition().lat()+","+ this.getPosition().lng();
-              $('#latitud').val(this.getPosition().lat());
-              $('#longitud').val(this.getPosition().lng());
-          });
-      }
-      // permite arrastar el marcador
-      function toggleBounce() {
-          if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-          } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-      }
-      // captura el evento click sobre le marcador
-      function funcionClick() {
-          if (marker.getAnimation() != null) {
-          marker.setAnimation(null);
-          } else {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-      }
-
-      google.maps.event.addListener( map, "click", function(ele) {
-          // codigo que crea el marcador
-          new google.maps.Marker({
-              map: map
-          })
-      });
-
     </script>
 	
 </body>
