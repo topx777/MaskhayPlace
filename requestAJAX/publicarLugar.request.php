@@ -129,6 +129,9 @@ if($_POST) {
 					$idestino = $value["destino"];
 					$agregarImagen = $db->query("INSERT INTO imagen(descripcion, url, lugar) VALUES('$idesc', '$idestino', $idLugar)");
 				}
+
+				$updateUsuario = $db->query("UPDATE usuarioregistrado SET negocio = 1 WHERE id_usuarioregistrado = $idUsuario");
+
 				echo 1;
 			} else {
 				$error = $db->error;

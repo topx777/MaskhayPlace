@@ -140,13 +140,14 @@
   <div class="content-wrapper">
       <div class="container-fluid">
         <?php
+            $observaciones = $resLugar["observaciones"];
             if ($resLugar["activo"] == 1) {
               echo "<div class='alert alert-success' role='alert'>
                       Su Lugar se encuentra activo
                     </div>" ;
             }else{
               echo "<div class='alert alert-danger' role='alert'>
-                      Su Lugar no encuentra activo
+                      Su Lugar no encuentra activo \n <b>Observaciones: $observaciones</b> 
                     </div>" ;
             }
          ?>
