@@ -14,7 +14,7 @@ if(isset($_SESSION["admin"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="SPARKER - Premium directory and listings template by Ansonika.">
     <meta name="author" content="Ansonika">
-    <title>SPARKER | Premium directory and listings template by Ansonika.</title>
+    <title>MaskhayPlace | Portal de Busqueda.</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="../assets/public/img/favicon.ico" type="image/x-icon">

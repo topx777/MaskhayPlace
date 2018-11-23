@@ -253,7 +253,7 @@ if($db->rows($obtenerReservas) > 0) {
 							<li><a href="#0">Acerca de nosotros</a></li>
 							<li><a href="#0">Pregunas frecuentes</a></li>
 							<li><a href="#0">Ayuda</a></li>
-							<li><a href="#0">Mi cuenta</a></li>
+							<li><a href="admin/login_admin.php">Administrador</a></li>
 							<li><a href="#0">Crear cuenta</a></li>
 							<li><a href="#0">Contactos</a></li>
 						</ul>

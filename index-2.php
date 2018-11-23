@@ -10,7 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="SPARKER - Premium directory and listings template by Ansonika.">
     <meta name="author" content="Ansonika">
-    <title>SPARKER | Premium directory and listings template by Ansonika.</title>
+    <title>MaskhayPlace | Portal de Busqueda.</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="assets/public/img/favicon.ico" type="image/x-icon">
@@ -270,7 +270,7 @@ session_start();
 							<li><a href="#0">Acerca de nosotros</a></li>
 							<li><a href="#0">Pregunas frecuentes</a></li>
 							<li><a href="#0">Ayuda</a></li>
-							<li><a href="#0">Mi cuenta</a></li>
+							<li><a href="admin/login_admin.php">Administrador</a></li>
 							<li><a href="#0">Crear cuenta</a></li>
 							<li><a href="#0">Contactos</a></li>
 						</ul>
