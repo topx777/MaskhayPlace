@@ -269,7 +269,8 @@
     <div class="modal fade" id="ModalHabitacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        
+          <form action="javascript:void(0)" method="post" enctype="multipart/form-data" id="formNewPieza">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Nueva Habitacion</h5>
@@ -278,18 +279,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
-    
+
                     <table>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre">
+                                    <input type="text" name="nombre_pieza" class="form-control" placeholder="Nombre">
                                 </div>
                                 </div>
                             </td>
                             <td class="Habtd">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Descripcion">
+                                    <input name="descripcion_pieza" type="text" class="form-control" placeholder="Descripcion">
                                 </div>
                             </td>
                         </tr>
@@ -299,7 +300,7 @@
                     <tr>
                         <td>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Precio" min="0" style="width: 100px;">
+                                <input name="precio_noche" type="number" class="form-control" placeholder="Precio" min="0" style="width: 100px;">
                             </div>
                         </td>
                         <td class="Habtd">
@@ -307,7 +308,7 @@
                         </td>
                         <td class="btnswich" style="padding-left: 20px;">
                             <label class="switch">
-                                <input type="checkbox">
+                                <input name="sanitario_privado" type="checkbox">
                                 <div class="slider round"></div>
                             </label>
                         </td>
@@ -316,7 +317,7 @@
                         </td>
                         <td class="btnswich" style="padding-left: 20px;">
                             <label class="switch">
-                                <input type="checkbox">
+                                <input name="frigobar" type="checkbox">
                                 <div class="slider round"></div>
                             </label>
                         </td>
@@ -329,7 +330,7 @@
                             <td>
                                 <div style="width: 300px;">
                                     <div class="form-group">
-                                        <form action="/file-upload" class="dropzone"></form>
+                                        <input type="file" name="imagen_pieza" id="">
                                         <center><label>Imagen de la Habitacion</label></center>
                                     </div>
                                 </div>
@@ -341,13 +342,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary add-pricing-list-item" data-dismiss="modal">Guardar</button>
+                <button id='btnRegistrarSitio' form="formNewPieza" type="submit" class="btn btn-primary add-pricing-list-item" data-dismiss="modal">Guardar</button>
             </div>
 
+          </form>
         </div>
     </div>
     </div>
-
 
     <!------------------------------fin modal habitacion------------------------------>
     <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
@@ -422,7 +423,22 @@
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
 	<script>
-
+      //enviar a server
+      $('#btnRegistrarSitio').click(function () { 
+     var form=new FormData($('#formNewPieza')[0]);
+     form.append('hotel', <?php echo $_GET['id']?>)
+     $.ajax({
+                type: "POST",
+                url: 'piezaHotel/controller/registrarPieza.php',
+                data: form,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log(response);
+                    document.getElementById('formNewPieza').reset();
+                }
+            });
+   });
       var marker;
       function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {
