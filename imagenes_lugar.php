@@ -169,22 +169,45 @@
 			<div class="row">
 				<div class="col-md-12">
 					<table id="pricing-list-container" style="width:100%;">
-						<tr class="pricing-list-item">
+          <?php 
+          if(isset($imagenes)):
+            foreach($imagenes as $key => $value): ?>
+            <tr class="pricing-list-item">
 							<td>
 								<div class="row">
-                  
-									<div class="col-md-4">
-										<div class="form-group">
-											<input type="file" class="form-control" id="">
-										</div>
+									<div class="col-md-3">
+										<img width="250" src="<?=$value["url"]?>">
 									</div>
 									<div class="col-md-5">
-                      <textarea class="form-control" rows="1"></textarea>
+                      <textarea class="form-control" rows="1"><?=$value["desc"]?></textarea>
 									</div>
                   
-									<div class="col-md-3">
+									<div class="col-md-4">
                     <div style="margin-top: 10px;">
-                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-image"></i>Ver</a>
+                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-edit"></i>Editar</a>
+                      <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-times"></i>Eliminar</a>
+                    </div>
+									</div>
+
+								</div>
+							</td>
+						</tr>
+          <?php 
+            endforeach;
+          endif;
+          ?>
+            <tr class="pricing-list-item">
+							<td>
+								<div class="row">
+									<div class="col-md-3">
+										<img width="250" src="<?=$value["url"]?>">
+									</div>
+									<div class="col-md-5">
+                      <textarea class="form-control" rows="1"><?=$value["desc"]?></textarea>
+									</div>
+                  
+									<div class="col-md-4">
+                    <div style="margin-top: 10px;">
                       <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-edit"></i>Editar</a>
                       <a href="#" class="btn_1 gray" data-toggle="modal" data-target="#ModalHabitacion"><i class="fa fa-fw fa-times"></i>Eliminar</a>
                     </div>

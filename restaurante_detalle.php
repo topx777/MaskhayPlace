@@ -305,7 +305,7 @@ $db->close();
 			<div class="row">
 				<div class="col-lg-3 col-12">
 					<div id="logo">
-						<a href="index.html">
+						<a href="index-2.php">
 							<img src="assets/public/img/logo.png" width="165" height="35" class="logo_sticky">
 						</a>
 					</div>
@@ -848,7 +848,7 @@ $db->close();
 							<div id="message-newsletter"></div>
 							<form method="post" action="assets/newsletter.php" name="newsletter_form" id="newsletter_form">
 								<div class="form-group">
-									<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Ingresa tu emaol">
+									<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Ingresa tu email">
 									<input type="submit" value="Submit" id="submit-newsletter">
 								</div>
 							</form>
