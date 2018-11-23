@@ -17,19 +17,11 @@
   }
   
   $idLugar = $resLugar["id_lugar"];
+
+  $obtenerHotel = $db->query("SELECT * FROM hotel WHERE lugar = $idLugar LIMIT 1");
+  $resHotel = $db->recorrer($obtenerHotel);
   
   // var_dump($idLugar);
-
-  //-------------MODIFICAR LOGO-----------------------------
-  if(isset($_POST['btnAceptar'])){
-    $archivo = $_FILES['fileImagen']['tmp_name'];
-    $destino = "assets/public/img/logos/". $_FILES['fileImagen']['name'];
-    move_uploaded_file($archivo, $destino);
-    
-    $modificarlogo = $db->query("UPDATE lugar SET logo = '$destino' WHERE id_lugar = $idLugar");
-    header('Location: Hoteleria.php');
-  }
-
 
  ?>
 
@@ -67,7 +59,7 @@
   <link rel="stylesheet" href="estilo.css">
 
   <!-- Agregar la librería de Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"></script>
 	
 </head>
 
@@ -155,7 +147,7 @@
       <div class="header_box version_2">
         <h2><i class="fa fa-user"></i>Lugar</h2>
       </div>
-      <center>
+      
       <div class="row">
         <div class="col-md-4" style="padding-top: 30px;">
           <div class="form-group">
@@ -163,22 +155,19 @@
               <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
             </div>
         </div>
-        </center>
         
         <div class="col-md-12 add_top_30">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label>Nombre del Negocio</label>
-                <form method="POST">
-                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="lugar_nombre" required="">
-                </form>
+                <input type="text" class="form-control" name="nombreNegocio" value="<?=$resLugar["nombre_lugar"]?>" id="lugar_nombre">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Direccion</label>
-                <input type="text" class="form-control" value="<?=$resLugar["direccion"]?>" id="direccion" required="">
+                <input type="text" class="form-control" value="<?=$resLugar["direccion"]?>" id="lugar_direccion">
               </div>
             </div>
           </div>
@@ -187,23 +176,23 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Descripcion</label>
-                <textarea id="descripcion" style="height:100px;"  class="form-control" placeholder="Personal info"><?=$resLugar["descripcion"]?></textarea>
+                <textarea id="lugar_descripcion" style="height:100px;"  class="form-control" placeholder="Descripcion Lugar"><?=$resLugar["descripcion"]?></textarea>
               </div>
             </div>
           </div>
           <!-- /row-->
-          <center>
+       
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Longitud</label>
-                <input type="text" class="form-control" value="<?=$resLugar["longitud_gps"]?>" id="longitud" required="">
-              </div>
-            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Latitud</label>
                 <input type="text" class="form-control" value="<?=$resLugar["latitud_gps"]?>" id="latitud" required="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Longitud</label>
+                <input type="text" class="form-control" value="<?=$resLugar["longitud_gps"]?>" id="longitud" required="">
               </div>
             </div>
           </div>
@@ -226,6 +215,43 @@
         </div>
       
     </div>
+
+    <!-- Categoria y Nivel -->
+    <div class="box_general padding_bottom">
+      <div class="header_box version_2">
+        <h2><i class="fa fa-cog"></i>Caracteristicas HOTEL</h2>
+      </div>
+          
+      <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="hotel_categoria">Categoria</label>
+              <select id="hotel_categoria" class="form-control">
+                <option <?=$resHotel["categoria"] == 'Hotel' ? "selected" : ""?>>Hotel</option>
+                <option <?=$resHotel["categoria"] == 'Hostal' ? "selected" : ""?>>Hostal</option>
+                <option <?=$resHotel["categoria"] == 'Residencial' ? "selected" : ""?>>Residencial</option>
+                <option <?=$resHotel["categoria"] == 'Alojamiento' ? "selected" : ""?>>Alojamiento</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="hotel_nivel">Nivel</label>
+              <select id="hotel_nivel" class="form-control">
+                <option <?=$resHotel["nivel"] == 0 ? "selected" : ""?>>0</option>
+                <option <?=$resHotel["nivel"] == 1 ? "selected" : ""?>>1</option>
+                <option <?=$resHotel["nivel"] == 2 ? "selected" : ""?>>2</option>
+                <option <?=$resHotel["nivel"] == 3 ? "selected" : ""?>>3</option>
+                <option <?=$resHotel["nivel"] == 4 ? "selected" : ""?>>4</option>
+                <option <?=$resHotel["nivel"] == 5 ? "selected" : ""?>>5</option>
+              </select>
+            </div>
+          </div>
+      </div>
+
+    </div>
+		<!-- /box_general-->
+
    <!-- -------------------------------------AREAS DISPONIBLES------------------------------------->
 		<div class="box_general padding_bottom" style="overflow: hidden;">
 			<div class="header_box version_2">
@@ -241,7 +267,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" id="parqueo" name="ChBParqueo">
+                <input type="checkbox" id="parqueo" name="ChBParqueo" <?=$resHotel["parqueo"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -257,7 +283,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" id="piscina">
+                <input type="checkbox" id="piscina" <?=$resHotel["piscina"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -273,7 +299,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" id="recreativa">
+                <input type="checkbox" id="recreativa" <?=$resHotel["area_recreativa"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -289,7 +315,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" id="bar">
+                <input type="checkbox" id="bar" <?=$resHotel["bar"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -308,7 +334,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox" id="gimnasio">
+                <input type="checkbox" id="gimnasio" <?=$resHotel["gimnasio"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -324,7 +350,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="spa" <?=$resHotel["spa"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -340,7 +366,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="comedor" <?=$resHotel["comedor"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -365,7 +391,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="cable" <?=$resHotel["cable"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -381,7 +407,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="internet" <?=$resHotel["internet"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -397,7 +423,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="desayuno" <?=$resHotel["desayuno"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -413,7 +439,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="servicio" <?=$resHotel["servicio_habitacion"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -429,7 +455,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="acondicionado" <?=$resHotel["aire_acondicionado"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -455,7 +481,7 @@
               </td>
               <td class="btnswich">
                 <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="mascota" <?=$resHotel["mascota"] == 1 ? "checked" : ""?>>
                 <div class="slider round"></div>
              </label>
               </td>
@@ -466,7 +492,7 @@
       </div>
     </div>
 		<!-- /box_general-->
-		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
+		<p><button id="updateLugar" class="btn_1 medium">Guardar</button></p>
 	  </div>
 	  <!-- /.container-fluid-->
    	</div>
@@ -483,86 +509,6 @@
       <i class="fa fa-angle-up"></i>
     </a>
 
-    <!------------------------------MODAL PARA crear habitacion------------------------------>
-    <div class="modal fade" id="ModalHabitacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Nueva Habitacion</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <table>
-          <tr>
-            <td>
-              <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Nombre">
-                    </div>
-                  </div>
-            </td>
-            <td class="Habtd">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Descripcion">
-              </div>
-            </td>
-          </tr>
-        </table>
-
-        <table>
-          <tr>
-            <td>
-              <div class="form-group">
-                <input type="number" class="form-control" placeholder="Precio"  min="0" style="width: 100px;">
-              </div> 
-            </td>
-            <td class="Habtd">
-               <label id="lb">Sanitario</label>
-            </td>
-            <td class="btnswich" style="padding-left: 20px;">
-              <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-              </label>
-            </td>
-            <td class="Habtd">
-              <label id="lb">Frigobar</label>
-            </td>
-            <td class="btnswich" style="padding-left: 20px;">
-              <label class="switch">
-                <input type="checkbox">
-                <div class="slider round"></div>
-              </label>
-            </td>
-          </tr>
-        </table>
-        <center>
-          <table>
-            <tr>
-              <td>
-                <div style="width: 300px;">
-                    <div class="form-group">
-                      <form action="/file-upload" class="dropzone"></form>
-                      <center><label>Imagen de la Habitacion</label></center>
-                      </div>
-                  </div>
-              </td>
-            </tr>
-          </table>
-        </center>
-                    
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary add-pricing-list-item" data-dismiss="modal">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
     <!------------------------------fin modal habitacion------------------------------>
     <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
     <div class="modal fade" id="ModificarImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -578,17 +524,13 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group" style="padding-left: 50px;">
-                  <form action="Hoteleria.php" method="POST" enctype="multipart/form-data">
-                    <br>
+                  <br>
                     <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
-                    <input type="file" name="fileImagen" required="">
+                    <input type="file" name="fileImagen" id="logo">
       
                     <div class="modal-footer" style="padding-left: 400px;">
-                      <input type="submit" class="btn btn-secondary" data-dismiss="modal" name="btnCancelar" value="Cancelar">
-                      <input type="submit" class="btn btn-primary" name="btnAceptar" value="Aceptar" >
+                      <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
-
-                  </form>
       
                   </div>
               </div>
@@ -636,6 +578,9 @@
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
 	<script>
+  window.onload = function() {
+    initMap();
+  }
 
       var marker;
       function initMap() {
@@ -681,6 +626,49 @@
       //         map: map
       //     })
       // });
+
+      $(document).on('click', '#updateLugar', function() {
+        form = new FormData();
+        
+        console.log($('#logo').prop('files')[0]);
+        form.append('lugar_nombre', $('#lugar_nombre').val());
+        form.append('lugar_direccion', $('#lugar_direccion').val());
+        form.append('lugar_descripcion', $('#lugar_descripcion').val());
+        form.append('lugar_nombre', $('#lugar_nombre').val());
+        form.append('latitud', $('#latitud').val());
+        form.append('longitud', $('#longitud').val());
+        if($('#logo').prop('files')[0] != undefined) {
+          form.append('logo', $('#logo').prop('files')[0]);
+        }
+        form.append('hotel_categoria', $('#hotel_categoria').val());
+        form.append('hotel_nivel', $('#hotel_nivel').val());
+        form.append('parqueo', $('#parqueo').val());
+        form.append('piscina', $('#piscina').val());
+        form.append('recreativa', $('#recreativa').val());
+        form.append('bar', $('#bar').val());
+        form.append('gimnasio', $('#gimnasio').val());
+        form.append('spa', $('#spa').val());
+        form.append('comedor', $('#comedor').val());
+        form.append('cable', $('#cable').val());
+        form.append('internet', $('#piscina').val());
+        form.append('desayuno', $('#desayuno').val());
+        form.append('servicio', $('#servicio').val());
+        form.append('acondicionado', $('#acondicionado').val());
+        form.append('mascota', $('#mascota').val());
+
+        $.ajax({
+          type: "POST",
+          url: "app/requestAJAX/modificarHotel.request.php",
+          data: form,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            console.log(response);
+          }
+        });
+
+      });
 
     </script>
 	
