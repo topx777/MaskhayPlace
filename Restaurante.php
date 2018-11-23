@@ -37,6 +37,16 @@
         $reshorarios = $db->recorrer($obtenerhorarios);
     }
 
+    //OBTENER LATITUD,LONGITUD
+
+    $obtenerlongitud = $db->query("SELECT longitud_gps FROM lugar WHERE id_lugar = $idlugar ");
+    if($db->rows($obtenerlongitud) > 0) {
+        $reslongitud = $db->recorrer($obtenerlongitud);
+    }
+    $obtenerlatitud = $db->query("SELECT latitud_gps FROM lugar  WHERE id_lugar = $idlugar ");
+    if($db->rows($obtenerlatitud) > 0) {
+        $reslatitud = $db->recorrer($obtenerlatitud);
+    }
 
 
     //OBTENER DESCRIPCION
@@ -281,7 +291,7 @@
                     </a>
                 </li>
             </ul>
-            <!-- CERRAR SEcION -->
+            <!-- CERRAR SESION -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
@@ -632,7 +642,7 @@
                 </div>
             </div>
                 <!-- /row -->
-            <div class="box_general padding_bottom">
+                <div class="box_general padding_bottom">
                 <div class="header_box version_2" style="width:300px;">
                     <h2>
                         <label>Geolocalizacion:</label><br>
@@ -640,11 +650,22 @@
                 </div>
                 <div class="row">
                     <!-- Mapa de GOOGLE -->
-                    <div  id="map" style="width:8000px; height:500px; float: left"></div>
-                    <button type="button" id="botonBorrar">Elimina marcadores</button> 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Longitud</label>
+                        <input type="text" class="form-control" value="<?=$reslongitud["longitud_gps"]?>" id="longitud" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label>Latitud</label>
+                        <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="latitud" required="">
+                        </div>
+                    </div>
+                    <div  id="map" style="width:8000px; height:500px; float: left"></div> 
                 </div>
                 <div class="modal-footer modal-lg">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
                 </div>
             </div>
         

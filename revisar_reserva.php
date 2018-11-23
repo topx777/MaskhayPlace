@@ -74,13 +74,13 @@ if(isset($_SESSION["filtro"])) {
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMylistings">
             <li>
-              <a href="listings.html">Pending <span class="badge badge-pill badge-primary">-</span></a>
+              <a href="listings.html">Pending<span class="badge badge-pill badge-primary">-</span></a>
             </li>
 			<li>
-              <a href="listings.html">Active <span class="badge badge-pill badge-success">-</span></a>
+              <a href="listings.html">Active<span class="badge badge-pill badge-success">-</span></a>
             </li>
 			<li>
-              <a href="listings.html">Expired <span class="badge badge-pill badge-danger">-</span></a>
+              <a href="listings.html">Expired<span class="badge badge-pill badge-danger">-</span></a>
             </li>
           </ul>
         </li>
