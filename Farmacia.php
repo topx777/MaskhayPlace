@@ -1,74 +1,39 @@
 <?php
-    include('helpers/class.Conexion.php');
+  session_start();
 
-    // $_SESSION["usuario"] =array(
-    //     'id' => 3, 'nombre' => "Carlos Rodrigo"
-    // );
-    $_SESSION["lugar"] =array(
-        'id_lugar' => 3
-    );
-    $db = new Conexion();
-    $db ->charset();
-    // OBTENER datos LUGAR
-    $idlugar = $_SESSION["lugar"]["id_lugar"];
-    $obtenerlugar = $db->query("SELECT nombre_lugar FROM lugar  WHERE id_lugar = $idlugar");
-    if($db->rows($obtenerlugar)>0){
-        $reslugar = $db->recorrer($obtenerlugar);
-    }
+  include('helpers/class.Conexion.php');
+  
+  $idLugar = $_GET["id"];
 
-    // else{
-    //     header('Location: FarmaciaVacia.html');
-    // }
-    // $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar LIMIT 1");
-    $obtenerdireccion = $db->query("SELECT direccion FROM lugar WHERE id_lugar = $idlugar");
-    if($db->rows($obtenerdireccion) > 0) {
-        $resdireccion = $db->recorrer($obtenerdireccion);
-    } 
-    // else {
-    //     header('Location: FarmaciaVacia.html');
-    // }
-    $obtenerdescripcion = $db->query("SELECT descripcion FROM lugar WHERE id_lugar = $idlugar");
-    if($db->rows($obtenerdescripcion) > 0) {
-        $resdescripcion = $db->recorrer($obtenerdescripcion);
-    }
-    // OBTENER LA LATITUD Y LONGITUD
-    $obtenerlongitud = $db->query("SELECT longitud_gps FROM lugar WHERE id_lugar = $idlugar ");
-    if($db->rows($obtenerlongitud) > 0) {
-        $reslongitud = $db->recorrer($obtenerlongitud);
-    }
-    $obtenerlatitud = $db->query("SELECT latitud_gps FROM lugar  WHERE id_lugar = $idlugar ");
-    if($db->rows($obtenerlatitud) > 0) {
-        $reslatitud = $db->recorrer($obtenerlatitud);
-    }
-    // OBTENER HORARIO
-    $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia WHERE lugar = $idlugar");
-    if($db->rows($obtenerhoraini) > 0){
-        $reshoraini = $db->recorrer($obtenerhoraini);
-    }
-    $obtenerhorafinal = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',-1) as horafinal FROM farmacia WHERE lugar = $idlugar");
-    if($db->rows($obtenerhorafinal) > 0){
-        $reshorafinal = $db->recorrer($obtenerhorafinal);
-    }
+  $db = new Conexion();
+  $db->charset();
+  //--------------------------OBTENER DATOS DE LA TABLA LUGAR-----------------------------------
+  //-------------OBTENER DATOS DEL LUGAR-----------------------------
+  $idUsuario = $_SESSION["usuario"]["id"];
 
-    // OBTENER SERVICIOS OFRECIDOS
-    $obtenervacunacion = $db->query("SELECT vacunas FROM farmacia WHERE lugar = $idlugar");
-    if($db->rows($obtenervacunacion)>0){
-        $resvacunacion = $db->recorrer($obtenervacunacion);
-    }
-    $obtenerturno = $db->query("SELECT turno FROM farmacia WHERE lugar = $idlugar");
-    if($db->rows($obtenerturno)>0){
-        $resturno = $db->recorrer($obtenerturno);
-    }
-    $obtenerenfermera = $db->query("SELECT servicio_enfermeria FROM farmacia WHERE lugar = $idlugar");
-    if($db->rows($obtenerenfermera)>0){
-        $resenfermera = $db->recorrer($obtenerenfermera);
-    }
-    //CARGAR IMAGEN
-    $obtenerLugar = $db->query("SELECT * FROM lugar WHERE id_lugar = $idlugar LIMIT 1");
-    if($db->rows($obtenerLugar)>0){
-        $resLugar = $db->recorrer($obtenerLugar);
-    }
-?>
+  $obtenerLugar = $db->query("SELECT * FROM lugar WHERE id_lugar = $idLugar LIMIT 1");
+  if($db->rows($obtenerLugar) > 0) {
+    $resLugar = $db->recorrer($obtenerLugar);
+  }
+  
+  $idLugar = $resLugar["id_lugar"];
+
+  $obtenerFarmacia = $db->query("SELECT * FROM farmacia WHERE lugar = $idLugar LIMIT 1");
+  $resFarmacia = $db->recorrer($obtenerFarmacia);
+
+   // OBTENER HORARIO
+   $obtenerhoraini = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',1) as horaini FROM farmacia WHERE lugar = $idLugar LIMIT 1");
+   if($db->rows($obtenerhoraini) > 0){
+       $reshoraini = $db->recorrer($obtenerhoraini);
+   }
+   $obtenerhorafinal = $db->query("SELECT SUBSTRING_INDEX (`horario`,'-',-1) as horafinal FROM farmacia WHERE lugar = $idLugar LIMIT 1");
+   if($db->rows($obtenerhorafinal) > 0){
+       $reshorafinal = $db->recorrer($obtenerhorafinal);
+   }
+  
+  // var_dump($idLugar);
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,7 +87,7 @@
     <!-- google maps script -->
     <script type="text/javascript">
         window.onload = function(){
-        var pos_original = new google.maps.LatLng(<?=$reslatitud["latitud_gps"]?>, <?=$reslongitud["longitud_gps"]?>);
+        var pos_original = new google.maps.LatLng(<?=$resLugar["latitud_gps"]?>, <?=$resLugar["longitud_gps"]?>);
         var options = {
             zoom: 16,
             center: pos_original,
@@ -228,7 +193,6 @@
     };
     
     // evento click para cambiode de datos latlng
-    // document.getElementById("longitud").value="<?=$reslongitud["longitud_gps"]?>"
     </script>
     <!-- google maps script final-->
     <!-- <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyDK-4115IIeoK7i7cFVO6jnjJ5krsxNyZE"
@@ -246,35 +210,35 @@
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="Hoteleria.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-edit"></i>
             <span class="nav-link-text">Datos Farmacia</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link"  href="imagenes_farmacia.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-image"></i>
             <span class="nav-link-text">Imagenes Farmacia</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="contactos_farmacia.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-phone"></i>
             <span class="nav-link-text">Contactos Farmacia</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="calificaciones_farmacia.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-star"></i>
             <span class="nav-link-text">Ver Calificaciones</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="Productos.php?id=<?=$idLugar?>">
             <i class="fa fa-fw fa-bed"></i>
             <span class="nav-link-text">Productos Farmacia</span>
           </a>
@@ -301,6 +265,17 @@
     <!-- Navegacion -->
     <div class="content-wrapper">
         <div class="container-fluid">
+            <?php
+                if ($resLugar["activo"] == 1) {
+                echo "<div class='alert alert-success' role='alert'>
+                        Su pagina se encuentra activa
+                        </div>" ;
+                }else{
+                echo "<div class='alert alert-danger' role='alert'>
+                        Su pagina no encuentra activa
+                        </div>" ;
+                }
+            ?>
             <!-- Area para personalizacion -->
             <!-- -------------------------------------Lugar------------------------------------->
             <div class="box_general padding_bottom">
@@ -315,6 +290,7 @@
                     <div class="form-group">
                         <form>
                         <img src="<?=$resLugar["logo"]?>" style="width: 100%;">
+                        <input type="file" name="fileImagen" id="logo">
                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#ModificarImg">Cambiar Imagen</button>
                         </form>
                     </div>
@@ -324,20 +300,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" style="width:200%" value="<?=$reslugar["nombre_lugar"]?>">
+                                <input type="text" class="form-control" style="width:200%" value="<?=$resLugar["nombre_lugar"]?>">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                             <label>Direccion</label>
-                            <input type="text" class="form-control" style="width:200%" value="<?=$resdireccion["direccion"]?>">
+                            <input type="text" class="form-control" style="width:200%" value="<?=$resLugar["direccion"]?>">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                         <label>Descripcion</label>
-                        <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resdescripcion["descripcion"]?></textarea>
+                        <textarea style="height:100px;" class="form-control" placeholder="Personal info"><?=$resLugar["descripcion"]?></textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -371,12 +347,7 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <?php if($resvacunacion["vacunas"]==0){?>
-                                                    <input type="checkbox">
-                                                <?php }
-                                                else {?>
-                                                    <input type="checkbox" checked>
-                                                <?php } ?>                        
+                                            <input type="checkbox" id="vacunas" name="ChBParqueo" <?=$resFarmacia["vacunas"] == 1 ? "checked" : ""?>>                     
                                                 <!-- <input type="checkbox" checked> -->
                                                 <div class="slider round"></div>
                                             </label>
@@ -392,7 +363,7 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <?php if($resturno["turno"]==0){?>
+                                                <?php if($resFarmacia["turno"]==0){?>
                                                     <input type="checkbox">
                                                 <?php }
                                                 else {?>
@@ -412,7 +383,7 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <?php if($resturno["0"]==0){?>
+                                                <?php if($resFarmacia["servicio_enfermeria"]==0){?>
                                                     <input type="checkbox">
                                                 <?php }
                                                 else {?>
@@ -432,7 +403,12 @@
                                         </td>
                                         <td class="btnswich">
                                             <label class="switch">
-                                                <input type="checkbox">
+                                                <?php if($resFarmacia["entrega_domicilio"]==0){?>
+                                                    <input type="checkbox">
+                                                <?php }
+                                                else {?>
+                                                    <input type="checkbox" checked>
+                                                <?php } ?>
                                                 <div class="slider round"></div>
                                             </label>
                                         </td>
@@ -458,19 +434,21 @@
                     <div class="col-md-6">
                         <div class="form-group">
                         <label>Longitud</label>
-                        <input type="text" class="form-control" value="<?=$reslongitud["longitud_gps"]?>" id="longitud" required="">
+                        <input type="text" class="form-control" value="<?=$resLugar["longitud_gps"]?>" id="longitud" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                         <label>Latitud</label>
-                        <input type="text" class="form-control" value="<?=$reslatitud["latitud_gps"]?>" id="latitud" required="">
+                        <input type="text" class="form-control" value="<?=$resLugar["latitud_gps"]?>" id="latitud" required="">
                         </div>
                     </div>
                     <div  id="map" style="width:8000px; height:500px; float: left"></div> 
                 </div>
+                <!-- /box_general-->
                 <div class="modal-footer modal-lg">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Guardar</button>
+                    <input type="hidden" id="idLugar" value="<?=$idLugar?>">
+                    <p><button id="updateLugar" class="btn_1 medium">Guardar</button></p>
                 </div>
             </div>
             <!-- fin panel mapa de google  -->
@@ -489,6 +467,35 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-angle-up"></i>
     </a>
+    <!------------------------------fin modal farmacia------------------------------>
+    <!------------------------------MODAL PARA MODIFICAR IMAGEN------------------------------>
+    <div class="modal fade" id="ModificarImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modificar Imagen</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" style="padding-left: 50px;">
+                  <br>
+                    <img style="width: 400px;" src="<?=$resLugar["logo"]?>"><br><br>
+                    <input type="file" name="fileImagen" id="logo">
+      
+                    <div class="modal-footer" style="padding-left: 400px;">
+                      <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+      
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
     <!-- MODAL PARA CERRAR CESION -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -549,5 +556,64 @@
         $('#timepicker2').timepicki();
     </script>
     <script src="assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- mis peticiones -->
+    <script>
+        $(document).on('click', '#updateLugar', function() {
+        form = new FormData();
+        
+        // console.log($('#logo').prop('files')[0]);
+        form.append('id_lugar', $('#idLugar').val());
+        form.append('nombre_lugar', $('#lugar_nombre').val());
+        form.append('direccion_lugar', $('#lugar_direccion').val());
+        form.append('descripcion_lugar', $('#lugar_descripcion').val());
+        form.append('latitud_gps', $('#latitud').val());
+        form.append('longitud_gps', $('#longitud').val());
+        if($('#logo').prop('files')[0] != undefined) {
+          form.append('logo', $('#logo').prop('files')[0]);
+        }
+       
+        form.append('vacunas', $('#vacunas').val());
+        form.append('hotel_piscina', $('#piscina').val());
+        form.append('hotel_recreativa', $('#recreativa').val());
+        form.append('hotel_bar', $('#bar').val());
+        form.append('hotel_gimnasio', $('#gimnasio').val());
+        form.append('hotel_spa', $('#spa').val());
+        form.append('hotel_comedor', $('#comedor').val());
+        form.append('hotel_cable', $('#cable').val());
+        form.append('hotel_internet', $('#piscina').val());
+        form.append('hotel_desayuno', $('#desayuno').val());
+        form.append('hotel_servicio', $('#servicio').val());
+        form.append('hotel_acondicionado', $('#acondicionado').val());
+        form.append('hotel_mascota', $('#mascota').val());
+
+        $.ajax({
+          type: "POST",
+          url: "app/requestAJAX/modificarHotel.request.php",
+          data: form,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+
+            if(response == 1) {
+              $('#AJAXresponse').html('<div class="alert alert-success" role="alert">Lugar Modificado con exito!</div>');
+              alertify
+              .alert("Correcto", "Lugar Modificado con exito.", function(){
+                alertify.success('Redirigiendo...');
+                setTimeout(() => {
+                  location.href = "administrar_lugar.php";
+                }, 3000);
+              });
+            } else {
+					  	$('#AJAXresponse').html('<div class="alert alert-danger" role="alert">ERROR: '+response+'</div>');
+            }
+
+            // console.log(response);
+          }
+        });
+
+      });
+    </script>
+    <!-- fin de mis peticiones -->
 </body>
 </html>
