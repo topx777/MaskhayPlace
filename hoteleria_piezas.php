@@ -15,9 +15,11 @@
   if($db->rows($obtenerLugar) > 0) {
     $resLugar = $db->recorrer($obtenerLugar);
   }
-  
   $idLugar = $resLugar["id_lugar"];
   
+
+  $hotel=$db->query("SELECT * FROM hotel WHERE lugar={$_GET['id']}");
+  $hotel=$hotel->fetch_object();
   // var_dump($idLugar);
 
   //-------------MODIFICAR LOGO-----------------------------
@@ -168,10 +170,10 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<table id="pricing-list-container" style="width:100%;">
+					<table id="pricing-list-container" id="piezasHotel" style="width:100%;">
 
 
-						<tr class="pricing-list-item">
+						<!-- <tr class="pricing-list-item">
 							<td>
 								<div class="row">
                   
@@ -237,7 +239,7 @@
 
 								</div>
 							</td>
-						</tr>
+						</tr> -->
 
 
 					</table>
@@ -426,7 +428,7 @@
       //enviar a server
       $('#btnRegistrarSitio').click(function () { 
      var form=new FormData($('#formNewPieza')[0]);
-     form.append('hotel', <?php echo $_GET['id']?>)
+     form.append('hotel', <?php echo $hotel->id_hotel;?>)
      $.ajax({
                 type: "POST",
                 url: 'piezaHotel/controller/registrarPieza.php',
@@ -439,6 +441,22 @@
                 }
             });
    });
+   $(document).ready(function () {
+    listarSitios();
+   });
+   function listarSitios() 
+   {
+     $.post("piezaHotel/controller/piezasHotel.php", 
+     {
+      id_hotel: <?php echo $hotel->id_hotel;?>
+     },
+       function (data, textStatus, jqXHR) {
+          console.log(data)
+          $('#piezasHotel').html(data);
+       }
+     );
+  
+    }
       var marker;
       function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {

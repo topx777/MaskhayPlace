@@ -37,6 +37,12 @@ class mPieza
         $this->db->query($sql);
         return $this->db->execute();
     }
+    public function getPiezasHotel($id_hotel)
+    {
+        $sql="SELECT * FROM `pieza` WHERE hotel={$id_hotel}";
+        $this->db->query($sql);
+        return $this->db->getRegistros();
+    }
 
 }
 
