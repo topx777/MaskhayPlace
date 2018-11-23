@@ -425,6 +425,9 @@
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
 	<script>
+       $(document).ready(function () {
+    listarSitios();
+   });
       //enviar a server
       $('#btnRegistrarSitio').click(function () { 
      var form=new FormData($('#formNewPieza')[0]);
@@ -440,9 +443,6 @@
                     document.getElementById('formNewPieza').reset();
                 }
             });
-   });
-   $(document).ready(function () {
-    listarSitios();
    });
    function listarSitios() 
    {
