@@ -394,6 +394,9 @@
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
 	<script>
+       $(document).ready(function () {
+    listarSitios();
+   });
       //enviar a server
       $('#btnRegistrarSitio').click(function () { 
      var form=new FormData($('#formNewPieza')[0]);
@@ -410,9 +413,7 @@
                 }
             });
    });
-   $(document).ready(function () {
-    listarSitios();
-   });
+  
     var lista;
     lista = document.getElementById('pricing-list-container');
     console.log(lista);

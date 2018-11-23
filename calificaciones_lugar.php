@@ -565,7 +565,21 @@
 			<!-- /row-->
 		</div>
 		<!-- /box_general-->
-		<p><a href="#0" class="btn_1 medium">Guardar</a></p>
+    <p><a href="#0" class="btn_1 medium">Guardar</a></p>
+    
+      <!-- Calificaciones -->
+      <div class="box_general">
+			<div class="header_box">
+				<h2 class="d-inline-block">Reviews List</h2>
+				
+			</div>
+			<div class="list_general reviews">
+				<ul id="listCal">
+		
+				</ul>
+			</div>
+    </div>
+    
 	  </div>
 	  <!-- /.container-fluid-->
    	</div>
@@ -735,7 +749,16 @@
 	<script>$('input.date-pick').datepicker();</script>
 	<!-- WYSIWYG Editor -->
 	<script>
-
+    $(function () {
+      $.post('piezaHotel/controller/calificaciones.php', 
+      {
+        id_lugar:<?php echo $_GET['id']?>
+      },
+        function (data, textStatus, jqXHR) {
+          $('#listCal').html(data);
+        }
+      );
+    });
       var marker;
       function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {
