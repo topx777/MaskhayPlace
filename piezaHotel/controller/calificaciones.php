@@ -16,7 +16,7 @@ $datos=$db->getRegistros();
 <?php foreach ($datos as $dato) :?>
 <li>
 						<span><?php echo $dato->fecha;?></span>
-						<span class="rating"></span>
+						<span class="rating"><?php echo estrellas($dato->calificacion);?></span>
 						<figure><img src="<?php echo $dato->logo;?>" alt=""></figure>
 						<h4><?php echo $dato->nombre_lugar;?> <small>por <?php echo " {$dato->nombre} {$dato->apellidos}";?></small></h4>
 						
