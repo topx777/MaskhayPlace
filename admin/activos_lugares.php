@@ -82,7 +82,7 @@ if($db->rows($obtenerLugares) > 0) {
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html"><img src="../assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
+    <a class="navbar-brand" href="../index-2.php"><img src="../assets/admin/img/logo.png" data-retina="true" alt="" width="165" height="36"></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -132,14 +132,7 @@ if($db->rows($obtenerLugares) > 0) {
 		<div class="box_general">
 			<div class="header_box">
 				<h2 class="d-inline-block">Lista de negocios: Todos</h2>
-				<div class="filter">
-					<select name="orderby" class="selectbox">
-						<option value="Any status">Cualquier Estatus</option>
-						<option value="Approved">Aceptado</option>
-						<option value="Pending">Pendiente</option>
-						<option value="Cancelled">Cancelado</option>
-					</select>
-				</div>
+				
 			</div>
 			<div class="list_general">
 				<ul>
