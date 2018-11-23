@@ -59,10 +59,10 @@
 	<!-- JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
 
-<!-- CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
-<!-- Default theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css"/>
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css"/>
 
   <link rel="stylesheet" href="estilo.css">
 
@@ -156,7 +156,7 @@
         <h2><i class="fa fa-user"></i>Lugar</h2>
       </div>
             
-      <div class="AJAXresponse"></div>
+      <div id="AJAXresponse"></div>
 
       <div class="row">
         <div class="col-md-4" style="padding-top: 30px;">
@@ -502,7 +502,7 @@
       </div>
     </div>
 		<!-- /box_general-->
-    <input type="text" id="idLugar" value="<?=$idLugar?>">
+    <input type="hidden" id="idLugar" value="<?=$idLugar?>">
 		<p><button id="updateLugar" class="btn_1 medium">Guardar</button></p>
 	  </div>
 	  <!-- /.container-fluid-->
@@ -681,10 +681,12 @@
               alertify
               .alert("Correcto", "Lugar Modificado con exito.", function(){
                 alertify.success('Redirigiendo...');
-                location.href = "administrar_lugar.php";
+                setTimeout(() => {
+                  location.href = "administrar_lugar.php";
+                }, 3000);
               });
             } else {
-					  	$('#AJAXresponse').html('<div class="alert alert-error" role="alert">ERROR: '+response+'</div>');
+					  	$('#AJAXresponse').html('<div class="alert alert-danger" role="alert">ERROR: '+response+'</div>');
             }
 
             // console.log(response);

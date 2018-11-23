@@ -849,7 +849,7 @@
 							location.href = "administrar_lugar.php";
 						});
 					} else {
-						$('#AJAXresponse').html('<div class="alert alert-error" role="alert">ERROR: '+response+'</div>');
+						$('#AJAXresponse').html('<div class="alert alert-danger" role="alert">ERROR: '+response+'</div>');
 					}
 				}
 			});

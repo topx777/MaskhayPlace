@@ -66,7 +66,7 @@ if($_POST) {
 		if($updateLugar) {
 	
 			$updateHotel = $db->query("UPDATE hotel SET categoria = '$hotel_categoria', nivel = $hotel_nivel, parqueo = $parqueo, piscina = $piscina, area_recreativa = $recreativa, bar = $bar, cable = $cable, internet = $internet, aire_acondicionado = $acondicionado, desayuno = $desayuno, gimnasio = $gimnasio, mascota = $mascota, spa = $spa, comedor = $comedor, servicio_habitacion = $servicio WHERE lugar = $id_lugar");
-			if($agregarHotel) {
+			if($updateHotel) {
 				echo 1;
 			} else {
 				$error = $db->error;
