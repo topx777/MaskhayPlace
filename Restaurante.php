@@ -1,13 +1,13 @@
 <?php
+
+    session_start();
     include('helpers/class.Conexion.php');
 
     //$_SESSION["usuario"] =array(
      //   'id' => 3, 'nombre' => "Carlos Rodrigo"
     //);
 
-    $_SESSION["lugar"] =array(
-        'id_lugar' => 1, 'nombre_lugar' => "Pollos Lopez"
-    );
+    $idLugar = $_GET["id"];
 
 
 
