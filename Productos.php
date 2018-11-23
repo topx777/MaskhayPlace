@@ -17,6 +17,8 @@
   }
   
   $idLugar = $resLugar["id_lugar"];
+
+  $enviarLugar = $db->query("INSERT IN TO medicamento(id_medicamento, nombre_medicamento, precio_medicamento, descuento, precio_descuento, descripcion, farmacia, imagen_medicamento)");
   
   // var_dump($idLugar);
 
