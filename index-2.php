@@ -381,7 +381,7 @@ session_start();
 	<!-- COMMON SCRIPTS -->
     <script src="assets/public/js/common_scripts.js"></script>
 	<script src="assets/public/js/functions.js"></script>
-	<script src="assets/validate.js"></script>
+
 	
 	<!-- SPECIFIC SCRIPTS -->
 	<script src="assets/public/js/video_header.js"></script>
