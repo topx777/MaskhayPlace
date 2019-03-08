@@ -20,7 +20,7 @@ if($_POST) {
                 'nombre' => $resAdmin["nombre"],
                 'apellidos' => $resAdmin["apellidos"],
             );
-            echo 1; 
+            echo 1; jjjj
         } else {
             echo 'Credenciales incorrectos';
         }
